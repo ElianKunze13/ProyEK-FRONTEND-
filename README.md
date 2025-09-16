@@ -1,6 +1,14 @@
 # FrontEnd Para Portofolio 
 
-Este repositorio guarda el formato utilizado para la creacion de mi portafolio digital(curriculum), aplicando control de versionado con Git y uso de Tags para definicion de cambios importantes.
+Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git y uso de Tags para definicion/mencion de cambios importantes realizados.
+
+--- 
+
+## Formato general de proyecto
+Componentes
+Models
+Servicies
+README.md
 
 --- 
 
