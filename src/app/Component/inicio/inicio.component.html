@@ -1,0 +1,466 @@
+
+ <!-- Homepage / Splash Screen -->
+  <section id="homepage" class="px-4">
+    <div class="text-center hovered-element">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Portfolio</span>
+        <span class="animate-pulse">_</span>
+      </h1>
+      <p class="text-lg md:text-xl mb-10 text-center max-w-lg mx-auto text-opacity-90 float-animation">
+        Bienvenido a mi portafolio digital donde la creatividad y la tecnología se encuentran
+      </p>
+      <button id="enter-button" class="btn text-lg group">
+        <span> Entrar al Portafolio</span>
+        <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all"></i>
+      </button>
+    </div>
+  </section>
+ 
+   <!-- Main Content -->
+  <div id="main-content" class="pt-20 md:pt-24">
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-opacity-90 backdrop-blur-md bg-[color:var(--bg-secondary)] z-40 shadow-sm">
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button">
+          <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+            P
+          </div>
+          <span class="font-semibold text-lg hidden sm:inline-block">Mi Portafolio</span>
+        </button>
+
+        <div class="flex items-center space-x-4">
+          <!-- Theme Switcher -->
+          <div class="hidden md:flex space-x-2">
+            <button class="theme-btn active" data-theme="day" title="Tema Día">
+              <i class="fas fa-sun"></i>
+            </button>
+            <button class="theme-btn" data-theme="night" title="Tema Noche">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+
+          <!-- Login Button -->
+          <button id="login-button" class="btn-outline btn hidden md:block">
+            <i class="fas fa-user mr-2"></i>Ingresar
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <div class="hamburger md:hidden">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+      <nav class="flex flex-col space-y-6 mb-8">
+        <a href="#home" class="mobile-nav-item text-lg font-medium">Inicio</a>
+        <a href="#courses" class="mobile-nav-item text-lg font-medium">Cursos y Talleres</a>
+        <a href="#skills" class="mobile-nav-item text-lg font-medium">Herramientas</a>
+        <a href="#contact" class="mobile-nav-item text-lg font-medium">Contacto</a>
+      </nav>
+      
+      <div class="mt-auto">
+        <!-- Mobile Theme Switcher -->
+        <p class="mb-3 font-medium">Temas</p>
+        <div class="flex space-x-3 mb-6">
+          <button class="theme-btn active" data-theme="day" title="Tema Día">
+            <i class="fas fa-sun"></i>
+          </button>
+          <button class="theme-btn" data-theme="night" title="Tema Noche">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+        
+        <!-- Mobile Login Button -->
+        <button id="mobile-login-button" class="btn w-full">
+          <i class="fas fa-user mr-2"></i>Ingresar
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Sections -->
+    <main class="container mx-auto px-4 pb-16">
+      <!-- Home Section -->
+      <section id="home" class="section visible min-h-[70vh] flex flex-col justify-center">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy <span class="text-[color:var(--accent)]">Developer</span></h2>
+          <p class="text-lg max-w-2xl mx-auto">Especialista en desarrollo web y aplicaciones móviles con más de 5 años de experiencia. Bienvenido a mi portafolio donde comparto mis proyectos y conocimientos.</p>
+        </div>
+      
+      </section>
+
+      <!-- Courses Section -->
+      <section id="courses" class="section pt-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2">Cursos y Talleres</h2>
+          <p class="text-lg text-[color:var(--text-secondary)]">Formación académica y certificaciones</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Course 1 -->
+          <div class="card">
+            <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
+              <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend </h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para aplicaciones web de alto rendimiento.</p>
+              <a href="javascript:void(0)" class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
+                Ver certificado
+                <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Course 2 -->
+          <div class="card">
+            <img src="https://cdn.pixabay.com/photo/2020/04/08/08/08/spring-5016266_1280.jpg" alt="UX/UI Design" class="w-full h-48 object-cover">
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Enero 2025</span>
+              <h3 class="text-xl font-semibold my-2">UX/UI Design </h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">Principios de diseño centrado en el usuario y creación de interfaces atractivas.</p>
+              <a href="javascript:void(0)" class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
+                Ver certificado
+                <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Course 3 -->
+          <div class="card">
+            <img src="https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg" alt="Machine Learning" class="w-full h-48 object-cover">
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Noviembre 2024</span>
+              <h3 class="text-xl font-semibold my-2">Introducción al Machine Learning</h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">Fundamentos de IA y aplicaciones prácticas con Python y TensorFlow.</p>
+              <a href="javascript:void(0)" class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
+                Ver certificado
+                <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Course 4 -->
+          <div class="card">
+            <img src="https://cdn.pixabay.com/photo/2018/07/14/11/33/network-3537401_1280.jpg" alt="DevOps" class="w-full h-48 object-cover">
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Septiembre 2024</span>
+              <h3 class="text-xl font-semibold my-2">DevOps y CI/CD</h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">Implementación de pipelines de integración y despliegue continuo con Docker y Kubernetes.</p>
+              <a href="javascript:void(0)" class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
+                Ver certificado
+                <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+          </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="section pt-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2">Herramientas y Conocimientos</h2>
+          <p class="text-lg text-[color:var(--text-secondary)]">Tecnologías que domino</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
+          <!-- Skill 1 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-html5"></i>
+            </div>
+            <span class="font-medium">HTML5</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 2 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-css3-alt"></i>
+            </div>
+            <span class="font-medium">CSS3</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 3 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-js"></i>
+            </div>
+            <span class="font-medium">JavaScript</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 4 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-react"></i>
+            </div>
+            <span class="font-medium">React</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 80%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 5 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-node-js"></i>
+            </div>
+            <span class="font-medium">Node.js</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 75%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 6 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <span class="font-medium">SQL</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 70%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 7 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-git-alt"></i>
+            </div>
+            <span class="font-medium">Git</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 8 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-figma"></i>
+            </div>
+            <span class="font-medium">Figma</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 65%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 9 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-docker"></i>
+            </div>
+            <span class="font-medium">Docker</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 60%"></div>
+            </div>
+          </div>
+          
+          <!-- Skill 10 -->
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <span class="font-medium">Responsive</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="section pt-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2">Contacto</h2>
+          <p class="text-lg text-[color:var(--text-secondary)]">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+          <div>
+            <form id="contact-form" class="space-y-6">
+              <div>
+                <label for="name" class="block mb-2 font-medium">Nombre</label>
+                <input type="text" id="name" class="form-input" placeholder="Tu nombre" required>
+              </div>
+              <div>
+                <label for="email" class="block mb-2 font-medium">Email</label>
+                <input type="email" id="email" class="form-input" placeholder="tu@email.com" required>
+              </div>
+              <div>
+                <label for="message" class="block mb-2 font-medium">Mensaje</label>
+                <textarea id="message" rows="4" class="form-input resize-none" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+              </div>
+              <button type="submit" class="btn w-full">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Enviar mensaje
+              </button>
+            </form>
+          </div>
+
+          <div class="flex flex-col justify-center">
+            <div class="card p-6 mb-6">
+              <h3 class="text-xl font-semibold mb-4">Información de contacto</h3>
+              <ul class="space-y-4">
+                <li class="flex items-center">
+                  <div class="w-10 h-10 rounded-full bg-[color:var(--accent)] bg-opacity-10 flex items-center justify-center mr-3 text-[color:var(--accent)]">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <span>contacto&#64;miportafolio.com</span>
+                </li>
+                <li class="flex items-center">
+                  <div class="w-10 h-10 rounded-full bg-[color:var(--accent)] bg-opacity-10 flex items-center justify-center mr-3 text-[color:var(--accent)]">
+                    <i class="fas fa-phone"></i>
+                  </div>
+                  <span>+1 (555) 123-4567</span>
+                </li>
+                <li class="flex items-center">
+                  <div class="w-10 h-10 rounded-full bg-[color:var(--accent)] bg-opacity-10 flex items-center justify-center mr-3 text-[color:var(--accent)]">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <span>Ciudad de México, México</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="flex justify-center space-x-4">
+              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-white flex items-center justify-center hover:opacity-80 transition-opacity">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-white flex items-center justify-center hover:opacity-80 transition-opacity">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-white flex items-center justify-center hover:opacity-80 transition-opacity">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-white flex items-center justify-center hover:opacity-80 transition-opacity">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Dashboard Section (visible after login) -->
+      <section id="dashboard" class="section dashboard-section pt-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2">Panel de Administración</h2>
+          <p class="text-lg text-[color:var(--text-secondary)]">Gestiona tu portafolio</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+          <div class="mb-8 flex justify-end">
+            <button id="logout-button" class="btn-outline btn">
+              <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
+            </button>
+          </div>
+          
+          <div class="card p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-4">Añadir nuevo curso/taller</h3>
+            <form id="course-form" class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Título</label>
+                <input type="text" class="form-input" placeholder="Nombre del curso o taller">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Fecha</label>
+                <input type="date" class="form-input">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Descripción</label>
+                <textarea class="form-input resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Imagen</label>
+                <div class="flex items-center">
+                  <input type="file" accept="image/*" class="form-input">
+                </div>
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Certificado (PDF)</label>
+                <input type="file" accept=".pdf" class="form-input">
+              </div>
+              <button type="submit" class="btn">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir curso
+              </button>
+            </form>
+          </div>
+          
+          <div class="card p-6">
+            <h3 class="text-xl font-semibold mb-4">Añadir nueva habilidad</h3>
+            <form id="skill-form" class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Nombre</label>
+                <input type="text" class="form-input" placeholder="Nombre de la tecnología o habilidad">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Nivel (1-100)</label>
+                <input type="range" min="1" max="100" value="75" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Ícono (Font Awesome)</label>
+                <input type="text" class="form-input" placeholder="fa-code">
+              </div>
+              <button type="submit" class="btn">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir habilidad
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[color:var(--bg-secondary)] py-8 border-t border-[color:var(--border)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <button id="footer-home-button" class="flex items-center justify-center md:justify-start transform transition-transform duration-200">
+              <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+                P
+              </div>
+              <span class="font-semibold text-lg">Mi Portafolio</span>
+            </button>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-[color:var(--text-secondary)]">© 2025 - Diseñado y desarrollado con <i class="fas fa-heart text-red-500"></i></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal">
+    <div class="modal-content">
+      <div class="close-modal">&times;</div>
+      <h3 class="text-2xl font-semibold mb-6 text-center">Iniciar sesión</h3>
+      <div id="login-error" class="text-red-500 mb-4 text-center" style="display:none"></div>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="username" class="block mb-2 font-medium">Usuario</label>
+          <input type="text" id="username" class="form-input" placeholder="Tu nombre de usuario">
+        </div>
+        <div>
+          <label for="password" class="block mb-2 font-medium">Contraseña</label>
+          <input type="password" id="password" class="form-input" placeholder="Tu contraseña">
+        </div>
+        <button type="submit" class="btn w-full">
+          <i class="fas fa-sign-in-alt mr-2"></i>Iniciar sesión
+        </button>
+      </form>
+    </div>
+  </div>
