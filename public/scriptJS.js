@@ -233,21 +233,7 @@
           }, 300);
         }, 3000);
       }
-      
-      // Add animations with GSAP
-      gsap.from(".float-animation", {
-        y: 20,
-        opacity: 0,
-        duration: 1,
-        delay: 0.5
-      });
-      
-      gsap.from("#enter-button", {
-        y: 20,
-        opacity: 0,
-        duration: 1,
-        delay: 0.8
-      });
+     
       
       // Initialize - Show sections that are already visible
       handleScroll();
