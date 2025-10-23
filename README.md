@@ -2,6 +2,12 @@
 
 Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git y uso de Tags para definicion/mencion de cambios importantes realizados.
 
+---
+
+## Documentacion y prototipos
+Prototipo visual (frontend): https://xkfti.magicloops.app/
+Historias de usuario: https://trello.com/invite/b/6862e7dca5c65a1ac3e0c315/ATTId497b92eabe2acf4bfafb3734af59c6cC685978C/webpotafolio
+
 --- 
 
 ## Formato general de proyecto
