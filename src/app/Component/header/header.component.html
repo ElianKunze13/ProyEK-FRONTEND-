@@ -1,23 +1,22 @@
 
  <!-- Header/Navigation -->
-    <header class="fixed top-0 left-0 w-full bg-opacity-90 backdrop-blur-md bg-[color:var(--bg-secondary)] z-40 shadow-sm">
+    <header class="fixed top-0 left-0 w-full bg-opacity-90 backdrop-blur-md  z-40 shadow-sm">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button">
+        <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
           <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
             P
           </div>
           <span class="font-semibold text-lg hidden sm:inline-block">Mi Portafolio</span>
         </button>
 
-        <div class="flex items-center space-x-4">
-          
 
-          <!-- Login Button -->
-          <button id="login-button" class="btn-outline btn hidden md:block">
+<!-- Login Button - ARREGLAR CSS-->
+        <div class="flex items-center space-x-4">
+          <button id="login-button" class="btn-outline md:block" routerLink="/login">
             <i class="fas fa-user mr-2" style="color: black;">Ingresar</i>
           </button>
-
-         
         </div>
+
+        
       </div>
     </header>
