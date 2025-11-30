@@ -11,14 +11,7 @@ export class ImagenService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-findAllImagenes(): Observable<Imagen[]> {
-   return this.http.get<Imagen[]>(`${this.apiUrl}/COMPLETAR CON RUTA CORRECTA`).pipe(
-      catchError(error => {
-        console.error('Error fetching fotos:', error);
-        return of([]);  // Devuelve un array vacío en caso de error
-      })
-    );
-}
+
 
   /*findAllFotos(): Observable<Foto[]> {
     return this.http.get<Foto[]>(`${this.apiUrl}/auth/fotos`).pipe(
