@@ -11,6 +11,17 @@ export class ConocimientoService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
+  
+    findAll(): Observable<Conocimiento[]> {
+        return this.http.get<Conocimiento[]>(this.apiUrl + '/todos/conocimientos')
+          .pipe(
+            catchError(error => {
+              console.error('Error fetching Conocimientos:', error);
+              return of([]);  // Devuelve un array vacío
+            })
+          );
+      }
+  
 
 findFrontend(): Observable<Conocimiento[]> {
     return this.http.get<Conocimiento[]>(this.apiUrl + '/frontend')
@@ -49,7 +60,7 @@ findFrontend(): Observable<Conocimiento[]> {
       );
   }
     findOtros(): Observable<Conocimiento[]> {
-    return this.http.get<Conocimiento[]>(this.apiUrl + '/otros')
+    return this.http.get<Conocimiento[]>(this.apiUrl + '/otros/conocimientos')
       .pipe(
         catchError(error => {
           console.error('Error fetching conocimientos OTROS:', error);
@@ -80,7 +91,7 @@ findFrontend(): Observable<Conocimiento[]> {
   }
       
   delete(id: number): Observable<any> {
-    return this.http.delete<void>(this.apiUrl + '/auth/modificar/conocimiento/' + id)
+    return this.http.delete<void>(this.apiUrl + '/borrrar/conocimiento/' + id)
       .pipe(
         catchError(error => {
           console.error('Error fetching conocimientos:', error);

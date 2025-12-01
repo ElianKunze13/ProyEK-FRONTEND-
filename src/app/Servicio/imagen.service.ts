@@ -11,7 +11,7 @@ export class ImagenService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-
+///como no hay controller para imagenes, dejo servicio comentado
 
   /*findAllFotos(): Observable<Foto[]> {
     return this.http.get<Foto[]>(`${this.apiUrl}/auth/fotos`).pipe(
