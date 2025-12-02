@@ -1,22 +1,88 @@
 
  <!-- Header/Navigation -->
-    <header class="fixed top-0 left-0 w-full bg-opacity-90 backdrop-blur-md  z-40 shadow-sm">
-      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
+    <header class="fixed w-full bg-opacity
+    -90 backdrop-blur-md  z-40 ">
+      
+      <div class="mx-auto px-4 py-3 flex">
+        
+      <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
           <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
             P
           </div>
           <span class="font-semibold text-lg hidden sm:inline-block">Mi Portafolio</span>
         </button>
 
+      
+     <div class="container-fluid" id="contenedor" >
+      
+      <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+</div>
 
-<!-- Login Button - ARREGLAR CSS-->
-        <div class="flex items-center space-x-4">
-          <button id="login-button" class="btn-outline md:block" routerLink="/login">
-            <i class="fas fa-user mr-2" style="color: black;">Ingresar</i>
-          </button>
-        </div>
-
-        
-      </div>
+</div>
+      
     </header>
+
+    <!--
+IMPORTANTE: tag para desactivar un link o boton
+
+aria-disabled="true" 
+
+SE PUEDE USAR PARA BOTON OCULTO DE LOGIN
+-->
+
+  
+
+<!--
+<nav class="navbar navbar-expand-lg fixed w-full bg-opacity
+    -90 backdrop-blur-md  z-40  ">
+
+  <div class="container-fluid" id="contenedor">
+    
+    <a class="navbar-brand">
+<button id="home-button" class="flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
+          <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+            P
+          </div>
+          <span class="font-semibold text-lg hidden sm:inline-block">Mi Portafolio</span>
+        </button>
+</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+         
+       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+
+
+      
+    </div>
+
+  </div>
+
+</nav>-->
+
+

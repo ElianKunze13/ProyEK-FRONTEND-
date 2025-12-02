@@ -2,5 +2,33 @@
     #home-button:hover { 
       transform: scale(1.05); 
     }
+
+
+   #contenedor{
+    width: 100%;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+ul {
+    width: fit-content;
+    background-color: rgb(53, 52, 51); 
+    margin: auto; 
+    padding: 1%;
+    border-radius: 4ch;
+}
+li {
+    background-color: aqua;
+    border-radius: 2ch; 
+    margin-top: 1ch;
+    margin-bottom: 1ch; 
+    margin-left: 1ch; 
+    margin-right: 1ch;
+}
+li a {
+    color: black;
+    font-weight: 500;
+}
     
     
