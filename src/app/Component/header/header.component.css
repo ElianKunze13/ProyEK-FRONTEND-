@@ -1,5 +1,9 @@
 
-    #home-button:hover { 
+   header{
+   background-color: #111827;
+   }
+   
+   #home-button:hover { 
       transform: scale(1.05); 
     }
 
