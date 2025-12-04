@@ -1,6 +1,6 @@
 
  <!-- Homepage / Splash Screen -->
-  <section id="homepage" class="px-4" >
+  <section id="homepage" class="px-4 slide-left-enter" >
     <div class="text-center hovered-element">
       <h1 class="text-5xl md:text-7xl font-bold mb-4">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
@@ -11,14 +11,61 @@
         Bienvenido a mi portafolio digital donde la creatividad y la tecnología se encuentran.
 
       </p>
-      <button id="enter-button" class="btn text-lg group float-animation" routerLink="/main" style="background-color: cadetblue;">
+
+
+      <button id="enter-button" class="btn text-lg group float-animation" routerLink="/main" 
+      style="background-color: cadetblue;">
         <span> Ingresar al Portafolio</span>
         <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all"></i>
       </button>
 
+  
       <p><abbr title="attribute">attr</abbr></p>
 
     </div>
   </section>
+
+
+
+  
+<!-- Homepage / Splash Screen -->
+<!-- Agregamos la clase page-container y el id homepage
+<section 
+  id="homepage" 
+  class="page-container px-4"
+  [class.slide-left-exit]="isNavigating" 
+>
+  <div class="text-center hovered-element h-full flex flex-col justify-center">
+    <h1 class="text-5xl md:text-7xl font-bold mb-4">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+        Portfolio
+      </span>
+      <span class="animate-pulse">_</span>
+    </h1>
+    
+    <p class="text-lg md:text-xl mb-10 text-center max-w-lg mx-auto text-opacity-90">
+      Bienvenido a mi portafolio digital donde la creatividad y la tecnología se encuentran.
+    </p>
+
+    <button 
+      id="enter-button" 
+      class="btn text-lg group float-animation" 
+      (click)="navigateToMain()" 
+      style="background-color: cadetblue;"
+      [disabled]="isNavigating"> 
+      
+      <span *ngIf="!isNavigating">Ingresar al Portafolio</span>
+     
+      
+  
+      <i *ngIf="!isNavigating" 
+         class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all">
+      </i>
+    </button>
+
+    <p><abbr title="attribute">attr</abbr></p>
+  </div>
+</section>-->
+
  
   

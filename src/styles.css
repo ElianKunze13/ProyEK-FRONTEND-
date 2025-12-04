@@ -1,2 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+
+/* ANIMACIONES DE TRANSICIÓN */
+
+/* 1. Animación de ENTRADA (slide desde la derecha) */
+.slide-left-enter {
+  animation: slideLeftEnter 0.8s ease-out forwards;
+}
+
+/* 2. Animación de SALIDA (slide hacia la izquierda) */
+.slide-left-exit {
+  animation: slideLeftExit 0.8s ease-in forwards;
+}
+
+/* 3. Keyframes para la animación de entrada */
+@keyframes slideLeftEnter {
+  from {
+    transform: translateX(100%); /* Comienza fuera de pantalla a la derecha */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);    /* Termina en su posición normal */
+    opacity: 1;
+  }
+}
+
+/* 4. Keyframes para la animación de salida */
+@keyframes slideLeftExit {
+  from {
+    transform: translateX(0);    /* Comienza en su posición normal */
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%); /* Sale por la izquierda */
+    opacity: 0;
+  }
+}
+
+/* 5. Estilos base para las páginas */
+.page-container {
+  position: fixed;      /* Fijo para que no haga scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;     /* Evita scroll durante animación */
+  background: white;    /* Tu color de fondo */
+}
+
+/* 6. Animación para el botón de carga */
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.button-loading {
+  animation: buttonPulse 0.6s ease;
+}
