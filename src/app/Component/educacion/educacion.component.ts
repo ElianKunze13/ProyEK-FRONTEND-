@@ -1,16 +1,13 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-main',
-  imports: [CommonModule, RouterLink],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css'
+  selector: 'app-educacion',
+  imports: [],
+  templateUrl: './educacion.component.html',
+  styleUrl: './educacion.component.css'
 })
-export class MainComponent implements OnInit{
-
-   ngOnInit() {
+export class EducacionComponent implements OnInit{
+ngOnInit() {
     // Agregar animación de entrada cuando se carga el componente
     setTimeout(() => {
       const mainPage = document.getElementById('main-page');
@@ -19,6 +16,4 @@ export class MainComponent implements OnInit{
       }
     }, 50); // Pequeño delay para que Angular renderice primero
   }
-
-
 }

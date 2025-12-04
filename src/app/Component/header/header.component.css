@@ -17,22 +17,30 @@
 
 ul {
     width: fit-content;
-    background-color: rgb(53, 52, 51); 
-    margin: auto; 
+    background-color: rgb(36, 35, 41); 
     padding: 1%;
-    border-radius: 4ch;
+    border-radius: 2ch;
+    border-color: #111827;
+font-family: monospace;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
 }
 li {
     background-color: aqua;
     border-radius: 2ch; 
     margin-top: 1ch;
     margin-bottom: 1ch; 
-    margin-left: 1ch; 
-    margin-right: 1ch;
+    margin-left: 2ch; 
+    margin-right: 2ch;
 }
-li a {
-    color: black;
-    font-weight: 500;
-}
-    
-    
+   li a abbr {
+    text-decoration: none;
+     color: black;
+    font-weight: 600;
+} 
+    li :hover {
+    font-weight:bolder;
+    border-radius: 1ch; 
+
+    }
