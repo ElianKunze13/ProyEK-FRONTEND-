@@ -1,11 +1,25 @@
-
-footer{
-   background-color: #111827;
+footer {
+  background-color: #111827;
 }
 
-#home-button:hover, #footer-home-button:hover { 
-    transform: scale(1.05); 
-    }
-    
-#home-button:active, #footer-home-button:active { 
-  transform: scale(0.98); }
+#home-button:hover,
+#footer-home-button:hover {
+  transform: scale(1.05);
+}
+
+#home-button:active,
+#footer-home-button:active {
+  transform: scale(0.98);
+}
+
+#mobile-login-button {
+  display: block;
+  color: #111827;
+  background-color: #111827;
+}
+
+#mobile-login-button:hover {
+  background-color: #233763;
+  opacity: 10;
+  color: white
+}

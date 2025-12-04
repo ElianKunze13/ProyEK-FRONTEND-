@@ -6,7 +6,7 @@ import { ConocimientoService } from '../../Servicio/conocimiento.service';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })

@@ -1,7 +1,7 @@
 
    <!-- Footer -->
-    <footer class="py-8">
-      <div class="container mx-auto px-4">
+    <footer class="py-4" >
+      <div class="container mx-auto px-8">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-4 md:mb-0">
             <button id="footer-home-button" class="flex items-center justify-center md:justify-start transform transition-transform duration-200" routerLink="/inicio">
@@ -16,4 +16,17 @@
           </div>
         </div>
       </div>
+
+
+      <div class="mt-auto" style="height: 30px; width: 20%;
+       padding: 0%; margin: 0 auto; position: relative;">
+        <!-- Login Button 
+         DEBE ESTAR ESCONDIDO Y SOLO AL PASAR CURSOR DEBE APARECER BOTON-->
+        <button id="mobile-login-button" class="btn w-full" aria-disabled="true" 
+        routerLink="/login" >
+          <i class="fas fa-user mr-2"></i>Ingresar
+        </button>
+      </div>
+
+
     </footer> 
