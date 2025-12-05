@@ -45,7 +45,40 @@
   animation: float 3s ease-in-out infinite;
 }
 
+#titulo{
+        font-family: monospace;
+        font:1.5em sans-serif; 
+        font-weight: bold;
+}
 
+#texto{ 
+      font-family: monospace; 
+      font:1.5em sans-serif; 
+      font-weight: normal;
+    }
+    
+#enter-button{
+  width: 200px;
+  background-color: #4f9b9e;
+   color: white; 
+   margin: 10%; 
+  padding: 0.75rem 1.5rem;
+   font-family:'Courier New', Courier, monospace;
+  font: 1em sans-serif; 
+  font-weight:normal;
+  font-size: large;
+    border-radius: 1rem;
+
+}
+#enter-button:hover{
+  background-color: #6bfaff;
+   color: rgb(0, 0, 0); 
+  font: 1.2em sans-serif; 
+  border-radius: 0.5rem;
+font-weight: bold;
+}
+
+/*
 .btn {
   background-color: var(--accent);
   background-color: cadetblue;
@@ -61,7 +94,7 @@
   color: rgb(0, 0, 0);
   transform: translateY(-2px);
 }
-
+*/
 
 
 

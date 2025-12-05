@@ -1,5 +1,6 @@
 footer {
   background-color: #111827;
+  color: #6f859a;
 }
 
 #home-button:hover,
@@ -12,13 +13,19 @@ footer {
   transform: scale(0.98);
 }
 
-#mobile-login-button {
+#seccion-login{
+  height: 30px; 
+  width: 20%;
+  padding: 0%; margin: 0 auto; position: relative;
+}
+
+#login-button {
   display: block;
   color: #111827;
   background-color: #111827;
 }
 
-#mobile-login-button:hover {
+#login-button:hover {
   background-color: #233763;
   opacity: 10;
   color: white

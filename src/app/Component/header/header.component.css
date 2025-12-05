@@ -15,10 +15,10 @@
        padding-bottom:0.5%;
 
 }
-
+/*
 ul {
     width: fit-content;
-    background-color: rgb(36, 35, 41); 
+  
     padding: 1%;
     border-radius: 2ch;
     border-color: #111827;
@@ -37,11 +37,77 @@ li {
 }
    li a abbr {
     text-decoration: none;
-     color: black;
+    
+     color: #1A1A1A;
     font-weight: 600;
 } 
-    li :hover {
+    li a abbr:hover {
     font-weight:bolder;
     border-radius: 1ch; 
-
+    color:	#005A99;
     }
+
+    ul li:active {
+    color:	#ffffff;
+    background-color: #005A99;
+    }*/
+    
+
+    ul {
+    width: fit-content;
+    padding: 1%;
+    border-radius: 2ch;
+    border-color: #111827;
+    font-family: monospace;
+    font: 1em sans-serif;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+li {
+    background-color: aqua;
+    border-radius: 2ch; 
+    margin-top: 1ch;
+    margin-bottom: 1ch; 
+    margin-left: 2ch; 
+    margin-right: 2ch;
+}
+
+li a abbr {
+    text-decoration: none;
+    color: #1A1A1A;
+    font-weight: 600;
+    display: block; /* Para que el abbr ocupe todo el espacio */
+    padding: 8px 16px; /* Agregar padding para mejor clic */
+} 
+
+/* Estado hover */
+li:hover {
+    background-color: #00cccc; /* Versión más clara de aqua */
+    transform: scale(0.95);
+}
+
+li a abbr:hover {
+    color: #005A99;
+}
+
+/* Estado activo (cuando la ruta está seleccionada) */
+li .nav-link.active {
+    background-color: #005A99 !important;
+}
+
+li .nav-link.active abbr {
+    color: #ffffff !important; 
+    font-weight: bold;
+}
+
+/* O si prefieres que todo el li cambie: */
+li.active {
+    background-color: #005A99;
+}
+
+li.active abbr {
+    color: #ffffff;
+    font-weight: bold;
+}

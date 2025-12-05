@@ -5,30 +5,46 @@
       
       <div class="mx-auto px-4 py-3 flex" >
         
-      <button id="home-button" class="flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
+      <button id="home-button" class="py-4 px-3 flex items-center transform transition-transform duration-200" type="button" routerLink="/inicio">
           <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
             P
           </div>
-          <span class="font-semibold text-lg hidden sm:inline-block">Mi Portafolio</span>
+          <span class="font-semibold text-lg sm:inline-block" style="color:#6f859a;">Mi Portafolio</span>
         </button>
 
       
-     <div class="container-fluid px-4 py-3" id="contenedor" >
-      
-      <ul class="nav nav-tabs">
-  <li class="nav-item">
-        <a class="nav-link" routerLink="/perfil"><abbr title="Mi perfil, curriculo y proyectos">Sobre mi</abbr></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/main"><abbr title="Aplicaciones y lenguajes que uso">Herramientas</abbr></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/contacto"><abbr title="Mis redes y formas de contactarme">Contactos</abbr></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/educacion" ><abbr title="Seccion donde detallo aprendizajes">Estudios</abbr></a>
-  </li>
-</ul>
+    <div class="container-fluid px-4 py-3" id="contenedor">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" 
+         routerLink="/perfil" 
+         routerLinkActive="active" 
+         [routerLinkActiveOptions]="{exact: true}">
+        <abbr title="Mi perfil, curriculo y proyectos">Sobre mi</abbr>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" 
+         routerLink="/main" 
+         routerLinkActive="active">
+        <abbr title="Aplicaciones y lenguajes que uso">Herramientas</abbr>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" 
+         routerLink="/contacto" 
+         routerLinkActive="active">
+        <abbr title="Mis redes y formas de contactarme">Contactos</abbr>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" 
+         routerLink="/educacion" 
+         routerLinkActive="active">
+        <abbr title="Seccion donde detallo aprendizajes">Estudios</abbr>
+      </a>
+    </li>
+  </ul>
 </div>
 
 </div>
