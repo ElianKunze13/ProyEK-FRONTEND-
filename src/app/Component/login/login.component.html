@@ -1,35 +1,73 @@
- <!-- Login Modal 
-  <div id="login-modal">
-    <div class="modal-content">
-      <div class="close-modal">&times;</div>
-      <h3 class="text-2xl font-semibold mb-6 text-center">Iniciar sesión</h3>
-      <div id="login-error" class="text-red-500 mb-4 text-center" style="display:none"></div>
-      <form id="login-form" class="space-y-4">
-        <div>
-          <label for="username" class="block mb-2 font-medium">Usuario</label>
-          <input type="text" id="username" class="form-input" placeholder="Tu nombre de usuario">
+ <!-- /Login -->
+<div id="fondo" class="min-h-screen flex flex-col items-center justify-center  relative">
+
+
+
+     <!-- Botón volver -->
+  <button
+    id="btn-volver"
+    class="absolute top-4 left-4 btn btn-primary"
+    routerLink="/inicio">
+    Volver
+  </button>
+
+
+  <!-- Card Login -->
+  <div class="bg-white rounded-lg shadow-md p-20 text-center ">
+
+
+    <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
+
+    <form [formGroup]="loginForm">
+    <p class="text-danger">{{loginError}}</p>
+    <div class="mb-3">
+      <label for="txtEmail" class="form-label">Email</label>
+      <input formControlName="username" type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="text-danger">
+            <div *ngIf="email.errors?.['required']">
+                El Email es requerido.
+            </div>
+            <div *ngIf="email.errors?.['email']">
+                El Email debe tener un formato válido.
+            </div>
         </div>
-        <div>
-          <label for="password" class="block mb-2 font-medium">Contraseña</label>
-          <input type="password" id="password" class="form-input" placeholder="Tu contraseña">
-        </div>
-        <button type="submit" class="btn w-full">
-          <i class="fas fa-sign-in-alt mr-2"></i>Ingresar
-        </button>
-      </form>
     </div>
-  </div>-->
+    <div class="mb-3">
+      <label for="txtPassword" class="form-label">Password</label>
+      <input formControlName="password" type="password" class="form-control" id="txtPassword">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="text-danger">
+            <div *ngIf="password.errors?.['required']">
+                El Password es requerido.
+            </div>
+            <div *ngIf="password.errors?.['minLength']">
+                El Password debe tener al menos 8 caracteres.
+            </div>
+        </div>
+    </div>
+    <button type="submit" id="enviar" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+</form>
 
 
+    
+  </div>
 
+</div>
+ 
+ 
+ <!-- ------------------------------------------------------
+  
+ -->
+
+
+<!-- Contact Section 
+       CREAR COMPONENTE NUEVO Y TRASLADARLO A ESTE
   <div id="main-content" class="pt-20 md:pt-24 slide-left-enter" >
    
     <main class="container mx-auto px-4 pb-16">
 
-
-      <!-- Contact Section 
-       CREAR COMPONENTE NUEVO Y TRASLADARLO A ESTE-->
-      <section id="contact" class="section pt-16">
+   <section id="contact" class="section pt-16">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold mb-2">Logearse</h2>
           <p class="text-lg text-[color:var(--text-secondary)]">¿Tienes un proyecto en mente? ¡Hablemos!</p>
@@ -61,4 +99,4 @@
     </main>
 
  
-  </div>
+  </div>-->

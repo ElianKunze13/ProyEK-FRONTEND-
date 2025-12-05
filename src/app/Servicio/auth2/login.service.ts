@@ -4,7 +4,7 @@ import  {  Observable, throwError, catchError, BehaviorSubject , tap, map} from 
 import { environment } from '../../../environments/environment';
 import { LoginRequest } from './loginRequest';
 import { isPlatformBrowser } from '@angular/common';
-import { Usuario } from '../../Modelos/usuario';
+import { Usuario } from '../../Modelo/usuario';
 
 @Injectable({
   providedIn: 'root'

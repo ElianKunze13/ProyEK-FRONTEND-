@@ -1,0 +1,81 @@
+#fondo {
+    background-color: black;
+    background-size:contain;
+    background-repeat: repeat;
+    padding-top:30rem;
+    
+    padding-top: 0%;
+    border-style: groove;
+}
+
+#main {
+    background-color: rgb(12, 7, 7);
+    padding: 60px;
+    border-radius: 2ch;
+    border-style: groove;
+    margin-top: 2%;
+    border-radius: 2ch;
+}
+
+
+input {
+    margin: 5px;
+    width: min-content;
+    cursor: pointer;
+}
+
+.card {
+    width: 18rem;
+    height: auto;
+    margin: 1%;
+    padding: 0%;
+    border-radius: 2ch;
+    align-items: center;
+
+}
+
+.btn {
+    font-weight: 500;
+    cursor: pointer;
+    width: max-content;
+
+}
+#btn-volver {
+    background: linear-gradient(135deg, rgb(50, 150, 243), rgb(124, 212, 215));
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+#btn-volver:hover  {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgb(0, 68, 255), rgb(104, 192, 195));
+}
+.btn-primary {
+    background-color: #35ac2f;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+    ;
+}
+
+.btn-secondary {
+    background-color: #aa6e2a;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+#enviar:hover{
+background-color: #47df3f;
+color: black;
+}
