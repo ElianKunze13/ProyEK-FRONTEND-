@@ -1,3 +1,4 @@
+/*
 footer {
   background-color: #111827;
   color: #6f859a;
@@ -16,9 +17,10 @@ footer {
 #seccion-login{
   height: 30px; 
   width: 20%;
-  padding: 0%; margin: 0 auto; position: relative;
+  margin: 0 auto; 
+  position: relative;
 }
-
+ 
 #login-button {
   display: block;
   color: #111827;
@@ -28,5 +30,72 @@ footer {
 #login-button:hover {
   background-color: #233763;
   opacity: 10;
-  color: white
+  color: white;
+  transition-delay: 2s; 
+
+}*/
+
+footer {
+  background-color: #111827;
+  color: #6f859a;
+  position: relative; /* Añadido para contexto de posicionamiento */
+}
+
+#home-button:hover,
+#footer-home-button:hover {
+  transform: scale(1.05);
+}
+
+#home-button:active,
+#footer-home-button:active {
+  transform: scale(0.98);
+}
+
+#seccion-login {
+  /* ELIMINADO: height: 30px;  ← Esto causaba el espacio en blanco */
+  width: 20%;
+  margin: 0 auto; 
+  position: relative;
+  overflow: hidden; /* Oculta el contenido que sobresale */
+  height: 0; /* Altura 0 cuando no está hover */
+  transition: height 0.3s ease; /* Transición suave al mostrar/ocultar */
+}
+
+/* Mostrar el botón solo en hover del footer */
+footer:hover #seccion-login {
+  height: 40px; /* Altura suficiente para el botón */
+  margin-top: 15px; /* Espacio arriba cuando se muestra */
+}
+
+#login-button {
+  display: block;
+  color: #111827;
+  background-color: #111827;
+  transform: translateY(100%); /* Oculto inicialmente */
+  transition: all 0.5s ease;
+  opacity: 0; /* Invisible por defecto */
+  position: absolute; /* Posicionamiento absoluto dentro del contenedor */
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+footer:hover #login-button {
+  transform: translateY(0); /* Mostrado */
+  opacity: 1;
+  transition-delay: 0.5s; /* Delay para efecto dramático */
+}
+
+#login-button:hover {
+  background-color: #233763;
+  color: white;
+  transform: translateY(0) scale(1.05); /* Efecto hover adicional */
+  transition-delay: 0s; /* Sin delay en hover interno */
+}
+
+/* Versión para móviles - ocultar completamente en pantallas pequeñas */
+@media (max-width: 768px) {
+  #seccion-login {
+    display: none; /* Oculta completamente en móviles */
+  }
 }
