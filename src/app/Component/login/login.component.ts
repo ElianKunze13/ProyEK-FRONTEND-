@@ -8,7 +8,7 @@ import { LoginRequest } from '../../Servicio/auth2/loginRequest';
 
 @Component({
   selector: 'app-login',
-  imports: [ ReactiveFormsModule, RouterLink,CommonModule],
+  imports: [ ReactiveFormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -49,7 +49,7 @@ loginError:string="";
         },
         complete: () => {
           console.info("Login completo");
-          this.router.navigateByUrl('/inicio');
+          this.router.navigateByUrl('/main');
           this.loginForm.reset();
         }
       })

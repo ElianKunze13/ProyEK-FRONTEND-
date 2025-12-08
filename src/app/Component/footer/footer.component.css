@@ -52,7 +52,6 @@ footer {
 }
 
 #seccion-login {
-  /* ELIMINADO: height: 30px;  ← Esto causaba el espacio en blanco */
   width: 20%;
   margin: 0 auto; 
   position: relative;
@@ -80,6 +79,7 @@ footer:hover #seccion-login {
   right: 0;
 }
 
+
 footer:hover #login-button {
   transform: translateY(0); /* Mostrado */
   opacity: 1;
@@ -93,6 +93,21 @@ footer:hover #login-button {
   transition-delay: 0s; /* Sin delay en hover interno */
 }
 
+#logeado{
+ width: 20%;
+  margin: 0 auto; 
+  position: relative;
+}
+
+#btn-habilitado {
+  display:flex;
+  color: #c4c4c4;
+  background-color: #111827;
+  bottom: 0;
+  margin-left: 40%;
+  padding: 1.5%;
+  border-color: #c4c4c4;
+}
 /* Versión para móviles - ocultar completamente en pantallas pequeñas */
 @media (max-width: 768px) {
   #seccion-login {

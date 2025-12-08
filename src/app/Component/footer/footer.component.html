@@ -19,14 +19,13 @@
 
         @if (loginOn) {
 <!-- Usuario logueado -->
-          <div class="dropdown">
-            <button class="btn user-dropdown-btn dropdown-toggle d-flex align-items-center"
+          <div id="seccion-logeado" class="dropdown- mt-auto">
+            <button id="btn-habilitado" class="
+            btn user-dropdown-btn dropdown-toggle d-flex align-items-center"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-              <div class="user-avatar">
-                {{ getInicialUsuario() }}
-              </div>
+              
               <span class="d-none d-md-inline user-name">{{ usuario || 'Usuario' }}</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
@@ -37,17 +36,17 @@
               </li>
               <li><hr class="dropdown-divider"></li>
               <li>
-                <a class="dropdown-item dropdown-item-custom" routerLink="/perfilUsuario">
+                <a class="dropdown-item dropdown-item-custom" routerLink="/actualizarPerfil">
                   <i class="fas fa-user me-2"></i>Mi Perfil
                 </a>
               </li>
               <!--iconos sacados de FontAwesome-->
               <li>
-                <a class="dropdown-item dropdown-item-custom" routerLink="/misMascotas">
-                  <i class="fas fa-paw me-2"></i>Mis Reportes
+                <a class="dropdown-item dropdown-item-custom" routerLink="/actualizarPortofolio">
+                  <i class="fas fa-paw me-2"></i>Actualizar portofolio
                 </a>
               </li>
-  
+              
 
               <li><hr class="dropdown-divider"></li>
               <li>

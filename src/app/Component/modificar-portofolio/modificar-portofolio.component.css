@@ -1,0 +1,13 @@
+#main-content{
+     background-color: #1e293b;
+color: white;
+}
+
+#logout-button{
+    color: #ffffff;
+}
+#logout-button:hover{
+    font-size: 1.2rem;
+    color: #ff5d2c;
+    border-color: #ff5d2c;
+}

@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './Servicio/auth2/Auth.guard';
 
 export const routes: Routes = [
 
 // Ruta raíz redirige a inicio
     { path: "", redirectTo: "/inicio", pathMatch: "full" },
 {
-    path:"inicio", 
+    path:"inicio",
     loadComponent: () => import("./Component/inicio/inicio.component")
     .then(m => m.InicioComponent)
 },
@@ -20,7 +21,7 @@ export const routes: Routes = [
     .then(m => m.LoginComponent)
 },
 { 
-    path: "perfil",
+    path: "perfilUsuario",
     loadComponent: () => import("./Component/perfil/perfil.component")
     .then(m => m.PerfilComponent)
 },{ 
@@ -35,11 +36,13 @@ export const routes: Routes = [
 
 { 
     path: "actualizarPortofolio",
+    canActivate: [AuthGuard],
     loadComponent: () => import("./Component/modificar-portofolio/modificar-portofolio.component")
     .then(m => m.ModificarPortofolioComponent)
 },
 { 
     path: "actualizarPerfil",
+    canActivate: [AuthGuard],
     loadComponent: () => import("./Component/modificar-perfil/modificar-perfil.component")
     .then(m => m.ModificarPerfilComponent)
 },

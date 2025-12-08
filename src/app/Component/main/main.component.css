@@ -6,7 +6,7 @@ color: white;
 
 
 
-/* Estilo de borde de tarjetas*/
+/* Estilo animado para borde de tarjetas*/
 
 .animated-border-card {
   position: relative;
@@ -23,9 +23,11 @@ color: white;
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, 
+  background: linear-gradient(50deg, 
     #3b82f600, 
     #3b82f6, 
+    #3b82f600, 
+     #3bf6ce, 
     #3b82f600, 
     #3b82f6, 
     #3b82f600
@@ -33,7 +35,7 @@ color: white;
   background-size: 400% 400%;
   border-radius: 0.875rem;
   z-index: -1;
-  animation: border-glow 4s ease infinite;
+  animation: border-glow 5s ease infinite;
 }
 
 @keyframes border-glow {
