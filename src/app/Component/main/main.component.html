@@ -19,7 +19,7 @@
 
     
 
-      <!-- Skills Section -->
+      <!-- Section de listas (se debe modificar para que esten recuadradas) -->
       <section id="skills" class="section">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold mb-2">Herramientas y Conocimientos</h2>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
-          <!-- Skill 1 -->
+          <!-- Skill para FRONTEND -->
            @for (conocimiento of conocimientosVal; track $index) {
           <div class="flex flex-col items-center">
             <div class="skill-icon">
@@ -39,16 +39,138 @@
             </div>
           </div>
         }
-       
+        <!-- Skill para BACKTEND -->
+          @for (conocimiento of conocimientosVal; track $index) {
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-html5"></i>
+            </div>
+            <span class="font-medium">HTML5</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
+        }
+        <!-- Skill para BASE DE DATOS -->
+          @for (conocimiento of conocimientosVal; track $index) {
+          <div class="flex flex-col items-center">
+            <div class="skill-icon">
+              <i class="fab fa-html5"></i>
+            </div>
+            <span class="font-medium">HTML5</span>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
+        }
+        
         </div>
-      </section>
 
-      
-       
-    
-    </main>
+         <!-- Section de tecnologías (estilo agrupado por categorías) -->
 
- 
+<div class="max-w-6xl mx-auto">
+    <!-- Fila 1: Frontend y Backend-->
+    <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <!-- Tarjeta Frontend -->
+      <div class="animated-border-card">
+        <h3 class="text-xl font-bold mb-4 text-[color:var(--accent)]">Frontend</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">HTML</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Stream2</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Fgms</span>
+        </div>
+      </div>
+
+       <!-- Tarjeta Backend -->
+      <div class="animated-border-card">
+        <h3 class="text-xl font-bold mb-4 text-[color:var(--accent)]">Backend</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">PHP</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Egmma.di</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nmt.js</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Ngms</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila 2: Base de datos y testing -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <!-- Tarjeta Base de datos -->
+      <div class="animated-border-card">
+        <h3 class="text-xl font-bold mb-4 text-[color:var(--accent)]">Base Datos</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">PHP</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Egmma.di</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nmt.js</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Ngms</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta Testing -->
+      <div class="animated-border-card">
+        <h3 class="text-xl font-bold mb-4 text-[color:var(--accent)]">Testing</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">MySQL</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nginx</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Apache</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila 3: Otros -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <!-- Tarjeta Otros -->
+      <div class="animated-border-card">
+        <h3 class="text-xl font-bold mb-4 text-[color:var(--accent)]">Otras</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">NavigSQL</span>
+          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Sparkle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Aprendiendo -->
+    <div class="mt-10">
+      <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Aprendiendo</h3>
+      <div class="bg-[color:var(--card-bg)] border border-[color:var(--border-color)] rounded-lg p-6 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">PyPro</span>
+          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">Adlib</span>
+          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">Docker</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Herramientas -->
+    <div class="mt-10">
+      <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Herramientas</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- ORGANIC -->
+        <div class="bg-[color:var(--card-bg)] border border-[color:var(--border-color)] rounded-lg p-6 shadow-sm">
+          <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">ORGANIC</h4>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">OK</span>
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">OEM</span>
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">Internet</span>
+          </div>
+        </div>
+
+        <!-- Tipo -->
+        <div class="bg-[color:var(--card-bg)] border border-[color:var(--border-color)] rounded-lg p-6 shadow-sm">
+          <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Tipo:</h4>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">Transfabricátor</span>
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">WebCode</span>
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">Home</span>
+            <span class="px-4 py-2 bg-[color:var(--tool-bg)] rounded-full text-sm font-medium">Windows</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
- 
+
+      </section>
+    </main>
+  </div>
+

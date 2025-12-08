@@ -4,3 +4,45 @@
 color: white;
 }
 
+
+
+/* Estilo de borde de tarjetas*/
+
+.animated-border-card {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.animated-border-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #3b82f600, 
+    #3b82f6, 
+    #3b82f600, 
+    #3b82f6, 
+    #3b82f600
+  );
+  background-size: 400% 400%;
+  border-radius: 0.875rem;
+  z-index: -1;
+  animation: border-glow 4s ease infinite;
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.5;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.8;
+  }
+}
