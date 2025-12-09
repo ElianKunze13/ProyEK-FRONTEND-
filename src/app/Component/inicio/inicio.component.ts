@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit,  } from '@angular/core';
 import { Router, RouterLink,} from '@angular/router';
 
@@ -9,7 +10,9 @@ import { Router, RouterLink,} from '@angular/router';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
- ngOnInit() {
+ 
+ 
+  ngOnInit() {
     // Agregar animación de entrada cuando se carga el componente
     setTimeout(() => {
       const mainPage = document.getElementById('main-page');
@@ -18,4 +21,7 @@ export class InicioComponent implements OnInit {
       }
     }, 70); // Pequeño delay para que Angular renderice primero
   }
+
+
+
 }
