@@ -1,27 +1,95 @@
   
- <!-- Main Content -->
+ <!-- Añadir nuevos atributos Content 
   <div id="main-content" class="pt-30 md:pt-5 slide-left-enter" >
    
-
-    <!-- Main Content Sections -->
     <main class="container pb-1">
  
- <!-- Dashboard Section (visible after login) -->
       <section id="dashboard" class="section dashboard-section pt-16">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold mb-2">Panel de Administración</h2>
-          <p class="text-lg text-[color:var(--text-secondary)]">Gestiona tu portafolio</p>
+          <p class="text-lg text-[color:var(--text-secondary)]">Gestionar portafolio</p>
         </div>
 
-        <div class="max-w-4xl mx-auto">
-          <div class="mb-8 flex justify-end">
-            <button id="logout-button" class="btn-outline btn" (click)="logout()">
-              <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
-            </button>
+        <div class="max-w-6xl mx-auto">
+  <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!--formulario añadir EDUCACION (cursos, talleres)  
+          <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-4">Crear nueva educacion </h3>
+            <form id="course-form" class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Título</label>
+                <input type="text" class="form-input" placeholder="Nombre del curso o taller">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Descripción</label>
+                <textarea class="form-input resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Nivel</label>
+                <!--añadir opcion multiple de nivel
+
+              </div>
+              
+              
+              <div>
+                <label class="block mb-2 font-medium">Certificado (imagen)</label>
+                <input type="file" accept=".pdf" class="form-input">
+              </div>
+              <button type="submit" class="btn">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
+              </button>
+            </form>
           </div>
+            <!--formulario añadir HERRAMIENTAS (tecnologias) 
+          <div class="card p-6 mb-8" style="border-color: rgb(255, 149, 255);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-4">Crear nueva herramienta/tecnologia</h3>
+            <form id="skill-form" class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Nombre</label>
+                <input type="text" class="form-input" placeholder="Nombre de la tecnología o habilidad">
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Nivel</label>
+                <!--añadir opcion multiple de nivel
+
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Tipo</label>
+                añadir opcion multiple de tipo
+                
+              </div>
+              <div>
+                <label class="block mb-2 font-medium">Ícono (imagen)</label>
+                <input type="text" class="form-input" placeholder="url de imagen">
+              </div>
+              <button type="submit" class="btn">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir 
+              </button>
+            </form>
+          </div>
+</div>
+
+  <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+         formulario añadir HABILIDADES (capacidades personales) 
+ <div class="card p-6 mb-8" style="border-color: rgb(43, 255, 0);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-4">Crear nueva habilidad adquirida</h3>
+            <form id="skill-form" class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Nombre</label>
+                <input type="text" class="form-input" placeholder="autodidacta">
+              </div>
           
-          <div class="card p-6 mb-8">
-            <h3 class="text-xl font-semibold mb-4">Añadir nuevo curso/taller</h3>
+              <button type="submit" class="btn">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir 
+              </button>
+            </form>
+          </div>
+          formulario añadir EXPERIENCIA (proyectos realizados) 
+ <div class="card p-6 mb-8" style="border-color: rgb(255, 145, 0);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-4">Crear nueva experiencia </h3>
             <form id="course-form" class="space-y-4">
               <div>
                 <label class="block mb-2 font-medium">Título</label>
@@ -36,45 +104,194 @@
                 <textarea class="form-input resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
               </div>
               <div>
-                <label class="block mb-2 font-medium">Imagen</label>
-                <div class="flex items-center">
-                  <input type="file" accept="image/*" class="form-input">
-                </div>
+                <label class="block mb-2 font-medium">Tipo Experiencia</label>
+                añadir opcion multiple de tipoExperiencia
+
               </div>
               <div>
-                <label class="block mb-2 font-medium">Certificado (PDF)</label>
-                <input type="file" accept=".pdf" class="form-input">
+                <label class="block mb-2 font-medium">Tecnologia usada</label>
+                añadir opcion multiple de tecnologiaUsada
+                
               </div>
+
+
               <button type="submit" class="btn">
                 <i class="fas fa-plus-circle mr-2"></i>
-                Añadir curso
+                Añadir
+              </button>
+            </form>
+          </div>
+            </div>
+
+        </div>
+
+
+      </section>
+       
+    </main>
+  </div>-->
+
+<!-- Añadir nuevos atributos Content -->
+<div id="main-content" class="pt-40 md:pt-16 slide-left-enter">
+  <main class="container pb-1">
+    <section id="dashboard" class="section dashboard-section pt-40">
+      
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2">Panel de Administración</h2>
+        <p class="text-lg text-[color:var(--text-secondary)]">Gestionar portafolio</p>
+      </div>
+
+      <div class="max-w-6xl mx-auto">
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!--formulario añadir EDUCACION (cursos, talleres)  -->
+          <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
+            <form id="course-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
+                <input type="text" class="form-control" placeholder="Nombre del curso o taller">
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
+                <textarea class="form-control resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
+                <select class="form-control">
+                  <option value="">Seleccionar nivel</option>
+                  <option value="basico">Básico</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                  <option value="experto">Experto</option>
+                </select>
+              </div>
+             
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Certificado (imagen)</label>
+                <div class="file-input-wrapper">
+                  <label class="file-input-label">
+                    <i class="fas fa-cloud-upload-alt mr-2"></i>
+                    Elegir archivo
+                    <input type="file" accept=".pdf" class="hidden">
+                  </label>
+                  <span class="file-name text-sm text-gray-500 mt-1 block">No se ha seleccionado ningún archivo</span>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
               </button>
             </form>
           </div>
           
-          <div class="card p-6">
-            <h3 class="text-xl font-semibold mb-4">Añadir nueva habilidad</h3>
-            <form id="skill-form" class="space-y-4">
-              <div>
-                <label class="block mb-2 font-medium">Nombre</label>
-                <input type="text" class="form-input" placeholder="Nombre de la tecnología o habilidad">
+          <!--formulario añadir HERRAMIENTAS (tecnologias) -->
+          <div class="card p-6 mb-8" style="border-color: rgb(255, 149, 255);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva herramienta/tecnologia</h3>
+            <form id="skill-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre de la tecnología o habilidad">
               </div>
-              <div>
-                <label class="block mb-2 font-medium">Nivel (1-100)</label>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
+                <select class="form-control">
+                  <option value="">Seleccionar nivel</option>
+                  <option value="basico">Básico</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                  <option value="experto">Experto</option>
+                </select>
               </div>
-              <div>
-                <label class="block mb-2 font-medium">Ícono (Font Awesome)</label>
-                <input type="text" class="form-input" placeholder="fa-code">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo</label>
+                <select class="form-control">
+                  <option value="">Seleccionar tipo</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="backend">Backend</option>
+                  <option value="database">Base de datos</option>
+                  <option value="devops">DevOps</option>
+                  <option value="herramienta">Herramienta</option>
+                  <option value="otro">Otro</option>
+                </select>
               </div>
-              <button type="submit" class="btn">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Ícono de imagen</label>
+                <input type="text" class="form-control" placeholder="url de imagen">
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
                 <i class="fas fa-plus-circle mr-2"></i>
-                Añadir habilidad
+                Añadir
               </button>
             </form>
           </div>
         </div>
-      </section>
-       
-    </main>
-  </div>
 
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!--formulario añadir HABILIDADES (capacidades personales) -->
+          <div class="card p-6 mb-8" style="border-color: rgb(43, 255, 0);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva habilidad adquirida</h3>
+            <form id="skill-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
+                <input type="text" class="form-control" placeholder="Ej: Trabajo en equipo, Liderazgo, Comunicación">
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
+              </button>
+            </form>
+          </div>
+          
+          <!--formulario añadir EXPERIENCIA (proyectos realizados) -->
+          <div class="card p-6 mb-8"  style="border-color: rgb(255, 145, 0);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva experiencia</h3>
+            <form id="course-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
+                <input type="text" class="form-control" placeholder="Nombre del proyecto o experiencia">
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Fecha</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
+                <textarea class="form-control resize-none" rows="3" placeholder="Descripción detallada de la experiencia..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia</label>
+                <select class="form-control">
+                  <option value="">Seleccionar tipo</option>
+                  <option value="profesional">Profesional</option>
+                  <option value="academico">Académico</option>
+                  <option value="proyecto">Proyecto Personal</option>
+                  <option value="voluntariado">Voluntariado</option>
+                  <option value="practica">Práctica</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada</label>
+                <select class="form-control" multiple>
+                  <option value="html">HTML</option>
+                  <option value="css">CSS</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="react">React</option>
+                  <option value="angular">Angular</option>
+                  <option value="node">Node.js</option>
+                  <option value="python">Python</option>
+                  <option value="java">Java</option>
+                  <option value="sql">SQL</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Mantén presionada la tecla Ctrl (Cmd en Mac) para seleccionar múltiples</p>
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

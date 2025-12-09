@@ -1,111 +1,88 @@
+<!-- Contact Section-->
+<div id="main-content" class="pt-50 md:pt-24  slide-left-enter">
 
-  
-   <!-- Contact Section-->
-    <div id="main-content" class="pt-50 md:pt-24  slide-left-enter" >
-   
-    <main class="container mx-auto px-4 pb-16 ">
+  <main class="container mx-auto px-4 pb-16 ">
 
-      <section id="contact" class="section pt-16 " >
-        <div class="text-center">
-          <p class="text-lg ">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+    <section id="contact" class="section pt-16 ">
+      <div class="text-center">
+        <p class="text-lg ">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+      </div>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-25  max-w-4xl mx-auto">
+
+        <!-- Sección para enviar mensaje -->
+        <div>
+          <form id="contact-form" class="contact-form space-y-6">
+            <div class="form-group">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" id="name" class="form-control" placeholder="Tu nombre (Ej: Juan Ramirez)" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Correo</label>
+              <input type="email" id="email" class="form-control" placeholder="correo@mail.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">Mensaje</label>
+              <textarea id="message" rows="4" class="form-control resize-none"
+                placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane mr-2"></i>
+              Enviar mensaje
+            </button>
+          </form>
         </div>
-         
-       
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10  max-w-4xl mx-auto" >
-       
-<!-- Sección para enviar mensaje -->
-  <div >
-    <form id="contact-form" class="contact-form space-y-6" >
-      <div class="form-group">
-        <label for="name" class="form-label">Nombre</label>
-        <input type="text" id="name" class="form-control" placeholder="Tu nombre (Ej: Juan Ramirez)" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="email" class="form-label">Correo</label>
-        <input 
-          type="email" 
-          id="email" 
-          class="form-control" 
-          placeholder="correo@mail.com" 
-          required
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="message" class="form-label">Mensaje</label>
-        <textarea 
-          id="message" 
-          rows="4" 
-          class="form-control resize-none" 
-          placeholder="Cuéntame sobre tu proyecto..." 
-          required
-        ></textarea>
-      </div>
-
-      <button type="submit" class="submit-btn">
-        <i class="fas fa-paper-plane mr-2"></i>
-        Enviar mensaje
-      </button>
-    </form>
-  </div>
 
 
 
 
-          <!--seccion de redes -->
-          <div class="flex flex-col justify-center">
-            <div class="card p-6 mb-6">
-              <h3 class="text-xl font-semibold mb-4">Información de contacto</h3>
-              
-              
-              <ul class="space-y-4">
-                
-                <li class="flex items-center">
-                 <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
-                <i class="fab fa-linkedin-in"><abbr title="Linkedin"></abbr></i>
-              </a>
-                </li>
-                <li class="flex items-center">
-                  <div class="w-10 h-10 rounded-full bg-[color:var(--accent)] bg-opacity-10 flex items-center justify-center mr-3 text-[color:var(--accent)]">
-                    <i class="fas fa-phone"></i>
-                  </div>
-                  <span>+1 (555) 123-4567</span>
-                </li>
-                <li class="flex items-center">
-                  <div class="w-10 h-10 rounded-full bg-[color:var(--accent)] bg-opacity-10 flex items-center justify-center mr-3 text-[color:var(--accent)]">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </div>
-                  <span>Ciudad </span>
-                </li>
-
-              </ul>
+        <!--seccion de redes sociales -->
+        <div class="flex flex-col justify-center">
+          <div class="card p-6 mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-center">Información de contacto</h3>
+            <p class="text-[color:var(--text-secondary)] mb-4 text-center">
+              Escanea el código QR para contactarme por WhatsApp o visita mis redes sociales</p>
 
 
-               <div id="iconos-redes" class="flex justify-center space-x-4">
-              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
+            <div id="contenedor-imagen" class="flex justify-center mb-6">
+              <img src="assets/QR.png" alt="Código QR de contacto"
+                class="max-w-[200px] w-full h-auto rounded-lg shadow-md">
+
+            </div>
+
+
+            <div id="iconos-redes" class="flex justify-center space-x-4">
+              <a href="https://www.linkedin.com/in/eli%C3%A1n-kunze-b809b6298/"
+                class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
                 <abbr title="Linkedin"><i class="fab fa-linkedin-in"></i></abbr>
               </a>
-              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
+              <a href="https://github.com/ElianKunze13"
+                class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
                 <abbr title="GitHub"><i class="fab fa-github"></i></abbr>
               </a>
-              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
+              <a href="javascript:void(0)"
+                class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
                 <abbr title="Twitter"><i class="fab fa-twitter"></i></abbr>
               </a>
-              <a href="javascript:void(0)" class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
+              <a href="javascript:void(0)"
+                class="w-12 h-12 rounded-full bg-[color:var(--accent)] text-black flex items-center justify-center hover:opacity-80 transition-opacity">
                 <abbr title="Instagram"><i class="fab fa-instagram"></i></abbr>
               </a>
             </div>
 
-            </div>
-
-          
           </div>
-        </div>
-      </section>
-      
-    
-    </main>
 
- 
-  </div>
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+
+</div>
