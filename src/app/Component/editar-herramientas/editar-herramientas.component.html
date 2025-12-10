@@ -1,0 +1,58 @@
+<!-- Seccion principal ModificarPortofolio -->
+<div id="main-content" class="pt-40 md:pt-16 slide-left-enter">
+  <main class="container pb-1">
+    <section id="dashboard" class="section dashboard-section pt-40">
+      
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2">Panel de Administración</h2>
+      </div>
+
+      <div class="max-w-6xl mx-auto">
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!--formulario añadir HERRAMIENTAS (tecnologias) -->
+          <div class="card p-6 mb-8" style="border-color: rgb(255, 149, 255);border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva herramienta/tecnologia</h3>
+            <form id="skill-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre de la tecnología o habilidad">
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
+                <select class="form-control">
+                  <option value="">Seleccionar nivel</option>
+                  <option value="basico">Básico</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                  <option value="experto">Experto</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo</label>
+                <select class="form-control">
+                  <option value="">Seleccionar tipo</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="backend">Backend</option>
+                  <option value="database">Base de datos</option>
+                  <option value="devops">DevOps</option>
+                  <option value="herramienta">Herramienta</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Ícono de imagen</label>
+                <input type="text" class="form-control" placeholder="url de imagen">
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
+              </button>
+            </form>
+          </div>
+        </div>
+
+        
+      </div>
+    </section>
+  </main>
+</div>

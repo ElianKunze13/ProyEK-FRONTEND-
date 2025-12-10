@@ -1,0 +1,61 @@
+
+<div id="main-content" class="pt-40 md:pt-16 slide-left-enter">
+  <main class="container pb-1">
+    <section id="dashboard" class="section dashboard-section pt-40">
+      
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2">Gestionar EDUCACION</h2>
+        <p class="text-lg text-[color:var(--text-secondary)]">/p>
+      </div>
+
+      <div class="max-w-6xl mx-auto">
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"> 
+          
+          <!--formulario añadir EDUCACION (cursos, talleres)  -->
+          <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
+            <form id="course-form" class="space-y-6">
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
+                <input type="text" class="form-control" placeholder="Nombre del curso o taller">
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
+                <textarea class="form-control resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
+                <select class="form-control">
+                  <option value="">Seleccionar nivel</option>
+                  <option value="basico">Básico</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                  <option value="experto">Experto</option>
+                </select>
+              </div>
+             
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Certificado (imagen)</label>
+                <div class="file-input-wrapper">
+                  <label class="file-input-label">
+                    <i class="fas fa-cloud-upload-alt mr-2"></i>
+                    Elegir archivo
+                    <input type="file" accept=".pdf" class="hidden">
+                  </label>
+                  <span class="file-name text-sm text-gray-500 mt-1 block">No se ha seleccionado ningún archivo</span>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary w-full py-3">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Añadir
+              </button>
+            </form>
+          </div>
+          
+       
+
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
