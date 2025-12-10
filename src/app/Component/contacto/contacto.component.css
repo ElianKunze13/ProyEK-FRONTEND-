@@ -6,9 +6,9 @@ color: white;
      font-size: 1.7em ;
      text-decoration: none;
 }
-#iconos-redes a:hover {
-     font-size: 1.9em ;
-     text-decoration:underline;
+#iconos-redes a abbr i:hover {
+     font-size: 1.2em ;
+     color: #146eff;
 }
 
 /* Estilos para el formulario de contacto */

@@ -2,9 +2,6 @@
     background-color: black;
     background-size:contain;
     background-repeat: repeat;
-    padding-top:30rem;
-    
-    padding-top: 0%;
     border-style: groove;
 }
 
@@ -12,7 +9,6 @@
     padding: 60px;
     border-radius: 2ch;
     border-style: groove;
-    margin-top: 2%;
     border-radius: 2ch;
 }
 
