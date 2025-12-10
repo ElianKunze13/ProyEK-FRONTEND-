@@ -142,152 +142,33 @@
 
       <div class="max-w-6xl mx-auto">
         <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <!--formulario añadir EDUCACION (cursos, talleres)  -->
+          <!--link a EDUCACION -->
           <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
-            <form id="course-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
-                <input type="text" class="form-control" placeholder="Nombre del curso o taller">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
-                <textarea class="form-control resize-none" rows="3" placeholder="Breve descripción del curso..."></textarea>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
-                <select class="form-control">
-                  <option value="">Seleccionar nivel</option>
-                  <option value="basico">Básico</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
-                  <option value="experto">Experto</option>
-                </select>
-              </div>
-             
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Certificado (imagen)</label>
-                <div class="file-input-wrapper">
-                  <label class="file-input-label">
-                    <i class="fas fa-cloud-upload-alt mr-2"></i>
-                    Elegir archivo
-                    <input type="file" accept=".pdf" class="hidden">
-                  </label>
-                  <span class="file-name text-sm text-gray-500 mt-1 block">No se ha seleccionado ningún archivo</span>
-                </div>
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
+            <h3 class="text-xl text-center font-semibold mb-6"
+            routerLink="/panelEducacion">Crear/modificar EDUCACION</h3>
+            
           </div>
           
-          <!--formulario añadir HERRAMIENTAS (tecnologias) -->
+          <!--link a HERRAMIENTAS -->
           <div class="card p-6 mb-8" style="border-color: rgb(255, 149, 255);border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva herramienta/tecnologia</h3>
-            <form id="skill-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre de la tecnología o habilidad">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
-                <select class="form-control">
-                  <option value="">Seleccionar nivel</option>
-                  <option value="basico">Básico</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
-                  <option value="experto">Experto</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo</label>
-                <select class="form-control">
-                  <option value="">Seleccionar tipo</option>
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
-                  <option value="database">Base de datos</option>
-                  <option value="devops">DevOps</option>
-                  <option value="herramienta">Herramienta</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Ícono de imagen</label>
-                <input type="text" class="form-control" placeholder="url de imagen">
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
+            <h3 class="text-xl text-center font-semibold mb-6"
+            routerLink="/panelHerramienta">Crear/modificar HERRAMIENTA</h3>
+            
           </div>
         </div>
 
         <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <!--formulario añadir HABILIDADES (capacidades personales) -->
+          <!-- HABILIDADES  -->
           <div class="card p-6 mb-8" style="border-color: rgb(43, 255, 0);border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva habilidad adquirida</h3>
-            <form id="skill-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" class="form-control" placeholder="Ej: Trabajo en equipo, Liderazgo, Comunicación">
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
+            <h3 class="text-xl text-center font-semibold mb-6"
+             routerLink="/panelHabilidad">Crear/modificar HABILIDAD</h3>
+           
           </div>
           
-          <!--formulario añadir EXPERIENCIA (proyectos realizados) -->
+          <!--link a EXPERIENCIAS-->
           <div class="card p-6 mb-8"  style="border-color: rgb(255, 145, 0);border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva experiencia</h3>
-            <form id="course-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
-                <input type="text" class="form-control" placeholder="Nombre del proyecto o experiencia">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Fecha</label>
-                <input type="date" class="form-control">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
-                <textarea class="form-control resize-none" rows="3" placeholder="Descripción detallada de la experiencia..."></textarea>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia</label>
-                <select class="form-control">
-                  <option value="">Seleccionar tipo</option>
-                  <option value="profesional">Profesional</option>
-                  <option value="academico">Académico</option>
-                  <option value="proyecto">Proyecto Personal</option>
-                  <option value="voluntariado">Voluntariado</option>
-                  <option value="practica">Práctica</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada</label>
-                <select class="form-control" multiple>
-                  <option value="html">HTML</option>
-                  <option value="css">CSS</option>
-                  <option value="javascript">JavaScript</option>
-                  <option value="react">React</option>
-                  <option value="angular">Angular</option>
-                  <option value="node">Node.js</option>
-                  <option value="python">Python</option>
-                  <option value="java">Java</option>
-                  <option value="sql">SQL</option>
-                </select>
-                <p class="text-xs text-gray-500 mt-1">Mantén presionada la tecla Ctrl (Cmd en Mac) para seleccionar múltiples</p>
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
+            <h3 class="text-xl text-center font-semibold mb-6" 
+            routerLink="/panelExperiencia">Crear/modificar EXPERIENCIA</h3>
           </div>
         </div>
       </div>

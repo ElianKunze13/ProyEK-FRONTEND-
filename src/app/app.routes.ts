@@ -46,6 +46,30 @@ export const routes: Routes = [
     loadComponent: () => import("./Component/modificar-perfil/modificar-perfil.component")
     .then(m => m.ModificarPerfilComponent)
 },
+{ 
+    path: "panelEducacion",
+    canActivate: [AuthGuard],
+    loadComponent: () => import("./Component/editar-educacion/editar-educacion.component")
+    .then(m => m.EditarEducacionComponent)
+},
+{ 
+    path: "panelExperiencia",
+    canActivate: [AuthGuard],
+    loadComponent: () => import("./Component/editar-experiencias/editar-experiencias.component")
+    .then(m => m.EditarExperienciasComponent)
+},
+{ 
+    path: "panelHabilidad",
+    canActivate: [AuthGuard],
+    loadComponent: () => import("./Component/editar-habilidades/editar-habilidades.component")
+    .then(m => m.EditarHabilidadesComponent)
+},
+{ 
+    path: "panelHerramienta",
+    canActivate: [AuthGuard],
+    loadComponent: () => import("./Component/editar-herramientas/editar-herramientas.component")
+    .then(m => m.EditarHerramientasComponent)
+},
 {
       path:'**',
       loadComponent:() => import('./Component/inicio/inicio.component').then(m => m.InicioComponent)
