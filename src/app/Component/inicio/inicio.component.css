@@ -5,7 +5,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #111827;
+  /* Nuevo fondo con imagen */
+  background: 
+    linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)), /* Overlay oscuro para mejorar legibilidad */
+    url('/assets/fondo.png') no-repeat center center fixed; /* Imagen de fondo */
+  background-size: cover; /* Cubre todo el área */
+  background-attachment: fixed; /* Efecto parallax opcional */
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -14,88 +19,54 @@
   z-index: 100;
 }
 
+/* Resto del CSS se mantiene igual */
 .animate-pulse {
   animation: pulse 2s infinite;
 }
 
-/* frames de animacion */
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 @keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }
 
-#titulo{
-        font-family: monospace;
-        font:1.5em sans-serif; 
-        font-weight: bold;
+#titulo {
+  font-family: monospace;
+  font: 1.5em sans-serif; 
+  font-weight: bold;
 }
 
-#texto{ 
-      font-family: monospace; 
-      font:1.5em sans-serif; 
-      font-weight: normal;
-    }
-    
-#enter-button{
+#texto { 
+  font-family: monospace; 
+  font: 1.5em sans-serif; 
+  font-weight: normal;
+}
+
+#enter-button {
   width: 200px;
   background-color: #4f9b9e;
-   color: white; 
-   margin: 10%; 
+  color: white; 
+  margin: 10%; 
   padding: 0.75rem 1.5rem;
-   font-family:'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font: 1.5em sans-serif; 
-  font-weight:normal;
+  font-weight: normal;
   font-size: large;
-    border-radius: 1rem;
-
+  border-radius: 1rem;
 }
-#enter-button:hover{
+
+#enter-button:hover {
   background-color: #6bfaff;
-   color: rgb(0, 0, 0); 
+  color: rgb(0, 0, 0); 
   font: 1.2em sans-serif; 
   border-radius: 0.5rem;
-font-weight: bold;
+  font-weight: bold;
 }
-
-/*
-.btn {
-  background-color: var(--accent);
-  background-color: cadetblue;
-  border: 1px solid #00f7ff;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-}
-
-.btn:hover {
-  background-color: var(--accent-hover);
-  color: rgb(0, 0, 0);
-  transform: translateY(-2px);
-}
-*/
-
-
-
-
