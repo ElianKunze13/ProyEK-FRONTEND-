@@ -8,6 +8,7 @@ import { catchError, Observable, of, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ConocimientoService {
+  
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }

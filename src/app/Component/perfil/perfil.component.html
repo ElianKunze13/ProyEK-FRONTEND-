@@ -16,41 +16,70 @@
 
         <p class="text-lg max-w-2xl mx-auto">
           Soy una persona...
-
-          <!--DEFINIR LISTA DE HABILIDADES EN TS-->
-          
-          <!-- etiquetas para mostras lista de habilidades blandas
-                @for (car of reportes.mascota.caracteristicas; track $index) {
-                <span class="badge bg-info me-1">{{car.cualidad}}</span>
-                }-->
-
           <!-- Enlace para previsualizar en una nueva pestaña-->
           <a href="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf" target="_blank" rel="noopener noreferrer">
             Previsualizar Curriculo
           </a>
         </p>
 
-  
+
+
+        <!-- perfil.component.html -->
+        <div class="seccion-habilidades">
+
+
+
+          <div class="carrusel-container" (mouseenter)="pausarCarrusel()" (mouseleave)="reanudarCarrusel()">
+
+            <div class="carrusel-wrapper">
+              <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
+                [style.transition]="'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'">
+
+                @for (habilidad of habilidades; track habilidad.id; let i = $index) {
+                <div class="habilidad-item">
+
+                  <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
+
+                  <!-- Indicador de animación -->
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                </div>
+                }
+
+                <!-- Duplicar elementos para efecto infinito continuo -->
+                @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
+                <div class="habilidad-item">
+                  <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                </div>
+                }
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
 
         <div class="w-full flex justify-center my-8">
           <iframe src="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf"
             class="w-full max-w-4xl h-[600px] md:h-[800px] border rounded-lg shadow-lg" frameborder="0">
             Tu navegador no soporta la visualización de PDFs.
           </iframe>
-          
+
         </div>
         <button (click)="descargarPdf()"><i class="fas fa-download mr-2"></i>Descargar Curriculo </button>
 
-                </div>
+      </div>
 
     </section>
-
-
-
-
-
-
   </main>
-
 
 </div>

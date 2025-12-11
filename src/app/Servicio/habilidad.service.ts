@@ -8,6 +8,7 @@ import { Habilidad } from '../Modelo/habilidad';
   providedIn: 'root'
 })
 export class HabilidadService {
+  
 private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }

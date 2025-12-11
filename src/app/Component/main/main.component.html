@@ -3,9 +3,7 @@
  <!-- Main Content -->
   <div id="main-content" class="pt-25 md:pt-25 slide-left-enter" >
    
-
-    <!-- Main Content Sections -->
-    <main class="container mx-auto px-4 pb-16">
+  <main class="container mx-auto px-4 pb-16">
       
  <section id="home" class="section visible flex flex-col justify-center">
         <div class="text-center mb-12">
@@ -15,50 +13,9 @@
       </section>
     
 
-      <!-- Section de listas (se debe modificar para que esten recuadradas) -->
+      <!-- Section de listas (estilo agrupado por categorías) -->
       <section id="skills" class="section">
-       
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
-          <!-- Skill para FRONTEND -->
-           @for (conocimiento of conocimientosVal; track $index) {
-          <div class="flex flex-col items-center">
-            <div class="skill-icon">
-              <i class="fab fa-html5"></i>
-            </div>
-            <span class="font-medium">HTML5</span>
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
-            </div>
-          </div>
-        }
-        <!-- Skill para BACKTEND -->
-          @for (conocimiento of conocimientosVal; track $index) {
-          <div class="flex flex-col items-center">
-            <div class="skill-icon">
-              <i class="fab fa-html5"></i>
-            </div>
-            <span class="font-medium">HTML5</span>
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
-            </div>
-          </div>
-        }
-        <!-- Skill para BASE DE DATOS -->
-          @for (conocimiento of conocimientosVal; track $index) {
-          <div class="flex flex-col items-center">
-            <div class="skill-icon">
-              <i class="fab fa-html5"></i>
-            </div>
-            <span class="font-medium">HTML5</span>
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-              <div class="bg-[color:var(--accent)] h-2.5 rounded-full" style="width: 95%"></div>
-            </div>
-          </div>
-        }
-        
-        </div>
-
-         <!-- Section de tecnologías (estilo agrupado por categorías) -->
+  
 
 <div class="max-w-6xl mx-auto">
     <!-- Fila 1: Frontend y Backend-->
@@ -66,21 +23,23 @@
       <!-- Tarjeta Frontend -->
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Frontend</h3>
+       
+        <!--seccion para traer lista de herramientas tipoFrontend usando @for-->
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">HTML</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Stream2</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Fgms</span>
+                      @for (conocimiento of conFront;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
+
       </div>
 
        <!-- Tarjeta Backend -->
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Backend</h3>
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">PHP</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Egmma.di</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nmt.js</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Ngms</span>
+            @for (conocimiento of conBack;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
       </div>
     </div>
@@ -91,10 +50,9 @@
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Base Datos</h3>
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">PHP</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Egmma.di</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nmt.js</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Ngms</span>
+             @for (conocimiento of conBD;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
       </div>
 
@@ -102,9 +60,9 @@
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Testing</h3>
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">MySQL</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Nginx</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Apache</span>
+             @for (conocimiento of conFront;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
       </div>
     </div>
@@ -115,8 +73,9 @@
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Otras</h3>
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">NavigSQL</span>
-          <span class="px-4 py-2 bg-[color:var(--skill-bg)] rounded-full text-sm font-medium">Sparkle</span>
+            @for (conocimiento of conOtros;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
       </div>
     </div>
@@ -126,9 +85,9 @@
       <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Aprendiendo</h3>
       <div class="bg-[color:var(--card-bg)] border border-[color:var(--border-color)] rounded-lg p-6 shadow-sm">
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">PyPro</span>
-          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">Adlib</span>
-          <span class="px-4 py-2 bg-[color:var(--learning-bg)] rounded-full text-sm font-medium">Docker</span>
+            @for (conocimiento of conFront;track conocimiento.id) {
+          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
+          }
         </div>
       </div>
     </div>
