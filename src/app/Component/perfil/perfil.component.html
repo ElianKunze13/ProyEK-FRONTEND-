@@ -1,52 +1,78 @@
 <!-- Main Content -->
 <div id="main-content" class="pt-25 md:pt-25 slide-left-enter">
 
-  <!-- Main Content Sections -->
   <main class="container mx-auto px-4 pb-16">
 
     <section id="home" class="section visible flex flex-col justify-center">
       <div class="text-center mb-1">
-        <h2 class="text-3xl md:text-5xl font-bold mb-12">¡Hola! Soy Elian Kunze</h2>
-        <p class="text-lg max-w-2xl mx-auto">
-          Desarrollador web fullstack apasionado por aprender
-          sobre las herramientas digitales y su implementacion en todo tipo de proyectos.
-        </p>
+        
+        <!-- Sección de Presentación con Foto y Texto -->
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+          
+          <!-- Foto de Perfil -->
+          <div class="flex-shrink-0">
+            @if (usuario.fotoUsuario && usuario.fotoUsuario.length > 0 && usuario.fotoUsuario[0]?.url) {
+    <img [src]="usuario.fotoUsuario[0].url"
+         [alt]="usuario.fotoUsuario[0].alt || usuario.nombre"
+                   class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-[color:var(--accent)] shadow-lg">
+            } @else {
+              <div class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gray-700 flex items-center justify-center border-4 border-[color:var(--accent)]">
+                <span class="text-5xl font-bold text-white">{{getIniciales(usuario.nombre)}}</span>
+              </div>
+            }
+          </div>
+          
+          <!-- Texto de Presentación -->
+          <div class="flex-1 max-w-2xl">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy {{usuario.nombre || '...vacio...'}}</h2>
+            
+            <p id="parrafo-estatico" class="text-lg mb-6">
+              Desarrollador web fullstack apasionado por aprender
+              sobre las herramientas digitales y su implementación en todo tipo de proyectos.
+            </p>
+            
+            
+          </div>
+          
+        </div>
 
-        <h2 class="text-3xl md:text-5xl font-bold mb-4">Un poco sobre mi...</h2>
+        <!-- Sección "Sobre mí" con descripción dinámica -->
+        <div class="max-w-4xl mx-auto mb-12">
+          <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
+            Un poco sobre mí...
+          </h3>
+          
+          <!-- Descripción dinámica desde la base de datos -->
+          @if (usuario.descripcion) {
+            <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+              <p class="text-lg leading-relaxed text-gray-300 text-left">
+                {{usuario.descripcion}}
+              </p>
+            </div>
+          } @else {
+            <!-- Texto por defecto si no hay descripción -->
+            <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+              <p class="text-lg leading-relaxed text-gray-300 text-left">
+                .........Aquí puedes escribir una descripción personal sobre tu experiencia, 
+                intereses y objetivos profesionales. Esta información se puede editar 
+                desde el panel de administración.......
+              </p>
+            </div>
+          }
+        </div>
 
-        <p class="text-lg max-w-2xl mx-auto">
-          Soy una persona...
-          <!-- Enlace para previsualizar en una nueva pestaña-->
-          <a href="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf" target="_blank" rel="noopener noreferrer">
-            Previsualizar Curriculo
-          </a>
-        </p>
-
-
-
-        <!-- perfil.component.html -->
-        <div class="seccion-habilidades">
-
-
-
+        <!-- Sección de Habilidades-->
+          <div class="seccion-habilidades">
           <div class="carrusel-container" (mouseenter)="pausarCarrusel()" (mouseleave)="reanudarCarrusel()">
-
             <div class="carrusel-wrapper">
               <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
                 [style.transition]="'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'">
 
                 @for (habilidad of habilidades; track habilidad.id; let i = $index) {
                 <div class="habilidad-item">
-
                   <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
-
-                  <!-- Indicador de animación -->
-                  <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                  </div>
                 </div>
                 }
-
                 <!-- Duplicar elementos para efecto infinito continuo -->
                 @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
                 <div class="habilidad-item">
@@ -56,7 +82,6 @@
                   </div>
                 </div>
                 }
-
               </div>
             </div>
           </div>
@@ -64,22 +89,39 @@
 
         </div>
 
-
-
-
-
-        <div class="w-full flex justify-center my-8">
-          <iframe src="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf"
-            class="w-full max-w-4xl h-[600px] md:h-[800px] border rounded-lg shadow-lg" frameborder="0">
-            Tu navegador no soporta la visualización de PDFs.
-          </iframe>
-
+        <!-- Sección del Currículum -->
+        <div class="max-w-4xl mx-auto">
+          <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
+            Mi Currículum
+          </h3>
+          
+          <!-- Vista previa del PDF -->
+          <div class="mb-6">
+            <iframe src="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf"
+              class="w-full max-w-4xl h-[500px] md:h-[700px] border rounded-lg shadow-lg" frameborder="0">
+              Tu navegador no soporta la visualización de PDFs.
+            </iframe>
+          </div>
+          
+          <!-- Botones de acción -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="px-6 py-3 bg-[color:var(--primary)] hover:bg-[color:var(--primary-dark)] rounded-lg transition-colors flex items-center justify-center gap-2">
+              <i class="fas fa-external-link-alt"></i>
+              Previsualizar Currículo
+            </a>
+            
+            <button (click)="descargarPdf()"
+                    class="px-6 py-3 bg-[color:var(--accent)] hover:bg-[color:var(--accent-dark)] rounded-lg transition-colors flex items-center justify-center gap-2">
+              <i class="fas fa-download"></i>
+              Descargar Currículo
+            </button>
+          </div>
         </div>
-        <button (click)="descargarPdf()"><i class="fas fa-download mr-2"></i>Descargar Curriculo </button>
 
       </div>
-
     </section>
   </main>
-
 </div>

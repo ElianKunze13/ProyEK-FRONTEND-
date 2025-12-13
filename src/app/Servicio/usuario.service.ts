@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Usuario } from '../Modelo/usuario';
 
 @Injectable({
@@ -15,10 +15,12 @@ export class UsuarioService {
  getById (id: number): Observable<Usuario> {   
     return this.http.get<Usuario>(this.apiUrl + '/auth/traerPor/' + id) // <Usuario> lo que va a devolver la llamada-consulta
       .pipe(
-        catchError(error => {
-          console.error('Error fetching usuario por id', error);
-          return of();  // Devuelve un vacío
-        })
+        
+      map(usuario => ({
+      ...usuario,
+      fotoUsuario: usuario.fotoUsuario || [] // Convierte null a array vacío
+    })
+      )
       );
   }
 

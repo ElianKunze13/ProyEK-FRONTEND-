@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Habilidad } from '../../Modelo/habilidad';
 import { HabilidadService } from '../../Servicio/habilidad.service';
+import { Usuario } from '../../Modelo/usuario';
+import { UsuarioService } from '../../Servicio/usuario.service';
+import { Role } from '../../Modelo/Enums/role';
+import { NgClass } from "../../../../node_modules/@angular/common/common_module.d-NEF7UaHr";
 
 @Component({
   selector: 'app-perfil',
@@ -10,6 +14,19 @@ import { HabilidadService } from '../../Servicio/habilidad.service';
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit, OnDestroy {
+    expandedIndex: number | null = null;
+
+ usuario: Usuario = {
+  id:0,
+nombre: "",
+username:"",
+password:"",
+rol:Role.ADMIN,
+descripcion:"",
+fotoUsuario : [],
+active:true 
+};
+  loading = true;
 
   habilidades: Habilidad[] = [];
   desplazamiento = 0;
@@ -17,7 +34,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
   itemsVisibles = 3;
 
   
- constructor(private http: HttpClient, private habilidadService: HabilidadService) {}
+ constructor(private http: HttpClient,
+   private habilidadService: HabilidadService,
+  private usuarioService:UsuarioService) {}
 ///metodo para descargar pdf curriculo
 descargarPdf() {
   this.http.get('assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf', { responseType: 'blob' })
@@ -42,6 +61,7 @@ descargarPdf() {
       }
     }, 50); 
 
+ this.loadUsuario();
     this.cargarHabilidades();
   }
 
@@ -119,5 +139,61 @@ descargarPdf() {
       clearInterval(this.intervalo);
     }
   }
+
+  loadUsuario(): void {
+  this.loading = true;
+  this.usuarioService.getById(1).subscribe({
+    next: (data) => {
+      console.log('Usuario recibido:', data);
+      console.log('FotoUsuario:', data.fotoUsuario);
+      console.log('Tipo de fotoUsuario:', typeof data.fotoUsuario);
+      console.log('Es array?', Array.isArray(data.fotoUsuario));
+      
+      // DEPURACIÓN DETALLADA
+      if (data.fotoUsuario) {
+        console.log('Longitud del array:', data.fotoUsuario.length);
+        if (data.fotoUsuario.length > 0) {
+          console.log('Primer elemento:', data.fotoUsuario[0]);
+          console.log('URL del primer elemento:', data.fotoUsuario[0]?.url);
+          console.log('Alt del primer elemento:', data.fotoUsuario[0]?.alt);
+        }
+      } else {
+        console.log('fotoUsuario es null o undefined');
+      }
+      
+      // Normalizar fotoUsuario
+      if (!data.fotoUsuario || !Array.isArray(data.fotoUsuario)) {
+        console.log('Normalizando fotoUsuario a array vacío');
+        data.fotoUsuario = [];
+      }
+      
+      // Filtrar elementos vacíos o sin URL
+      data.fotoUsuario = data.fotoUsuario.filter(foto => 
+        foto && foto.url && foto.url.trim() !== ''
+      );
+      
+      this.usuario = data;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Error al cargar usuario:', err);
+      console.error('Detalles del error:', err.error);
+      this.loading = false;
+    }
+  });
+}
+
+  // Método para obtener iniciales para avatar por defecto
+  getIniciales(nombreCompleto: string | undefined): string {
+    if (!nombreCompleto) return 'EK';
+    
+    const nombres = nombreCompleto.split(' ');
+    if (nombres.length >= 2) {
+      return (nombres[0].charAt(0) + nombres[1].charAt(0)).toUpperCase();
+    }
+    return nombreCompleto.substring(0, 2).toUpperCase();
+  }
+
+
 }
 
