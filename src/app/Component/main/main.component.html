@@ -24,14 +24,23 @@
       <div class="animated-border-card">
         <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Frontend</h3>
        
-        <!--seccion para traer lista de herramientas tipoFrontend usando @for-->
-        <div class="flex flex-wrap gap-3">
-                      @for (conocimiento of conFront;track conocimiento.id) {
-          <span class="px-4 py-2 rounded-full text-sm font-medium">{{conocimiento.nombre}}</span>
-          }
+        <!-- Sección para traer lista de herramientas tipo Frontend usando @for -->
+    <div class="flex flex-wrap gap-4 justify-center">
+      @for (conocimiento of conFront; track conocimiento.id) {
+        <div class="flex flex-col items-center w-20">
+          <!-- Imagen de la herramienta -->
+            <div class="mb-2 p-2 bg-white/10 rounded-lg">
+              <img 
+                [src]="conocimiento.imagenes[0].url" 
+                [alt]="conocimiento.nombre"
+                class="w-12 h-12 object-contain">
+            </div>
+          <!-- Nombre de la herramienta -->
+          <span class="text-sm font-medium text-center">{{ conocimiento.nombre }}</span>
         </div>
-
-      </div>
+      }
+    </div>
+  </div>
 
        <!-- Tarjeta Backend -->
       <div class="animated-border-card">
