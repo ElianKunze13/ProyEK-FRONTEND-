@@ -27,23 +27,21 @@
           <p class="text-lg text-[color:var(--text-secondary)]">Formación académica y certificaciones</p>
         </div>
 
+              @for ( educacion of educaciones; track educacion.id) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Course 1 -->
           <div class="card">
-            <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
+            <img  [src]="educacion.imagenes[0]?.url" 
+                      [alt]="educacion.imagenes[0]?.alt"
+            class="w-full h-48 object-cover">
             <div class="p-5">
-              <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-              <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-              <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para aplicaciones web de alto rendimiento.</p>
-              <a href="javascript:void(0)" class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                Ver certificado
-                <i class="fas fa-external-link-alt ml-1"></i>
-              </a>
+              <span class="text-sm text-[color:var(--accent)]">TIPO: {{educacion.tipoEducacion}}</span>
+              <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
             </div>
           </div>
-          
-      
-        </div>
+        </div>}
+
       </section>
       
 
