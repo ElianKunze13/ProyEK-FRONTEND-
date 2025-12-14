@@ -40,12 +40,12 @@ active:true
   private usuarioService:UsuarioService) {}
 ///metodo para descargar pdf curriculo
 descargarPdf() {
-  this.http.get('assets/BUENAS-PRACTICAS-EN-LA-PODA.pdf', { responseType: 'blob' })
+  this.http.get('assets/Curriculum Vitae Profesional sin Foto (EK).pdf', { responseType: 'blob' })
     .subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'BUENAS-PRACTICAS-EN-LA-PODA.pdf';
+      a.download = 'Curriculum EK.pdf';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

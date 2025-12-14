@@ -7,6 +7,7 @@ export interface Usuario {
     username: string;
     password: string;
     rol: Role;
+    
     introduccion: string;
     descripcion: string;
     fotoUsuario: Imagen[];
