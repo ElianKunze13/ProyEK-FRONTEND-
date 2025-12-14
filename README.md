@@ -1,6 +1,11 @@
 # FrontEnd Para Portofolio 
 
-Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git y uso de Tags para definicion/mencion de cambios importantes realizados.
+Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git para definicion explicita de cambios realizados.
+
+---
+## 🔗 Repositorios Relacionados
+
+- **Backend:** [ProyEK-BACKEND](https://github.com/ElianKunze13/ProyEK-BACKEND-.git)
 
 ---
 
@@ -26,7 +31,70 @@ Herramientas de inteligencia artificial implementadas:
 - GitHub Copilot (manejo de errores)
 - MagicLoops (para prototipado visual de la web)
 
+
 ---
+
+## 📂 Estructura del Repositorio
+```
+ProyEK-FRONTEND-/
+|
+├── 📁 public/                    # Recursos estáticos (imágenes, iconos, etc.)
+├── 📁 src/                       
+│   ├── 📁 app/                   
+│   │   ├── 📁 Components/        # Componentes reutilizables donde se define formato y estilos
+│   │   ├── 📁 Guards/            # Guards para protección de rutas
+│   │   ├── 📁 Modelos/           # Modelos de datos (interfaces/enums)
+│   │   ├── 📁 Servicios/         # Servicios para lógica de negocio y API
+│   │   ├── (otros archivos) 
+│   │   
+│   │
+│   └── 📁 environments/          # Configuraciones por entorno (development/production)
+│
+├── 📄 package.json               # Dependencias del proyecto 
+├── 📄 angular.json              
+├── 📄 tsconfig.json             
+└── 📄 README.md                  # Archivo actual (presentación/documentación)
+```
+
+---
+
+## ⚙️ Instalación y Configuración
+
+### Prerrequisitos
+
+- Node.js (v18 o superior)
+- npm (v9 o superior)
+- Angular CLI (`npm install -g @angular/cli`)
+
+### Instalación
+
+1. **Clonar el repositorio:**
+```bash
+   git clone https://github.com/tu-usuario/ProyEK-FRONTEND-.git
+   cd ProyEK-FRONTEND-
+```
+
+2. **Instalar dependencias:**
+```bash
+   npm install
+```
+
+3. **Configurar variables de entorno:**
+   - Edita los archivos en `src/environments/` según tu configuración (URLs de API, etc.)
+
+4. **Ejecutar en modo desarrollo:**
+```bash
+   ng serve
+```
+   La aplicación estará disponible en `http://localhost:4200`
+
+5. **Compilar para producción:**
+```bash
+   ng build --configuration production
+```
+
+---
+
 
 ## 📖 Licencias
 - 'ESTE PROYECTO FUE CREADO CON FINES EDUCATIVOS Y PARA USO PERSONAL'
