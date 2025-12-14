@@ -22,8 +22,9 @@ nombre: "",
 username:"",
 password:"",
 rol:Role.ADMIN,
+introduccion:"",
 descripcion:"",
-fotoUsuario : [],
+fotoUsuario :  [],
 active:true 
 };
   loading = true;

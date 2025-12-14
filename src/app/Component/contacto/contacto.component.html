@@ -11,7 +11,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-25  max-w-4xl mx-auto">
 
-        <!-- Sección para enviar mensaje -->
+        <!-- Sección para enviar mensaje (SIN MODIFICAR) 
         <div>
           <form id="contact-form" class="contact-form space-y-6">
             <div class="form-group">
@@ -35,8 +35,75 @@
               Enviar mensaje
             </button>
           </form>
-        </div>
+        </div>-->
+<!-- Sección para enviar mensaje -->
+<div>
+  <form [formGroup]="contactoForm" (ngSubmit)="onSubmit()" class="contact-form space-y-6">
+    
+    <!-- Mensajes de estado -->
+    <div *ngIf="mensajeExito" class="alert alert-success">
+      <i class="fas fa-check-circle mr-2"></i>
+      ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.
+    </div>
+    
+    <div *ngIf="mensajeError" class="alert alert-error">
+      <i class="fas fa-exclamation-circle mr-2"></i>
+{{ errorMessage }}    </div>
 
+    <div class="form-group">
+      <label for="name" class="form-label">Nombre *</label>
+      <input type="text" id="name" formControlName="nombreUsuario" 
+             class="form-control" 
+             placeholder="Tu nombre (Ej: Juan Ramirez)" 
+             [class.border-error]="contactoForm.get('nombreUsuario')?.invalid && contactoForm.get('nombreUsuario')?.touched">
+      <div *ngIf="contactoForm.get('nombreUsuario')?.invalid && contactoForm.get('nombreUsuario')?.touched" 
+           class="text-error text-sm mt-1">
+        <span *ngIf="contactoForm.get('nombreUsuario')?.errors?.['required']">El nombre es requerido</span>
+        <span *ngIf="contactoForm.get('nombreUsuario')?.errors?.['maxlength']">Máximo 100 caracteres</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label">Correo *</label>
+      <input type="email" id="email" formControlName="email" 
+             class="form-control" 
+             placeholder="correo@mail.com" 
+             [class.border-error]="contactoForm.get('email')?.invalid && contactoForm.get('email')?.touched">
+      <div *ngIf="contactoForm.get('email')?.invalid && contactoForm.get('email')?.touched" 
+           class="text-error text-sm mt-1">
+        <span *ngIf="contactoForm.get('email')?.errors?.['required']">El correo es requerido</span>
+        <span *ngIf="contactoForm.get('email')?.errors?.['email']">Correo inválido</span>
+        <span *ngIf="contactoForm.get('email')?.errors?.['maxlength']">Máximo 100 caracteres</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message" class="form-label">Mensaje *</label>
+      <textarea id="message" rows="4" formControlName="mensaje" 
+                class="form-control resize-none"
+                placeholder="Cuéntame sobre tu proyecto..."
+                [class.border-error]="contactoForm.get('mensaje')?.invalid && contactoForm.get('mensaje')?.touched"></textarea>
+      <div class="flex justify-between items-center mt-1">
+        <div *ngIf="contactoForm.get('mensaje')?.invalid && contactoForm.get('mensaje')?.touched" 
+             class="text-error text-sm">
+          <span *ngIf="contactoForm.get('mensaje')?.errors?.['required']">El mensaje es requerido</span>
+          <span *ngIf="contactoForm.get('mensaje')?.errors?.['maxlength']">Máximo 300 caracteres</span>
+        </div>
+        <div class="text-sm text-gray-500">
+          {{ contactoForm.get('mensaje')?.value?.length || 0 }}/300
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" [disabled]="contactoForm.invalid || enviando">
+      <i class="fas fa-paper-plane mr-2"></i>
+      <span *ngIf="!enviando">Enviar mensaje</span>
+      <span *ngIf="enviando">
+        <i class="fas fa-spinner fa-spin mr-2"></i>Enviando...
+      </span>
+    </button>
+  </form>
+</div>
 
 
 

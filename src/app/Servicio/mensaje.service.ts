@@ -4,6 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { Mensaje } from '../Modelo/mensaje';
 
+
+export interface ApiResponse {
+  estado: string;
+  mensaje: string;
+  data: Mensaje | null;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -31,6 +37,7 @@ private apiUrl = environment.apiUrl;
         })
       );}
 
+      /*modificar service para enviar datos de formulario a backend y enviar correo a usuario
     save(mensaje: Mensaje): Observable<Mensaje> {
       return this.http.post<Mensaje>(this.apiUrl + '/guardar/contacto', mensaje)
         .pipe(
@@ -39,7 +46,21 @@ private apiUrl = environment.apiUrl;
             return of();  // Devuelve un vacío en caso de error
           })
         );
-    }
+    }*/
+  enviarMensaje(mensaje: Mensaje): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}/guardar/contacto`, mensaje)
+      .pipe(
+        catchError(error => {
+          console.error('Error enviando mensaje:', error);
+          // Retornamos un objeto de error similar a la respuesta del backend
+          return of({
+            estado: 'error',
+            mensaje: 'Error al conectar con el servidor',
+            data: null
+          });
+        })
+      );
+  }
 
         
     delete(id: number): Observable<any> {
