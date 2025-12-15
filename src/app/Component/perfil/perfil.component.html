@@ -27,9 +27,9 @@
             <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy {{usuario.nombre || '...vacio...'}}</h2>
             
             <p id="parrafo-estatico" class="text-lg mb-6">
-              {{usuario.introduccion}}
-              <!--Desarrollador web fullstack apasionado por aprender
-              sobre las herramientas digitales y su implementación en todo tipo de proyectos.-->
+              {{usuario.introduccion || 
+              'Desarrollador web fullstack apasionado por aprender sobre las herramientas digitales y su implementación en todo tipo de proyectos.' }}
+            
             </p>
             
             
@@ -43,23 +43,12 @@
             Un poco sobre mí...
           </h3>
           
-          <!-- Descripción dinámica desde la base de datos -->
-          @if (usuario.descripcion) {
             <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
               <p class="text-lg leading-relaxed text-gray-300 text-left">
-                {{usuario.descripcion}}
+                {{usuario.descripcion || 'Esta información se puede editar desde el panel de administración'}}
               </p>
             </div>
-          } @else {
-            <!-- Texto por defecto si no hay descripción -->
-            <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <p class="text-lg leading-relaxed text-gray-300 text-left">
-                .........Aquí puedes escribir una descripción personal sobre tu experiencia, 
-                intereses y objetivos profesionales. Esta información se puede editar 
-                desde el panel de administración.......
-              </p>
-            </div>
-          }
+          
         </div>
 
         <!-- Sección de Habilidades-->
