@@ -1,0 +1,107 @@
+
+#main-content{
+     background-color: #1e293b;
+color: white;
+}
+
+
+#fondo {  
+  background-color: #1e293b;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main {
+  background-color: #ffffff;
+  padding: 40px;
+  margin-top: 5%;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.btn {
+  font-weight: 600;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: #35ac2f;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #2e8f29;
+}
+
+.btn-secondary {
+  background-color: #aa6e2a;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #905b21;
+}
+
+#btn-volver {
+    background: linear-gradient(135deg, rgb(50, 150, 243), rgb(124, 212, 215));
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+#btn-volver:hover  {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgb(0, 68, 255), rgb(104, 192, 195));
+}
+#editar {
+    top: 10px;
+    right: 10px;
+    background-color: #c7efff;
+    border-style:black;
+    padding: 12px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+     /* Otros estilos del botón */
+  animation-name: subirYBajar;
+  animation-duration: 2.5s; /* Duración de la animación */
+  animation-iteration-count: infinite; /* Repetir la animación indefinidamente */
+}
+#editar:hover {
+    background-color: #93ceff;
+    color: black;
+    transform: scale(1.1);
+    border: 20%;
+}
+@keyframes subirYBajar {
+  0% {
+    transform: translateY(0); /* Posición inicial */
+  }
+  50% {
+    transform: translateY(-10px); /* Mueve el botón hacia arriba */
+  }
+  100% {
+    transform: translateY(0); /* Vuelve a la posición inicial */
+  }
+}

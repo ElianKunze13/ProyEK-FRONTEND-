@@ -19,13 +19,38 @@
           <div class="card">
             <img  [src]="educacion.imagenes[0]?.url" 
                       [alt]="educacion.imagenes[0]?.alt"
-            class="w-full h-48 object-cover">
+            class="w-full h-48 object-contain">    
             <div class="p-5">
               <span class="text-sm text-[color:var(--accent)]">TIPO: {{educacion.tipoEducacion}}</span>
               <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
               <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
+              <span class="text-sm text-[color:var(--accent)]">Fecha: {{educacion.fechaObtencion}}</span>
+  
+            
+              <button id="btn-Certificado" class="btn btn-secondary w-100" (click)="verdetalles(educacion)">
+                Ver certificado <i class="fas fa-external-link-alt ml-1"></i>
+              </button> 
             </div>
           </div>
+
+  <div class="popup-overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <div class="contenedor">
+  <h2>{{educacion.titulo}}</h2>
+ <img  [src]="educacion.imagenes[0].url" 
+                      [alt]="educacion.imagenes[0].alt"
+            class="w-full h-48 object-cover">     
+    <button id="cerrarPopup" class="btn d-grid btn-primary btn-lg mt-6" (click)="cerrarPopup()" >Cerrar</button>
+  </div>
+
+  </div>
+</div>
+
+
+
+
+
+
         </div>}
 
       </section>

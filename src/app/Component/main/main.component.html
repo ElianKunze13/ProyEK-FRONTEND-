@@ -5,8 +5,7 @@
   <main class="container mx-auto px-4 pb-16">
     <section id="home" class="section visible flex flex-col justify-center">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-2">Herramientas y Conocimientos</h2>
-        <p class="text-lg text-[color:var(--text-secondary)]">Tecnologías que domino</p>
+        <h2 class="text-3xl font-bold mb-2">Lenguajes y Conocimientos que domino</h2>
       </div>
     </section>
 
@@ -18,16 +17,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           
           <!-- Tarjeta Frontend -->
-          <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Frontend</h3>
+          <div class="animated-border-card" >
+            <h3 class="text-xl text-center font-bold mb-4" 
+            style="color: rgb(210, 169, 248);">Frontend</h3>
             <div class="flex flex-wrap gap-4 justify-center">
               @for (conocimiento of conFront; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
-                  <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                  <div class="mb-3 p-3 bg-white/10 rounded-lg">
                     <img 
                       [src]="conocimiento.imagenes[0]?.url" 
                       [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre"
-                      class="w-12 h-12 object-contain">
+                      class="w-14 h-14 object-cover" >
                   </div>
                   <span class="text-sm font-medium text-center" style="color: aliceblue;">
                     {{ conocimiento?.nombre }}
@@ -51,7 +51,7 @@
 
           <!-- Tarjeta Backend -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Backend</h3>
+            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(157, 224, 255);">Backend</h3>
             <div class="flex flex-wrap gap-4 justify-center">
               @for (conocimiento of conBack; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20" >
@@ -87,7 +87,7 @@
           
           <!-- Tarjeta Base de datos -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Base Datos</h3>
+            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(250, 142, 201);">Base Datos</h3>
             <div class="flex flex-wrap gap-4 justify-center">
               @for (conocimiento of conBD; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
@@ -107,7 +107,7 @@
 
           <!-- Tarjeta Testing -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Testing</h3>
+            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(169, 248, 202);">Testing</h3>
             <div class="flex flex-wrap gap-4 justify-center">
               @for (conocimiento of conTest; track conocimiento.id) { <!-- CAMBIADO -->
                 <div class="flex flex-col items-center w-20">
@@ -131,7 +131,7 @@
           
           <!-- Tarjeta Otros -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 text-[color:var(--accent)]">Otras</h3>
+            <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(165, 165, 165);">Otras</h3>
             <div class="flex flex-wrap gap-4 justify-center">
               @for (conocimiento of conOtros; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
@@ -150,36 +150,16 @@
           </div>
         </div>
 
-        <!-- Sección Aprendiendo -->
-        <div class="mt-10">
-          <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Aprendiendo</h3>
-          <div class="animated-border-card">
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conFront; track conocimiento.id) { <!-- CAMBIADO -->
-                <div class="flex flex-col items-center w-20">
-                  <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                    <img 
-                      [src]="conocimiento.imagenes[0]?.url" 
-                      [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre"
-                      class="w-12 h-12 object-contain">
-                  </div>
-                  <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                    {{ conocimiento?.nombre }}
-                  </span>
-                </div>
-              }
-            </div>
-          </div>
-        </div>
+      
 
         <!-- Sección Herramientas -->
         <div class="mt-10">
-          <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Herramientas</h3>
+          <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Tecnologias y Herramientas que uso</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- ORGANIC -->
+            <!-- IA -->
             <div class="animated-border-card">
-              <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">ORGANIC</h4>
+              <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">IA</h4>
               <div class="flex flex-wrap gap-4 justify-center">
                 @for (conocimiento of conFront; track conocimiento.id) { <!-- NUEVO -->
                   <div class="flex flex-col items-center w-20">
@@ -197,9 +177,9 @@
               </div>
             </div>
 
-            <!-- Tipo -->
+            <!-- Prototipado -->
             <div class="animated-border-card">
-              <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Tipo:</h4>
+              <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Prototipos-Presentaciones</h4>
               <div class="flex flex-wrap gap-4 justify-center">
                 @for (conocimiento of conFront; track conocimiento.id) { <!-- NUEVO -->
                   <div class="flex flex-col items-center w-20">

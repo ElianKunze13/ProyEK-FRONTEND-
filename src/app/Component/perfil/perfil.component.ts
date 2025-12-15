@@ -164,7 +164,6 @@ descargarPdf() {
       
       // Normalizar fotoUsuario
       if (!data.fotoUsuario || !Array.isArray(data.fotoUsuario)) {
-        console.log('Normalizando fotoUsuario a array vacío');
         data.fotoUsuario = [];
       }
       

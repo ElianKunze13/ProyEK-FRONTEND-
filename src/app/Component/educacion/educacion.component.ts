@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Educacion } from '../../Modelo/educacion';
 import { EducacionService } from '../../Servicio/educacion.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-educacion',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './educacion.component.html',
   styleUrl: './educacion.component.css'
 })
@@ -24,8 +25,6 @@ ngOnInit() {
       }
     }, 50); // Pequeño delay para que Angular renderice primero
   }
-
-
 
   cargarEducaciones(): void {
     this.educacionService.findAll().subscribe({
@@ -49,4 +48,20 @@ ngOnInit() {
   
   
   }
+
+  
+mostrarPopup = false;
+
+verdetalles(reencuentro: any) {
+  this.mostrarPopup = true;
+}
+
+cerrarPopup() {
+  this.mostrarPopup = false;
+}
+
+abrirPopup(reencuentro: any) {
+  console.log('Ver certificado');
+  this.mostrarPopup = true;
+}
 }

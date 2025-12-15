@@ -43,8 +43,8 @@ export const routes: Routes = [
 { 
     path: "actualizarPerfil",
     canActivate: [AuthGuard],
-    loadComponent: () => import("./Component/modificar-perfil/modificar-perfil.component")
-    .then(m => m.ModificarPerfilComponent)
+    loadComponent: () => import("./Component/actualizar-perfil/actualizar-perfil.component")
+    .then(m => m.ActualizarPerfilComponent)
 },
 { 
     path: "panelEducacion",

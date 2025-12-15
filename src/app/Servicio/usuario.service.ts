@@ -35,7 +35,7 @@ getByUsername(username: string): Observable<Usuario | undefined> {
 }
 
 save(usuario: Usuario): Observable<Usuario> { 
-    return this.http.post<Usuario>(this.apiUrl + '/usuarios', usuario)
+    return this.http.post<Usuario>(this.apiUrl + '/guardarUsuario', usuario)
     .pipe(
         catchError(error => {
           console.error('Error saving usuario:', error);
