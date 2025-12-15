@@ -13,7 +13,7 @@ import { ConocimientoService } from '../../Servicio/conocimiento.service';
 export class MainComponent implements OnInit{
     expandedIndex: number | null = null;
 
-  conFront?:Conocimiento[] =[];
+  conFront:Conocimiento[] =[];
   conBack:Conocimiento[] =[];
   conBD:Conocimiento[] =[];
   conTest:Conocimiento[] =[];
