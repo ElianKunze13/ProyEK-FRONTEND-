@@ -18,6 +18,8 @@ export class MainComponent implements OnInit{
   conBD:Conocimiento[] =[];
   conTest:Conocimiento[] =[];
   conOtros:Conocimiento[] =[];
+conIA:Conocimiento[] =[];
+conProt:Conocimiento[] =[];
 
    constructor(private conocimientoService: ConocimientoService){}
 
@@ -27,6 +29,9 @@ export class MainComponent implements OnInit{
     this.cargarConocimientosBD();
     this.cargarConocimientosTest();
     this.cargarConocimientosOtros();
+   this.cargarConocimientosIA();
+   this.cargarConocimientosPrototipo();
+
 
     // Agregar animación de entrada cuando se carga el componente
     setTimeout(() => {
@@ -62,7 +67,7 @@ export class MainComponent implements OnInit{
         console.log('📊 Cantidad de items:', data.length);
         console.log('🔍 Estructura del primer item:', data[0]);
         
-        this.conFront=data;
+        this.conBack=data;
         console.log(JSON.stringify(this.conBack))
       },
       error: () =>{
@@ -80,7 +85,7 @@ export class MainComponent implements OnInit{
         console.log('📊 Cantidad de items:', data.length);
         console.log('🔍 Estructura del primer item:', data[0]);
         
-        this.conFront=data;
+        this.conBD=data;
         console.log(JSON.stringify(this.conBD))
       },
       error: () =>{
@@ -102,7 +107,7 @@ export class MainComponent implements OnInit{
         console.log(JSON.stringify(this.conTest))
       },
       error: () =>{
-        this.conFront=[];
+        this.conTest=[];
         console.log(JSON.stringify(this.conTest))
 
         console.log("Error al cargar lista")
@@ -120,7 +125,7 @@ export class MainComponent implements OnInit{
         console.log(JSON.stringify(this.conOtros))
       },
       error: () =>{
-        this.conFront=[];
+        this.conOtros=[];
         console.log(JSON.stringify(this.conOtros))
 
         console.log("Error al cargar lista")
@@ -128,4 +133,40 @@ export class MainComponent implements OnInit{
     })
   }
 
+ cargarConocimientosIA(): void{
+    this.conocimientoService.findIA().subscribe({
+      next: (data: Conocimiento[])=>{
+         console.log('✅ Datos recibidos:', data);
+        console.log('📊 Cantidad de items:', data.length);
+        console.log('🔍 Estructura del primer item:', data[0]);
+        
+        this.conIA=data;
+        console.log(JSON.stringify(this.conIA))
+      },
+      error: () =>{
+        this.conIA=[];
+        console.log(JSON.stringify(this.conIA))
+        console.log("Error al cargar lista")
+      }
+    })
+  }
+
+  cargarConocimientosPrototipo(): void{
+    this.conocimientoService.findOtros().subscribe({
+      next: (data: Conocimiento[])=>{
+         console.log('✅ Datos recibidos:', data);
+        console.log('📊 Cantidad de items:', data.length);
+        console.log('🔍 Estructura del primer item:', data[0]);
+        
+        this.conProt=data;
+        console.log(JSON.stringify(this.conProt))
+      },
+      error: () =>{
+        this.conProt=[];
+        console.log(JSON.stringify(this.conProt))
+        console.log("Error al cargar lista")
+      }
+    })
+  }
+ 
 }

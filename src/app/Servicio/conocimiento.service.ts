@@ -69,6 +69,30 @@ findFrontend(): Observable<Conocimiento[]> {
         })
       );
   }
+/**AGREGAR SERVICIO TRAER LISTA ia Y testing  */
+
+findIA(): Observable<Conocimiento[]> {
+    return this.http.get<Conocimiento[]>(this.apiUrl + '/ia')
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching conocimientos IA:', error);
+          return of([]);  // Devuelve un array vacío
+        })
+      );
+  }
+
+  findModelado(): Observable<Conocimiento[]> {
+    return this.http.get<Conocimiento[]>(this.apiUrl + '/prototipado')
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching conocimientos PROTOTIPOS:', error);
+          return of([]);  // Devuelve un array vacío
+        })
+      );
+  }
+  
+
+
   save(conocimiento: Conocimiento): Observable<Conocimiento> {
     return this.http.post<Conocimiento>(this.apiUrl + '/auth/guardar/conocimiento', conocimiento)
       .pipe(

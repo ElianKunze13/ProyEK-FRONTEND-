@@ -44,4 +44,16 @@ save(usuario: Usuario): Observable<Usuario> {
       );
   }
 
+ updateUsuario (id: number, usuario: Usuario): Observable<Usuario> { 
+    return this.http.put<Usuario>(`${this.apiUrl}/usuario/${id}`, usuario)
+    .pipe(
+        catchError(error => {
+          console.error('Error actualizando usuario:', error);
+          return of();  // Devuelve un vacío en caso de error
+        })
+      );
+  }
+
+
+
 }
