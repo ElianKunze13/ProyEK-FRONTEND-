@@ -1,3 +1,4 @@
+
 <div id="main-content" class=" slide-left-enter">
   <main class="container pb-1">
     <section id="dashboard" class="section dashboard-section pt-40">
@@ -10,6 +11,145 @@
 
         <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-1">
           <!--formulario añadir EDUCACION (cursos, talleres)  -->
+          <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;background-color: rgb(218, 218, 218);">
+            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
+            <form id="course-form" [formGroup]="educacionForm" (ngSubmit)="guardarEducacion()" class="space-y-6">
+              
+              <!-- Título -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
+                <input type="text" formControlName="titulo" class="form-control" placeholder="Nombre del curso o taller">
+                <div *ngIf="educacionForm.get('titulo')?.invalid && educacionForm.get('titulo')?.touched" 
+                     class="text-red-500 text-sm mt-1">
+                  El título es requerido
+                </div>
+              </div>
+              
+              <!-- Descripción -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
+                <textarea formControlName="descripcion" class="form-control resize-none" rows="3"
+                  placeholder="Breve descripción del curso..."></textarea>
+                <div *ngIf="educacionForm.get('descripcion')?.invalid && educacionForm.get('descripcion')?.touched" 
+                     class="text-red-500 text-sm mt-1">
+                  La descripción es requerida (mínimo 10 caracteres)
+                </div>
+              </div>
+              
+              <!-- Fecha de obtención -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de obtención *</label>
+                <input type="date" formControlName="fechaObtencion" class="form-control">
+                <div *ngIf="educacionForm.get('fechaObtencion')?.invalid && educacionForm.get('fechaObtencion')?.touched" 
+                     class="text-red-500 text-sm mt-1">
+                  La fecha es requerida
+                </div>
+              </div>
+              
+              <!-- Nivel/Tipo de Educación -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de educación *</label>
+                <select formControlName="tipoEducacion" class="form-control">
+                  <option value="">Seleccionar tipo</option>
+                  <option value="FORMAL">FORMAL</option>
+                  <option value="INFORMAL_CURSO">INFORMAL-CURSO</option>
+                  <option value="AUTODIDACTA">AUTODIDACTA</option>
+                  <option value="OTROS">OTROS</option>
+                </select>
+                <div *ngIf="educacionForm.get('tipoEducacion')?.invalid && educacionForm.get('tipoEducacion')?.touched" 
+                     class="text-red-500 text-sm mt-1">
+                  Debe seleccionar un tipo de educación
+                </div>
+              </div>
+
+              <!-- URL de la imagen -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">URL de la imagen (opcional)</label>
+                <input type="text" formControlName="imagenUrl" class="form-control" 
+                       placeholder="https://ejemplo.com/certificado.jpg">
+              </div>
+              
+              <!-- Texto alternativo de la imagen -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen (opcional)</label>
+                <input type="text" formControlName="imagenAlt" class="form-control" 
+                       placeholder="Certificado de finalización">
+              </div>
+
+              <!-- Mensajes de error -->
+              <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {{ errorMessage }}
+              </div>
+              
+              <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ successMessage }}
+              </div>
+
+              <button type="submit" [disabled]="educacionForm.invalid || guardando" 
+                      class="btn-primary w-full py-3 flex items-center justify-center">
+                <i class="fas fa-plus-circle mr-2"></i>
+                <span *ngIf="!guardando">Añadir educación</span>
+                <span *ngIf="guardando">Guardando...</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lista de educaciones existentes -->
+      @if (educaciones.length > 0) {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          @for (educacion of educaciones; track educacion.id) {
+            <div class="card">
+              <div class="p-4" style="position: relative; display: inline-block;">
+                <img [src]="educacion.imagenes[0]?.url || 'assets/default-image.jpg'" 
+                     [alt]="educacion.imagenes[0]?.alt || 'Imagen de educación'" 
+                     class="campaign-img rounded">
+                <button id="editar" type="button" class="btn btn-primary btn-editar" 
+                        (click)="cargarEducacionParaEditar(educacion)">
+                  ✏️
+                </button>
+              </div>
+              
+              <div class="p-5">
+                <span class="text-sm text-[color:var(--accent)]">
+                  Tipo de educación: 
+                  <span class="badge text-bg-secondary">{{educacion.tipoEducacion}}</span>
+                </span>
+                <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
+                <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
+                
+                <!--EDITAR PARA DEFINIR Y TRAER FECHA
+                <span class="text-sm text-[color:var(--accent)]">
+                  Fecha: {{educacion.fechaObtencion}}
+                </span>-->
+
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="text-center py-8">
+          <p class="text-gray-500">No hay educación registrada aún. Agrega la primera.</p>
+        </div>
+      }
+
+    </section>
+  </main>
+</div>
+
+<!--<div id="main-content" class=" slide-left-enter">
+  <main class="container pb-1">
+    <section id="dashboard" class="section dashboard-section pt-40">
+
+      <div class="text-center mb-20">
+        <h2>Gestionar EDUCACION</h2>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-1">
           <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;background-color: rgb(218, 218, 218);">
             <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
             <form id="course-form" class="space-y-6">
@@ -26,10 +166,10 @@
                 <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
                 <select class="form-control">
                   <option value="">Seleccionar nivel</option>
-                  <option value="basico">Básico</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
-                  <option value="experto">Experto</option>
+                  <option value="basico">FORMAL</option>
+                  <option value="intermedio">INFORMAL-CURSO</option>
+                  <option value="avanzado">AUTODIDACTA</option>
+                  <option value="experto">OTROS</option>
                 </select>
               </div>
 
@@ -54,93 +194,35 @@
 
       </div>
 
-       <div class="px-4 md:px-6 lg:px-8">
-          <!--listas de educaciones para actualizar-->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Course 1 -->
-            <div class="card" >
-              <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg"
-                alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
-              <div class="p-5">
-                <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-                <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-                <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para
-                  aplicaciones web de alto rendimiento.</p>
-                <a href="javascript:void(0)"
-                  class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                  Ver certificado
-                  <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Course 1 -->
-            <div class="card" >
-              <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg"
-                alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
-              <div class="p-5">
-                <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-                <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-                <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para
-                  aplicaciones web de alto rendimiento.</p>
-                <a href="javascript:void(0)"
-                  class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                  Ver certificado
-                  <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Course 1 -->
-            <div class="card" >
-              <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg"
-                alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
-              <div class="p-5">
-                <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-                <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-                <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para
-                  aplicaciones web de alto rendimiento.</p>
-                <a href="javascript:void(0)"
-                  class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                  Ver certificado
-                  <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Course 1 -->
-            <div class="card">
-              <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg"
-                alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
-              <div class="p-5">
-                <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-                <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-                <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para
-                  aplicaciones web de alto rendimiento.</p>
-                <a href="javascript:void(0)"
-                  class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                  Ver certificado
-                  <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Course 1 -->
-            <div class="card" >
-              <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg"
-                alt="Desarrollo Web Frontend" class="w-full h-48 object-cover">
-              <div class="p-5">
-                <span class="text-sm text-[color:var(--accent)]">Marzo 2025</span>
-                <h3 class="text-xl font-semibold my-2">Desarrollo Web Frontend Avanzado</h3>
-                <p class="mb-4 text-[color:var(--text-secondary)]">React, Vue.js y arquitecturas modernas para
-                  aplicaciones web de alto rendimiento.</p>
-                <a href="javascript:void(0)"
-                  class="inline-flex items-center text-[color:var(--accent)] font-medium hover:underline">
-                  Ver certificado
-                  <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-              </div>
-            </div>
 
+       @for ( educacion of educaciones; track educacion.id) {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="card">
 
+                  <div class="p-4" style="position: relative; display: inline-block; ">
+                    <img [src]="educacion.imagenes[0]?.url" [alt]="educacion.imagenes[0]?.alt" class="campaign-img rounded">
+
+                    <button id="editar" type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" (click)="cargarEducacionParaEditar(educacion)">
+                        ✏️
+                    </button>
+                </div>
+
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Tipo de educacion: 
+                <span class="badge text-bg-secondary">{{educacion.tipoEducacion}}</span></span>
+              <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
+  
+        
+             
+            </div>
           </div>
-        </div>
+        </div>}
+
+                 AÑADIR Formulario de actualización (DEBE PERMITIR ACTUALIZAR TODOS SUS CAMPOS) 
+
     </section>
+    
   </main>
-</div>
+</div>-->

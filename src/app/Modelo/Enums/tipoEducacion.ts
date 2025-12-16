@@ -1,6 +1,6 @@
 export enum TipoEducacion {
-    FORMAL,
-    INFORMAL_CURSO,
-    AUTODIDACTA,
-    OTROS
+     FORMAL = 'FORMAL',
+  INFORMAL_CURSO = 'INFORMAL_CURSO',
+  AUTODIDACTA = 'AUTODIDACTA',
+  OTROS = 'OTROS'
 }
