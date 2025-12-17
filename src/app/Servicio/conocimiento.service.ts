@@ -14,7 +14,7 @@ export class ConocimientoService {
   constructor(private http: HttpClient) { }
   
     findAll(): Observable<Conocimiento[]> {
-        return this.http.get<Conocimiento[]>(this.apiUrl + '/todos/conocimientos')
+        return this.http.get<Conocimiento[]>(this.apiUrl + '/todos/educaciones')
           .pipe(
             catchError(error => {
               console.error('Error fetching Conocimientos:', error);

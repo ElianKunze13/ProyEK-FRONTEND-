@@ -1,58 +1,306 @@
+
 <!-- Seccion principal ModificarPortofolio -->
 <div id="main-content" class="slide-left-enter">
   <main class="container pb-1">
     <section id="dashboard" class="section dashboard-section pt-40">
-      
+
       <div class="text-center mb-20">
-        <h2 >Gestionar HERRAMIENTAS</h2>
+        <h2>Gestionar HERRAMIENTAS</h2>
       </div>
 
-      <div class="max-w-6xl mx-auto">
-        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <!--formulario añadir HERRAMIENTAS (tecnologias) -->
-          <div class="card p-6 mb-8" style="border-color: rgb(255, 149, 255);border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva herramienta/tecnologia</h3>
-            <form id="skill-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre de la tecnología o habilidad">
+            <div class="max-w-2xl mx-auto">
+
+        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-1">
+      <!-- FORMULARIO PARA CARGAR CONOCIMIENTO NUEVO -->
+      <div class="card p-6 mb-8" style="border-color: rgb(177, 98, 177); border-width: 3px; background-color: rgb(218, 218, 218); margin-bottom: 10%;">
+        <h3 class="text-xl text-center font-semibold mb-6">Crear nuevo conocimiento</h3>
+        <form [formGroup]="conocimientoForm" (ngSubmit)="guardarConocimiento()" class="space-y-6">
+          
+          <div class="form-group">
+            <label class="block mb-2 text-sm font-medium text-gray-700">Nombre *</label>
+            <input type="text" formControlName="nombre" class="form-control" placeholder="Nombre de la herramienta o tecnología">
+            <div *ngIf="conocimientoForm.get('nombre')?.invalid && conocimientoForm.get('nombre')?.touched" 
+                 class="text-red-500 text-sm mt-1">
+              El nombre es requerido (mínimo 2 caracteres)
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="block mb-2 text-sm font-medium text-gray-700">Nivel *</label>
+            <select formControlName="nivel" class="form-control">
+              <option value="">Seleccionar nivel</option>
+              <option value="BASICO">BÁSICO</option>
+              <option value="INTERMEDIO">INTERMEDIO</option>
+              <option value="AVANZADO">AVANZADO</option>
+              <option value="EXPERTO">EXPERTO</option>
+            </select>
+            <div *ngIf="conocimientoForm.get('nivel')?.invalid && conocimientoForm.get('nivel')?.touched" 
+                 class="text-red-500 text-sm mt-1">
+              Debe seleccionar un nivel
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de conocimiento *</label>
+            <select formControlName="tipoConocimiento" class="form-control">
+              <option value="">Seleccionar tipo</option>
+              <option value="FRONTEND">FRONTEND</option>
+              <option value="BACKEND">BACKEND</option>
+              <option value="BASE_DATOS">BASE DE DATOS</option>
+              <option value="TESTING">TESTING</option>
+              <option value="IA">INTELIGENCIA ARTIFICIAL</option>
+              <option value="MODELADO">PROTOTIPADO/MODELADO</option>
+              <option value="OTROS">OTROS</option>
+            </select>
+            <div *ngIf="conocimientoForm.get('tipoConocimiento')?.invalid && conocimientoForm.get('tipoConocimiento')?.touched" 
+                 class="text-red-500 text-sm mt-1">
+              Debe seleccionar un tipo de conocimiento
+            </div>
+          </div>
+
+          <!-- URL de la imagen -->
+          <div class="form-group">
+            <label class="block mb-2 text-sm font-medium text-gray-700">URL del logo/imagen (opcional)</label>
+            <input type="text" formControlName="imagenUrl" class="form-control" 
+                   placeholder="https://ejemplo.com/logo.png">
+          </div>
+          
+          <!-- Texto alternativo de la imagen -->
+          <div class="form-group">
+            <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen (opcional)</label>
+            <input type="text" formControlName="imagenAlt" class="form-control" 
+                   placeholder="Logo de la tecnología">
+          </div>
+
+          <!-- Mensajes de error -->
+          <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {{ errorMessage }}
+          </div>
+          
+          <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            {{ successMessage }}
+          </div>
+
+          <button type="submit" [disabled]="conocimientoForm.invalid || guardando" 
+                  class="btn-primary w-full py-3 flex items-center justify-center">
+            <i class="fas fa-plus-circle mr-2"></i>
+            <span *ngIf="!guardando">Añadir conocimiento</span>
+            <span *ngIf="guardando">Guardando...</span>
+          </button>
+        </form>
+      </div>
+      </div>
+      </div>
+
+      <!-- LISTA DE CONOCIMIENTOS EXISTENTES -->
+      @if (conocimientos.length > 0) {
+        <div class="animated-border-card mb-8"  >
+          <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">Todos los conocimientos</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6" >
+            @for (conocimiento of conocimientos; track conocimiento.id) {
+            <div class="relative group"  >
+              <div class="flex flex-col items-center w-full p-4 bg-white/10 rounded-lg " >
+                <!-- Imagen del conocimiento -->
+                <div class="mb-3 p-3 bg-white/10 rounded-lg">
+                  <img [src]="conocimiento.imagenes[0]?.url || 'assets/default-tech.png'" 
+                       [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre"
+                       class="w-14 h-14 object-cover">
+                </div>
+                
+                <!-- Información del conocimiento -->
+                <span class="text-sm font-medium text-center mb-1" style="color: aliceblue;">
+                  {{ conocimiento.nombre }}
+                </span>
+                
+                <!-- Badges para nivel y tipo -->
+                <div class="flex flex-wrap justify-center gap-1 mt-1">
+                  <span class="badge text-bg-primary text-xs">
+                    {{ conocimiento.nivel }}
+                  </span>
+                  <span class="badge text-bg-secondary text-xs">
+                    {{ conocimiento.tipoConocimiento }}
+                  </span>
+                </div>
+                
+                <!-- Botones de acción (aparecen al hacer hover) -->
+                <div class="action-buttons opacity-100" >
+                  <button type="button" class="btn btn-primary btn-action btn-editar" 
+                          (click)="cargarConocimientoParaEditar(conocimiento)"
+                          title="Editar conocimiento">
+                    ✏️ 
+                  </button>
+                  
+                  <button type="button" class="btn btn-danger btn-action btn-eliminar" 
+                          (click)="confirmarEliminacion(conocimiento)"
+                          title="Eliminar conocimiento">
+                    🗑️
+                  </button>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
-                <select class="form-control">
-                  <option value="">Seleccionar nivel</option>
-                  <option value="basico">Básico</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
-                  <option value="experto">Experto</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo</label>
-                <select class="form-control">
-                  <option value="">Seleccionar tipo</option>
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
-                  <option value="database">Base de datos</option>
-                  <option value="devops">DevOps</option>
-                  <option value="herramienta">Herramienta</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Ícono de imagen</label>
-                <input type="text" class="form-control" placeholder="url de imagen">
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
+            </div>
+            }
           </div>
         </div>
+      } @else {
+        <div class="text-center py-8">
+          <p class="text-gray-500">No hay conocimientos registrados aún. Agrega el primero.</p>
+        </div>
+      }
 
-        
-      </div>
+      <!-- MODAL PARA EDITAR CONOCIMIENTO -->
+      @if (mostrarModalEditar) {
+        <div class="modal-overlay">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                Editando: {{conocimientoEditado?.nombre}}
+              </h5>
+              <button type="button" class="btn-close" (click)="cerrarModalEditar()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <div class="bg-white rounded-lg shadow-md p-6">
+                <div *ngIf="mensaje" class="mensaje" [class]="mensajeTipo === 'error' ? 'text-red-600' : 'text-green-600'">
+                  {{ mensaje }}
+                </div>
+
+                <form [formGroup]="editarConocimientoForm" (ngSubmit)="actualizarConocimiento()">
+                  
+                  <!-- Nombre -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Nombre *</label>
+                    <input type="text" formControlName="nombre" class="form-control">
+                    <div *ngIf="editarConocimientoForm.get('nombre')?.invalid && editarConocimientoForm.get('nombre')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      El nombre es requerido (mínimo 2 caracteres)
+                    </div>
+                  </div>
+
+                  <!-- Nivel -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Nivel *</label>
+                   <select formControlName="nivel" class="form-control">
+  <option value="">Seleccionar nivel</option>
+  <option value="PRINCIPIANTE_BASICO">PRINCIPIANTE/BÁSICO</option>
+  <option value="INTERMEDIO">INTERMEDIO</option>
+  <option value="ALTO">ALTO</option>
+  <option value="AVANZADO">AVANZADO</option>
+</select>
+                    <div *ngIf="editarConocimientoForm.get('nivel')?.invalid && editarConocimientoForm.get('nivel')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      Debe seleccionar un nivel
+                    </div>
+                  </div>
+
+                  <!-- Tipo de conocimiento -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de conocimiento *</label>
+                    <select formControlName="tipoConocimiento" class="form-control">
+  <option value="">Seleccionar tipo</option>
+  <option value="FRONTEND">FRONTEND</option>
+  <option value="BACKEND">BACKEND</option>
+  <option value="BASE_DATOS">BASE DE DATOS</option>
+  <option value="TESTING">TESTING</option>
+  <option value="IA">INTELIGENCIA ARTIFICIAL</option>
+  <option value="PROTOTIPO">PROTOTIPADO/MODELADO</option>
+  <option value="OTROS">OTROS</option>
+</select>
+                    <div *ngIf="editarConocimientoForm.get('tipoConocimiento')?.invalid && editarConocimientoForm.get('tipoConocimiento')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      Debe seleccionar un tipo de conocimiento
+                    </div>
+                  </div>
+
+                  <!-- URL de la imagen -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">URL del logo/imagen</label>
+                    <input type="text" formControlName="imagenUrl" class="form-control" 
+                           placeholder="https://ejemplo.com/logo.png">
+                  </div>
+
+                  <!-- Texto alternativo de la imagen -->
+                  <div class="form-group mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen</label>
+                    <input type="text" formControlName="imagenAlt" class="form-control" 
+                           placeholder="Logo de la tecnología">
+                  </div>
+
+                  <div class="form-actions flex justify-between">
+                    <button type="submit" class="btn btn-primary px-6 py-2" [disabled]="actualizando || editarConocimientoForm.invalid">
+                      <span *ngIf="!actualizando">
+                        <i class="fas fa-paper-plane me-2"></i>Actualizar conocimiento
+                      </span>
+                      <span *ngIf="actualizando">
+                        <i class="fas fa-spinner fa-spin me-2"></i>Actualizando...
+                      </span>
+                    </button>
+                    
+                    <button type="button" class="btn btn-secondary px-6 py-2" (click)="cerrarModalEditar()">
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR -->
+      @if (mostrarModalConfirmacion) {
+        <div class="modal-overlay">
+          <div class="modal-content modal-confirmacion">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="fas fa-exclamation-triangle me-2 text-yellow-500"></i>
+                Confirmar eliminación
+              </h5>
+              <button type="button" class="btn-close" (click)="cancelarEliminacion()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <div class="text-center p-6">
+                <div class="mb-4">
+                  <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                    ¿Está seguro de eliminar este conocimiento?
+                  </h3>
+                  <p class="text-gray-600">
+                    Está a punto de eliminar: <strong>"{{conocimientoAEliminar?.nombre}}"</strong>
+                  </p>
+                  <p class="text-gray-500 text-sm mt-2">
+                    Esta acción no se puede deshacer.
+                  </p>
+                </div>
+                
+                <div class="flex justify-center space-x-4 mt-6">
+                  <button type="button" class="btn btn-danger px-6 py-2" 
+                          (click)="eliminarConocimiento()" 
+                          [disabled]="eliminando">
+                    <span *ngIf="!eliminando">
+                      <i class="fas fa-trash me-2"></i>Sí, eliminar
+                    </span>
+                    <span *ngIf="eliminando">
+                      <i class="fas fa-spinner fa-spin me-2"></i>Eliminando...
+                    </span>
+                  </button>
+                  
+                  <button type="button" class="btn btn-secondary px-6 py-2" 
+                          (click)="cancelarEliminacion()"
+                          [disabled]="eliminando">
+                    <i class="fas fa-times me-2"></i>Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
     </section>
   </main>
 </div>
