@@ -1,5 +1,4 @@
-
-<div id="main-content" class=" slide-left-enter">
+<div id="main-content" class="slide-left-enter">
   <main class="container pb-1">
     <section id="dashboard" class="section dashboard-section pt-40">
 
@@ -15,7 +14,6 @@
             <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
             <form id="course-form" [formGroup]="educacionForm" (ngSubmit)="guardarEducacion()" class="space-y-6">
               
-              <!-- Título -->
               <div class="form-group">
                 <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
                 <input type="text" formControlName="titulo" class="form-control" placeholder="Nombre del curso o taller">
@@ -25,7 +23,6 @@
                 </div>
               </div>
               
-              <!-- Descripción -->
               <div class="form-group">
                 <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
                 <textarea formControlName="descripcion" class="form-control resize-none" rows="3"
@@ -36,17 +33,6 @@
                 </div>
               </div>
               
-              <!-- Fecha de obtención -->
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de obtención *</label>
-                <input type="date" formControlName="fechaObtencion" class="form-control">
-                <div *ngIf="educacionForm.get('fechaObtencion')?.invalid && educacionForm.get('fechaObtencion')?.touched" 
-                     class="text-red-500 text-sm mt-1">
-                  La fecha es requerida
-                </div>
-              </div>
-              
-              <!-- Nivel/Tipo de Educación -->
               <div class="form-group">
                 <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de educación *</label>
                 <select formControlName="tipoEducacion" class="form-control">
@@ -96,8 +82,10 @@
         </div>
 
       </div>
-
-      <!-- Lista de educaciones existentes -->
+<div class="text-center mb-20">
+        <h2>EDITAR EDUCACION</h2>
+      </div>
+      <!-- Lista de educaciones existentes para editar -->
       @if (educaciones.length > 0) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           @for (educacion of educaciones; track educacion.id) {
@@ -106,10 +94,23 @@
                 <img [src]="educacion.imagenes[0]?.url || 'assets/default-image.jpg'" 
                      [alt]="educacion.imagenes[0]?.alt || 'Imagen de educación'" 
                      class="campaign-img rounded">
-                <button id="editar" type="button" class="btn btn-primary btn-editar" 
-                        (click)="cargarEducacionParaEditar(educacion)">
-                  ✏️
-                </button>
+                
+                <!-- Contenedor para botones de acción -->
+                <div class="action-buttons">
+                  <!-- Botón Editar -->
+                  <button type="button" class="btn btn-primary btn-action btn-editar" 
+                          (click)="cargarEducacionParaEditar(educacion)"
+                          title="Editar educación">
+                    ✏️
+                  </button>
+                  
+                  <!-- Botón Eliminar -->
+                  <button type="button" class="btn btn-danger btn-action btn-eliminar" 
+                          (click)="confirmarEliminacion(educacion)"
+                          title="Eliminar educación">
+                    🗑️
+                  </button>
+                </div>
               </div>
               
               <div class="p-5">
@@ -119,12 +120,6 @@
                 </span>
                 <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
                 <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
-                
-                <!--EDITAR PARA DEFINIR Y TRAER FECHA
-                <span class="text-sm text-[color:var(--accent)]">
-                  Fecha: {{educacion.fechaObtencion}}
-                </span>-->
-
               </div>
             </div>
           }
@@ -135,94 +130,151 @@
         </div>
       }
 
+      <!-- MODAL PERSONALIZADO PARA EDITAR EDUCACIÓN -->
+      @if (mostrarModal) {
+        <div class="modal-overlay">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                Editando Educación: {{educacionEditada.titulo}}
+              </h5>
+              <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <div class="bg-white rounded-lg shadow-md p-6">
+                <div *ngIf="mensaje" class="mensaje" [class]="mensajeTipo === 'error' ? 'text-red-600' : 'text-green-600'">
+                  {{ mensaje }}
+                </div>
+
+                <form [formGroup]="editarEducacionForm" (ngSubmit)="actualizarEducacion()">
+                  
+                  <!-- Título -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
+                    <input type="text" formControlName="titulo" class="form-control">
+                    <div *ngIf="editarEducacionForm.get('titulo')?.invalid && editarEducacionForm.get('titulo')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      El título es requerido (mínimo 3 caracteres)
+                    </div>
+                  </div>
+
+                  <!-- Descripción -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
+                    <textarea formControlName="descripcion" class="form-control" rows="4"></textarea>
+                    <div *ngIf="editarEducacionForm.get('descripcion')?.invalid && editarEducacionForm.get('descripcion')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      La descripción es requerida (mínimo 10 caracteres)
+                    </div>
+                  </div>
+
+                  <!-- Tipo de educación -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de educación *</label>
+                    <select formControlName="tipoEducacion" class="form-control">
+                      <option value="">Seleccionar tipo</option>
+                      <option value="FORMAL">FORMAL</option>
+                      <option value="INFORMAL_CURSO">INFORMAL-CURSO</option>
+                      <option value="AUTODIDACTA">AUTODIDACTA</option>
+                      <option value="OTROS">OTROS</option>
+                    </select>
+                    <div *ngIf="editarEducacionForm.get('tipoEducacion')?.invalid && editarEducacionForm.get('tipoEducacion')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                      Debe seleccionar un tipo de educación
+                    </div>
+                  </div>
+
+                  <!-- URL de la imagen -->
+                  <div class="form-group mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">URL de la imagen</label>
+                    <input type="text" formControlName="imagenUrl" class="form-control" 
+                           placeholder="https://ejemplo.com/certificado.jpg">
+                  </div>
+
+                  <!-- Texto alternativo de la imagen -->
+                  <div class="form-group mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen</label>
+                    <input type="text" formControlName="imagenAlt" class="form-control" 
+                           placeholder="Certificado de finalización">
+                  </div>
+
+                  <div class="form-actions flex justify-between">
+                    <button type="submit" class="btn btn-primary px-6 py-2" [disabled]="actualizando || editarEducacionForm.invalid">
+                      <span *ngIf="!actualizando">
+                        <i class="fas fa-paper-plane me-2"></i>Actualizar educación
+                      </span>
+                      <span *ngIf="actualizando">
+                        <i class="fas fa-spinner fa-spin me-2"></i>Actualizando...
+                      </span>
+                    </button>
+                    
+                    <button type="button" class="btn btn-secondary px-6 py-2" (click)="cerrarModal()">
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR -->
+      @if (mostrarModalConfirmacion) {
+        <div class="modal-overlay">
+          <div class="modal-content modal-confirmacion">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="fas fa-exclamation-triangle me-2 text-yellow-500"></i>
+                Confirmar eliminación
+              </h5>
+              <button type="button" class="btn-close" (click)="cancelarEliminacion()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <div class="text-center p-6">
+                <div class="mb-4">
+                  <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                    ¿Está seguro de eliminar esta educación?
+                  </h3>
+                  <p class="text-gray-600">
+                    Está a punto de eliminar: <strong>"{{educacionAEliminar?.titulo}}"</strong>
+                  </p>
+                  <p class="text-gray-500 text-sm mt-2">
+                    Esta acción no se puede deshacer.
+                  </p>
+                </div>
+                
+                <div class="flex justify-center space-x-4 mt-6">
+                  <button type="button" class="btn btn-danger px-6 py-2" 
+                          (click)="eliminarEducacion()" 
+                          [disabled]="eliminando">
+                    <span *ngIf="!eliminando">
+                      <i class="fas fa-trash me-2"></i>Sí, eliminar
+                    </span>
+                    <span *ngIf="eliminando">
+                      <i class="fas fa-spinner fa-spin me-2"></i>Eliminando...
+                    </span>
+                  </button>
+                  
+                  <button type="button" class="btn btn-secondary px-6 py-2" 
+                          (click)="cancelarEliminacion()"
+                          [disabled]="eliminando">
+                    <i class="fas fa-times me-2"></i>Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
     </section>
   </main>
 </div>
-
-<!--<div id="main-content" class=" slide-left-enter">
-  <main class="container pb-1">
-    <section id="dashboard" class="section dashboard-section pt-40">
-
-      <div class="text-center mb-20">
-        <h2>Gestionar EDUCACION</h2>
-      </div>
-
-      <div class="max-w-2xl mx-auto">
-
-        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-1">
-          <div class="card p-6 mb-8" style="border-color: aqua; border-width: 3px;background-color: rgb(218, 218, 218);">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva educación</h3>
-            <form id="course-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
-                <input type="text" class="form-control" placeholder="Nombre del curso o taller">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
-                <textarea class="form-control resize-none" rows="3"
-                  placeholder="Breve descripción del curso..."></textarea>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Nivel</label>
-                <select class="form-control">
-                  <option value="">Seleccionar nivel</option>
-                  <option value="basico">FORMAL</option>
-                  <option value="intermedio">INFORMAL-CURSO</option>
-                  <option value="avanzado">AUTODIDACTA</option>
-                  <option value="experto">OTROS</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Certificado (imagen)</label>
-                <div class="file-input-wrapper">
-                  <label class="file-input-label">
-                    <i class="fas fa-cloud-upload-alt mr-2"></i>
-                    Elegir archivo
-                    <input type="file" accept=".pdf" class="hidden">
-                  </label>
-                  <span class="file-name text-sm text-gray-500 mt-1 block">No se ha seleccionado ningún archivo</span>
-                </div>
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-
-
-       @for ( educacion of educaciones; track educacion.id) {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="card">
-
-                  <div class="p-4" style="position: relative; display: inline-block; ">
-                    <img [src]="educacion.imagenes[0]?.url" [alt]="educacion.imagenes[0]?.alt" class="campaign-img rounded">
-
-                    <button id="editar" type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" (click)="cargarEducacionParaEditar(educacion)">
-                        ✏️
-                    </button>
-                </div>
-
-            <div class="p-5">
-              <span class="text-sm text-[color:var(--accent)]">Tipo de educacion: 
-                <span class="badge text-bg-secondary">{{educacion.tipoEducacion}}</span></span>
-              <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
-              <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
-  
-        
-             
-            </div>
-          </div>
-        </div>}
-
-                 AÑADIR Formulario de actualización (DEBE PERMITIR ACTUALIZAR TODOS SUS CAMPOS) 
-
-    </section>
-    
-  </main>
-</div>-->
