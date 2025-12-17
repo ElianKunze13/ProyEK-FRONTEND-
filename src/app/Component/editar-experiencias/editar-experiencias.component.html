@@ -1,68 +1,398 @@
 
-<div id="main-content" class=" slide-left-enter">
+<div id="main-content" class="slide-left-enter">
   <main class="container pb-1">
     <section id="dashboard" class="section dashboard-section pt-40">
       
       <div class="text-center mb-20">
-        <h2 >Gestionar EXPERIENCIA</h2>
+        <h2>Gestionar EXPERIENCIAS</h2>
       </div>
 
       <div class="max-w-6xl mx-auto">
-      
+        
+        <!-- FORMULARIO PARA CREAR NUEVA EXPERIENCIA -->
+        <div class="card p-6 mb-8" style="border-color: rgb(255, 145, 0); border-width: 3px; background-color: rgb(218, 218, 218);">
+          <h3 class="text-xl text-center font-semibold mb-6">Crear nueva experiencia</h3>
+          
+          <form [formGroup]="experienciaForm" (ngSubmit)="guardarExperiencia()" class="space-y-6">
+            <!-- Título -->
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
+              <input 
+                type="text" 
+                formControlName="titulo" 
+                class="form-control" 
+                placeholder="Nombre del proyecto o experiencia"
+              >
+              <div 
+                *ngIf="experienciaForm.get('titulo')?.invalid && experienciaForm.get('titulo')?.touched" 
+                class="text-red-500 text-sm mt-1"
+              >
+                El título es requerido (mínimo 2 caracteres)
+              </div>
+            </div>
+            
+            <!-- Fecha -->
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-medium text-gray-700">Fecha *</label>
+              <input 
+                type="date" 
+                formControlName="fechaHora" 
+                class="form-control"
+              >
+              <div 
+                *ngIf="experienciaForm.get('fechaHora')?.invalid && experienciaForm.get('fechaHora')?.touched" 
+                class="text-red-500 text-sm mt-1"
+              >
+                La fecha es requerida
+              </div>
+            </div>
+            
+            <!-- Descripción -->
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
+              <textarea 
+                formControlName="descripcion" 
+                class="form-control resize-none" 
+                rows="3" 
+                placeholder="Descripción detallada de la experiencia..."
+              ></textarea>
+              <div 
+                *ngIf="experienciaForm.get('descripcion')?.invalid && experienciaForm.get('descripcion')?.touched" 
+                class="text-red-500 text-sm mt-1"
+              >
+                La descripción es requerida (mínimo 10 caracteres)
+              </div>
+            </div>
+            
+          <!-- Tipo de Experiencia -->
+<div class="form-group">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia *</label>
+  <select formControlName="tipoExperiencia" class="form-control">
+    <option value="">Seleccionar tipo</option>
+    <option *ngFor="let tipo of tiposExperiencia" [value]="tipo.value">
+      {{ tipo.label }}
+    </option>
+  </select>
+  <div *ngIf="experienciaForm.get('tipoExperiencia')?.invalid && experienciaForm.get('tipoExperiencia')?.touched" 
+       class="text-red-500 text-sm mt-1">
+    Debe seleccionar un tipo de experiencia
+  </div>
+</div>
 
-        <div id="tarjetas" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-         
-          <!--formulario añadir EXPERIENCIA (proyectos realizados) -->
-          <div class="card p-6 mb-8"  style="border-color: rgb(255, 145, 0);border-width: 3px;">
-            <h3 class="text-xl text-center font-semibold mb-6">Crear nueva experiencia</h3>
-            <form id="course-form" class="space-y-6">
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Título</label>
-                <input type="text" class="form-control" placeholder="Nombre del proyecto o experiencia">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Fecha</label>
-                <input type="date" class="form-control">
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción</label>
-                <textarea class="form-control resize-none" rows="3" placeholder="Descripción detallada de la experiencia..."></textarea>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia</label>
-                <select class="form-control">
-                  <option value="">Seleccionar tipo</option>
-                  <option value="profesional">Profesional</option>
-                  <option value="academico">Académico</option>
-                  <option value="proyecto">Proyecto Personal</option>
-                  <option value="voluntariado">Voluntariado</option>
-                  <option value="practica">Práctica</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada</label>
-                <select class="form-control" multiple>
-                  <option value="html">HTML</option>
-                  <option value="css">CSS</option>
-                  <option value="javascript">JavaScript</option>
-                  <option value="react">React</option>
-                  <option value="angular">Angular</option>
-                  <option value="node">Node.js</option>
-                  <option value="python">Python</option>
-                  <option value="java">Java</option>
-                  <option value="sql">SQL</option>
-                </select>
-                <p class="text-xs text-gray-500 mt-1">Mantén presionada la tecla Ctrl (Cmd en Mac) para seleccionar múltiples</p>
-              </div>
-              <button type="submit" class="btn-primary w-full py-3">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Añadir
-              </button>
-            </form>
-          </div>
-
-          <!--AÑADIR LISTA DE EXPERIENCIAS CON 2 BOTONES MODAL: PARA EDITAR Y ELIMINAR-->
+<!-- Tecnología usada -->
+<div class="form-group">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada *</label>
+  <select formControlName="tecnologiaUsada" class="form-control">
+    <option value="">Seleccionar tecnología</option>
+    <option *ngFor="let tecnologia of tecnologiasUsadas" [value]="tecnologia.value">
+      {{ tecnologia.label }}
+    </option>
+  </select>
+  <div *ngIf="experienciaForm.get('tecnologiaUsada')?.invalid && experienciaForm.get('tecnologiaUsada')?.touched" 
+       class="text-red-500 text-sm mt-1">
+    Debe seleccionar una tecnología
+  </div>
+</div>
+            
+            <!-- Mensajes de error/success -->
+            <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {{ errorMessage }}
+            </div>
+            
+            <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+              {{ successMessage }}
+            </div>
+            
+            <button 
+              type="submit" 
+              [disabled]="experienciaForm.invalid || guardando" 
+              class="btn-primary w-full py-3 flex items-center justify-center"
+            >
+              <i class="fas fa-plus-circle mr-2"></i>
+              <span *ngIf="!guardando">Añadir experiencia</span>
+              <span *ngIf="guardando">Guardando...</span>
+            </button>
+          </form>
         </div>
+        
+        <!-- LISTA DE EXPERIENCIAS EXISTENTES -->
+        @if (experiencias.length > 0) {
+          <div class="animated-border-card mb-8">
+            <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">
+              Todas las experiencias ({{experiencias.length}})
+            </h3>
+            
+            <div class="grid grid-cols-1 gap-6">
+              @for (experiencia of experiencias; track experiencia.id) {
+                <div class="relative group">
+                  <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700" 
+                       style="background-color: rgb(80, 3, 153); position: relative;">
+                    
+                    <!-- Botones de acción -->
+                    <div class="action-buttons opacity-100 group-hover:opacity-100 transition-opacity">
+                      <button 
+                        type="button" 
+                        class="btn btn-primary btn-action btn-editar" 
+                        (click)="cargarExperienciaParaEditar(experiencia)"
+                        title="Editar experiencia"
+                      >
+                        ✏️ 
+                      </button>
+                      
+                      <button 
+                        type="button" 
+                        class="btn btn-danger btn-action btn-eliminar" 
+                        (click)="confirmarEliminacion(experiencia)"
+                        title="Eliminar experiencia"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                    
+                    <!-- Contenido de la experiencia -->
+                    <h4 class="text-2xl md:text-3xl font-bold mb-4" 
+                        style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-right: 60px;">
+                      {{experiencia.titulo}}
+                    </h4>
+                    
+                    <div class="flex flex-wrap items-center gap-4 mb-4">
+                      <span class="text-sm text-gray-300">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        {{experiencia.fechaHora | date: 'dd/MM/yyyy'}}
+                      </span>
+                      
+                      <span class="badge text-bg" style="background-color: rgb(19, 19, 88); padding: 0.5rem 1rem;">
+  {{ getTipoExperienciaLabel(experiencia.tipoExperiencia) }}
+</span>
+
+<span class="badge" style="background-color: rgb(0, 100, 0); padding: 0.5rem 1rem; color: white;">
+  <i class="fas fa-code mr-2"></i>
+  {{ getTecnologiaUsadaLabel(experiencia.tecnologiaUsada) }}
+</span>
+                    </div>
+                    
+                    <p class="text-lg leading-relaxed text-gray-300 text-left mb-0" 
+                       style="font-family: 'Courier New', Courier, monospace;">
+                      {{experiencia.descripcion}}
+                    </p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="text-center py-8">
+            <p class="text-gray-500">No hay experiencias registradas aún. Agrega la primera.</p>
+          </div>
+        }
+
+        <!-- MODAL PARA EDITAR EXPERIENCIA -->
+        @if (mostrarModalEditar) {
+          <div class="modal-overlay">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  Editando: {{experienciaEditada?.titulo}}
+                </h5>
+                <button 
+                  type="button" 
+                  class="btn-close" 
+                  (click)="cerrarModalEditar()" 
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              
+              <div class="modal-body">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                  <div 
+                    *ngIf="mensaje" 
+                    class="mensaje mb-4 p-3 rounded" 
+                    [class]="mensajeTipo === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'"
+                  >
+                    {{ mensaje }}
+                  </div>
+
+                  <form [formGroup]="editarExperienciaForm" (ngSubmit)="actualizarExperiencia()">
+                    <!-- Título -->
+                    <div class="form-group mb-4">
+                      <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
+                      <input 
+                        type="text" 
+                        formControlName="titulo" 
+                        class="form-control"
+                        placeholder="Nombre del proyecto o experiencia"
+                      >
+                      <div 
+                        *ngIf="editarExperienciaForm.get('titulo')?.invalid && editarExperienciaForm.get('titulo')?.touched" 
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        El título es requerido (mínimo 2 caracteres)
+                      </div>
+                    </div>
+
+                    <!-- Fecha -->
+                    <div class="form-group mb-4">
+                      <label class="block mb-2 text-sm font-medium text-gray-700">Fecha *</label>
+                      <input 
+                        type="date" 
+                        formControlName="fechaHora" 
+                        class="form-control"
+                      >
+                      <div 
+                        *ngIf="editarExperienciaForm.get('fechaHora')?.invalid && editarExperienciaForm.get('fechaHora')?.touched" 
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        La fecha es requerida
+                      </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group mb-4">
+                      <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
+                      <textarea 
+                        formControlName="descripcion" 
+                        class="form-control resize-none" 
+                        rows="3"
+                        placeholder="Descripción detallada de la experiencia..."
+                      ></textarea>
+                      <div 
+                        *ngIf="editarExperienciaForm.get('descripcion')?.invalid && editarExperienciaForm.get('descripcion')?.touched" 
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        La descripción es requerida (mínimo 10 caracteres)
+                      </div>
+                    </div>
+
+
+
+                  <!-- Tipo de Experiencia -->
+<div class="form-group mb-4">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia *</label>
+  <select formControlName="tipoExperiencia" class="form-control">
+    <option value="">Seleccionar tipo</option>
+    <option *ngFor="let tipo of tiposExperiencia" [value]="tipo.value">
+      {{ tipo.label }}
+    </option>
+  </select>
+  <div *ngIf="editarExperienciaForm.get('tipoExperiencia')?.invalid && editarExperienciaForm.get('tipoExperiencia')?.touched" 
+       class="text-red-500 text-sm mt-1">
+    Debe seleccionar un tipo de experiencia
+  </div>
+</div>
+
+<!-- Tecnología usada -->
+<div class="form-group mb-6">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada *</label>
+  <select formControlName="tecnologiaUsada" class="form-control">
+    <option value="">Seleccionar tecnología</option>
+    <option *ngFor="let tecnologia of tecnologiasUsadas" [value]="tecnologia.value">
+      {{ tecnologia.label }}
+    </option>
+  </select>
+  <div *ngIf="editarExperienciaForm.get('tecnologiaUsada')?.invalid && editarExperienciaForm.get('tecnologiaUsada')?.touched" 
+       class="text-red-500 text-sm mt-1">
+    Debe seleccionar una tecnología
+  </div>
+</div>
+
+
+
+
+                    <div class="form-actions flex justify-between mt-6">
+                      <button 
+                        type="submit" 
+                        class="btn btn-primary px-6 py-2" 
+                        [disabled]="actualizando || editarExperienciaForm.invalid"
+                      >
+                        <span *ngIf="!actualizando">
+                          <i class="fas fa-paper-plane me-2"></i>Actualizar experiencia
+                        </span>
+                        <span *ngIf="actualizando">
+                          <i class="fas fa-spinner fa-spin me-2"></i>Actualizando...
+                        </span>
+                      </button>
+                      
+                      <button 
+                        type="button" 
+                        class="btn btn-secondary px-6 py-2" 
+                        (click)="cerrarModalEditar()"
+                        [disabled]="actualizando"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR -->
+        @if (mostrarModalConfirmacion) {
+          <div class="modal-overlay">
+            <div class="modal-content modal-confirmacion">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  <i class="fas fa-exclamation-triangle me-2 text-yellow-500"></i>
+                  Confirmar eliminación
+                </h5>
+                <button 
+                  type="button" 
+                  class="btn-close" 
+                  (click)="cancelarEliminacion()" 
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              
+              <div class="modal-body">
+                <div class="text-center p-6">
+                  <div class="mb-4">
+                    <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                      ¿Está seguro de eliminar esta experiencia?
+                    </h3>
+                    <p class="text-gray-600">
+                      Está a punto de eliminar: <strong>"{{experienciaAEliminar?.titulo}}"</strong>
+                    </p>
+                    <p class="text-gray-500 text-sm mt-2">
+                      Esta acción no se puede deshacer.
+                    </p>
+                  </div>
+                  
+                  <div class="flex justify-center space-x-4 mt-6">
+                    <button 
+                      type="button" 
+                      class="btn btn-danger px-6 py-2" 
+                      (click)="eliminarExperiencia()" 
+                      [disabled]="eliminando"
+                    >
+                      <span *ngIf="!eliminando">
+                        <i class="fas fa-trash me-2"></i>Sí, eliminar
+                      </span>
+                      <span *ngIf="eliminando">
+                        <i class="fas fa-spinner fa-spin me-2"></i>Eliminando...
+                      </span>
+                    </button>
+                    
+                    <button 
+                      type="button" 
+                      class="btn btn-secondary px-6 py-2" 
+                      (click)="cancelarEliminacion()"
+                      [disabled]="eliminando"
+                    >
+                      <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       </div>
     </section>
   </main>
