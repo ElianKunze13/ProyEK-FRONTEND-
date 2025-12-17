@@ -33,15 +33,7 @@
 <!-- Sección del Currículum -->
         <div id="mi-curriculo" class="max-w-4xl mx-auto max-w-2xl ">
           
-          <!-- Vista previa del PDF
-          <div class="mb-6">
-            <iframe src="assets/Curriculum Vitae Profesional sin Foto (EK).pdf"
-              class="w-full max-w-4xl h-[500px] md:h-[700px] border rounded-lg shadow-lg" frameborder="0">
-              Tu navegador no soporta la visualización de PDFs.
-            </iframe>
-          </div>-->
-          
-          <!-- Botones de acción -->
+        
             <button style="background-color: rgb(4, 49, 88); border-radius: 2cap; margin-bottom: 8%;">
             <a href="assets/Curriculum Vitae Profesional sin Foto (EK).pdf"  
                target="_blank" 
@@ -61,33 +53,27 @@
               Descargar Currículo
             </button>
         </div>
-
-
         </div>
 
-
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-20" style="margin-top: 12%;">
         <!-- Texto descripcion personal -->
-        <div class="max-w-4xl mx-auto mb-12">
+        <div class="col max-w-4xl mx-auto mb-12">
           <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
-            Un poco sobre mí...
+            Un poco sobre mí
           </h3>
           
             <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
               <p class="text-lg leading-relaxed text-gray-300 text-left">
-               <!--icono FLATICON
-                <img src="https://cdn-icons-gif.flaticon.com/6454/6454106.gif" alt="ejemplo" class="w-14 h-14 object-cover">
-                icono ICONO8
-                <img src="https://img.icons8.com/?size=80&id=8rKdRqZFLurS&format=png" alt="ejemplo" class="w-14 h-14 object-cover">
-              -->
-
                 {{usuario.descripcion || 'Esta información se puede editar desde el panel de administración'}}
               </p>
             </div>
           
         </div>
-
         <!-- Sección de Habilidades-->
           <div class="seccion-habilidades">
+            <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
+            Soy una persona...
+          </h3>
           <div class="carrusel-container" (mouseenter)="pausarCarrusel()" (mouseleave)="reanudarCarrusel()">
             <div class="carrusel-wrapper">
               <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
@@ -113,8 +99,33 @@
 
 
         </div>
+        </div>
 
-        
+        <!--lista de proyectos-->
+        <div class="max-w-4xl mx-auto mb-12">
+          <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
+            Mis Proyectos..
+          </h3>
+
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+            @for (experiencia of experiencias; track $index) {
+            <div class="col bg-gray-800/50 p-6 rounded-xl border border-gray-700" style="background-color:rgb(80, 3, 153);">
+             <h4 class="text-2xl md:text-4xl font-bold mb-6" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+            {{experiencia.titulo}}  {{experiencia.fechaHora}} 
+          </h4>
+              <p class="text-lg leading-relaxed text-gray-300 text-left" style="font-family: 'Courier New', Courier, monospace;">
+                {{experiencia.descripcion}}            
+              </p>    
+             
+              <span class="text-sm text-[color:var(--accent)]">Tipo de educacion: 
+                <span class="badge text-bg" 
+                style="background-color: rgb(19, 19, 88);padding: 1.5%;"> {{experiencia.tipoExperiencia}}</span></span>
+              
+            
+            </div>}
+          </div>
+        </div>
+
       </div>
     </section>
   </main>

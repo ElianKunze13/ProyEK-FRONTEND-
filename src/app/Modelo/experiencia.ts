@@ -5,7 +5,7 @@ export interface Experiencia {
    
     id: any;
         titulo: string;
-        fechaHora: Date;
+        fechaHora: string | Date;
         descripcion: string;
         tipoExperiencia: TipoExperiencia;
         tecnologiaUsada: TecnologiaUsada;
