@@ -57,7 +57,7 @@ h2 {
 /* Definición de colores por clase */
 .habilidad-item {
   width: 140px;
-  height: 180px;
+  height: 100px;
   flex-shrink: 0;
   border-radius: 20px;
   display: flex;
@@ -85,10 +85,6 @@ h2 {
   z-index: 1;
 }
 
-.habilidad-item:hover {
-  transform: translateY(-10px) scale(1.08);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-}
 
 .habilidad-item > * {
   position: relative;
