@@ -15,7 +15,7 @@ import { Experiencia } from '../../Modelo/experiencia';
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
-export class PerfilComponent implements OnInit, OnDestroy {
+export class PerfilComponent implements OnInit {
   expandedIndex: number | null = null;
 
   usuario: Usuario = {
@@ -151,21 +151,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.desplazamiento += direccion * this.itemWidth;
   }
 
-  // Métodos para pausar/reanudar al interactuar
-  pausarCarrusel(): void {
-    clearInterval(this.intervalo);
-  }
-
-  reanudarCarrusel(): void {
-    this.iniciarCarruselAutomatico();
-  }
-
-  ngOnDestroy(): void {
-    if (this.intervalo) {
-      clearInterval(this.intervalo);
-    }
-  }
-
+ 
   loadUsuario(): void {
     this.loading = true;
     this.usuarioService.getById(1).subscribe({

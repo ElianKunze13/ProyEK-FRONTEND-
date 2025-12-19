@@ -74,7 +74,7 @@
             <h3 class="text-2xl md:text-4xl font-bold mb-6 text-[color:var(--accent)]">
             Soy una persona...
           </h3>
-          <div class="carrusel-container" (mouseenter)="pausarCarrusel()" (mouseleave)="reanudarCarrusel()">
+          <div class="carrusel-container" >
             <div class="carrusel-wrapper">
               <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
                 [style.transition]="'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'">
@@ -117,11 +117,11 @@
                 {{experiencia.descripcion}}            
               </p>    
              
-              <span class="text-sm text-[color:var(--accent)]">Tipo de educacion: 
+              <span class="text-sm text-[color:var(--accent)]">Tipo de proyecto: 
                 <span class="badge text-bg" 
                 style="background-color: rgb(19, 19, 88);padding: 1.5%;"> {{experiencia.tipoExperiencia}}</span></span>
               
-            
+          
             </div>}
           </div>
         </div>
