@@ -33,16 +33,11 @@
                     {{ conocimiento?.nombre }}
                   </span>
                   <!-- Nivel (solo visible en hover) -->
-    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 
+        <span id="nivel" class="-bottom-8 left-1/2 transform -translate-x-1/2 
                 bg-gray-800/90 text-white px-2 py-1 rounded-lg 
                 text-xs whitespace-nowrap z-10 border border-gray-700
-                opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                pointer-events-none">
-      <div class="flex items-center gap-1">
-        <span>Nivel:</span>
-        <span class="font-semibold">{{ conocimiento?.nivel }}</span>
-      </div>
-    </div>
+                  duration-200
+                pointer-events-none">Nivel: {{ conocimiento?.nivel }}</span>
   </div>
                 
               }
@@ -65,17 +60,7 @@
                     {{ conocimiento?.nombre }}
                   </span>
 
-    <!-- Nivel (solo visible en hover) -->
-    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 
-                bg-gray-800/90 text-white px-2 py-1 rounded-lg 
-                text-xs whitespace-nowrap z-10 border border-gray-700
-                opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                pointer-events-none">
-      <div class="flex items-center gap-1">
-        <span>Nivel:</span>
-        <span class="font-semibold">{{ conocimiento?.nivel }}</span>
-      </div>
-    </div>
+    
   </div>
               }
             </div>

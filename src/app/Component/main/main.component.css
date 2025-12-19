@@ -4,6 +4,25 @@
   min-height: 100vh;
 }
 
+ #nivel {
+position:absolute;
+opacity: 0;
+color:transparent;
+}
+
+#nivel:hover{
+  position: absolute;
+  opacity: 100; 
+  transition: duration-200;
+  color: white;
+  font-weight:700;
+  font-size: x-small;
+  background-color: #404041;
+  border: #a5a5a5;
+  }
+
+
+
 /* Estilo animado para borde de tarjetas */
 .animated-border-card {
   position: relative;

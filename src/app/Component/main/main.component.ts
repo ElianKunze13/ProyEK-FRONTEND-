@@ -103,7 +103,7 @@ conProt:Conocimiento[] =[];
         console.log('📊 Cantidad de items:', data.length);
         console.log('🔍 Estructura del primer item:', data[0]);
         
-        this.conFront=data;
+        this.conTest=data;
         console.log(JSON.stringify(this.conTest))
       },
       error: () =>{
@@ -121,7 +121,7 @@ conProt:Conocimiento[] =[];
         console.log('📊 Cantidad de items:', data.length);
         console.log('🔍 Estructura del primer item:', data[0]);
         
-        this.conFront=data;
+        this.conOtros=data;
         console.log(JSON.stringify(this.conOtros))
       },
       error: () =>{
@@ -152,7 +152,7 @@ conProt:Conocimiento[] =[];
   }
 
   cargarConocimientosPrototipo(): void{
-    this.conocimientoService.findOtros().subscribe({
+    this.conocimientoService.findModelado().subscribe({
       next: (data: Conocimiento[])=>{
          console.log('✅ Datos recibidos:', data);
         console.log('📊 Cantidad de items:', data.length);
