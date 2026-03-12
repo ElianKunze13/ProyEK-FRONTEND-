@@ -1,4 +1,4 @@
-# FrontEnd Para Portofolio 
+# ✨FrontEnd Para Portofolio 
 
 Este repositorio guarda el formato utilizado para la creacion de un portafolio digital (curriculum), diseñado y creado aplicando modalidades de trabajo agil (Sprint y Scrum) que permiten mejorar el rendimiento a la hora de desarrollar.
 
