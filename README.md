@@ -1,6 +1,6 @@
 # FrontEnd Para Portofolio 
 
-Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git para definicion explicita de cambios realizados.
+Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado e integracion de cambios mediante Git, utilizando estandares de buena convencion para definicion de commits y ramas.
 
 ---
 ## 🔗 Repositorios Relacionados
@@ -13,13 +13,6 @@ Este repositorio guarda el formato utilizado para la creacion de portafolio digi
 - Prototipo visual (frontend): https://xkfti.magicloops.app/
 - Historias de usuario: https://trello.com/invite/b/6862e7dca5c65a1ac3e0c315/ATTId497b92eabe2acf4bfafb3734af59c6cC685978C/webpotafolio
 
---- 
-
-## Formato general de proyecto
-- Componentes
-- Models
-- Servicies
-- README.md
 
 --- 
 
@@ -98,6 +91,6 @@ ProyEK-FRONTEND-/
 
 ## 📖 Licencias
 - 'ESTE PROYECTO FUE CREADO CON FINES EDUCATIVOS Y PARA USO PERSONAL'
-- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2.
+- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2 and SpringBoot.
 
 
