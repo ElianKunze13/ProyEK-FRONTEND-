@@ -111,7 +111,7 @@ ProyEK-FRONTEND-/
 
 
 ## 📖 Licencias
-- 'ESTE PROYECTO FUE CREADO CON FINES EDUCATIVOS Y PARA USO PERSONAL'
+- 'Este proyecto tiene una licensia MIT y sirve para fines educativos'. 
 
 
 
