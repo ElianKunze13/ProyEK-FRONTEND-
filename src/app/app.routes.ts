@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './Servicio/auth2/Auth.guard';
+import { AdminGuard } from './Guards/Admin.guard';
+import { AuthGuard } from './Guards/Auth.guard';
 
 export const routes: Routes = [
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
 },
 { 
     path: "perfilUsuario",
+     canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/perfil/perfil.component")
     .then(m => m.PerfilComponent)
 },{ 
@@ -36,37 +38,37 @@ export const routes: Routes = [
 
 { 
     path: "actualizarPortofolio",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/modificar-portofolio/modificar-portofolio.component")
     .then(m => m.ModificarPortofolioComponent)
 },
 { 
     path: "actualizarPerfil",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/actualizar-perfil/actualizar-perfil.component")
     .then(m => m.ActualizarPerfilComponent)
 },
 { 
     path: "panelEducacion",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/editar-educacion/editar-educacion.component")
     .then(m => m.EditarEducacionComponent)
 },
 { 
     path: "panelExperiencia",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/editar-experiencias/editar-experiencias.component")
     .then(m => m.EditarExperienciasComponent)
 },
 { 
     path: "panelHabilidad",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/editar-habilidades/editar-habilidades.component")
     .then(m => m.EditarHabilidadesComponent)
 },
 { 
     path: "panelHerramienta",
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard,AdminGuard],
     loadComponent: () => import("./Component/editar-herramientas/editar-herramientas.component")
     .then(m => m.EditarHerramientasComponent)
 },
