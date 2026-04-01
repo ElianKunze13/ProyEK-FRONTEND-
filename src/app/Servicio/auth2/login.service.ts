@@ -4,7 +4,7 @@ import  {  Observable, throwError, catchError, BehaviorSubject , tap, map} from 
 import { environment } from '../../../environments/environment';
 import { LoginRequest } from './loginRequest';
 import { isPlatformBrowser } from '@angular/common';
-import { Usuario } from '../../Modelo/usuario';
+import { Usuario } from '../../Modelos/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -49,13 +49,32 @@ register(credentials: Usuario): Observable<any> {
   );
 }
 
+// login.service.ts - CORREGIR LOGOUT
+logout(): void {
+  if (isPlatformBrowser(this.platformId)) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("rol");
+    localStorage.removeItem("username");
+    localStorage.removeItem("tokenExp");
+  }
+  
+  this.usuarioLoginOn.next(false);
+  this.usuarioToken.next("");
+  
+  // Redirigir al login
+  if (isPlatformBrowser(this.platformId)) {
+    window.location.href = '/login';
+  }
+}
+
+/*
   logout():void{
   localStorage.removeItem("token");  // 🗑️ Limpia almacenamiento
   localStorage.removeItem("rol", ); // Primer rol
   localStorage.removeItem("username");
   localStorage.removeItem("tokenExp"); // Guardar expiración
   this.usuarioLoginOn.next(false);     // 🔴 Actualiza estado
-  }
+  }*/
 
   private handleError(error:HttpErrorResponse){
     if(error.status===0){
@@ -90,7 +109,38 @@ register(credentials: Usuario): Observable<any> {
   get userToken():String{
     return this.usuarioToken.value;
   }
+///////////////////////////////////////////////
 
+// login.service.ts - MEJORAR isAuthenticated()
+isAuthenticated(): boolean {
+  // Verificar en entorno de navegador
+  if (!isPlatformBrowser(this.platformId)) {
+    return false;
+  }
+
+  const token = localStorage.getItem("token");
+  
+  if (!token) {
+    return false;
+  }
+
+  // Verificar expiración
+  const tokenExp = localStorage.getItem("tokenExp");
+  if (tokenExp) {
+    const expirationTime = parseInt(tokenExp);
+    const currentTime = Date.now();
+    
+    if (currentTime > expirationTime) {
+      console.log('Token expirado, eliminando...');
+      this.logout();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/*
 isAuthenticated(): boolean {
   const token = this.getToken(); // Usar getToken() en lugar de userToken
 
@@ -126,8 +176,8 @@ private isTokenExpired(): boolean {
   });
 
   return currentTime > expirationTime;
-}
-
+}*/
+////////////////////////////////////////////////////
 
 
 
@@ -186,6 +236,18 @@ getUsuarioDesdeToken(): { id: number, username: string, roles: string[] } | null
   }
 }
 
+// Agregar en login.service.ts
+private redirectUrl: string | null = null;
+
+setRedirectUrl(url: string): void {
+  this.redirectUrl = url;
+}
+
+getRedirectUrl(): string | null {
+  const url = this.redirectUrl;
+  this.redirectUrl = null;
+  return url;
+}
 
 }
 

@@ -1,10 +1,13 @@
+/*estilos de componente*/
 #main-content {
   background-color: #1e293b;
   color: white;
   min-height: 100vh;
 }
+  
 
-/* #nivel {
+/*estilo de span con nivel de conocimiento*/
+ #nivel {
 position:absolute;
 opacity: 0;
 color:transparent;
