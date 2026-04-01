@@ -1,25 +1,38 @@
-# FrontEnd Para Portofolio 
+# ✨FrontEnd Para Portofolio 
 
-Este repositorio guarda el formato utilizado para la creacion de portafolio digital personal(curriculum), aplicando control de versionado con Git para definicion explicita de cambios realizados.
+Este repositorio guarda el formato utilizado para la creacion de un portafolio digital (curriculum), diseñado y creado aplicando modalidades de trabajo agil (Sprint y Scrum) que permiten mejorar el rendimiento a la hora de desarrollar.
+
+Este se desarrollo aplicando control de versionado e integracion de cambios mediante Git, utilizando estandares de buena convencion para la definicion de commits y ramas de trabajo.
+
 
 ---
 ## 🔗 Repositorios Relacionados
 
-- **Backend:** [ProyEK-BACKEND](https://github.com/ElianKunze13/ProyEK-BACKEND-.git)
+- **Backend (API REST):** [ProyEK-BACKEND](https://github.com/ElianKunze13/ProyEK-BACKEND-.git)
 
+---
+
+## 🛠️ Herramientas implementadas
+### Lenguajes
+- **TypeScript v5.0** 
+- **HTML** 
+- **CSS** 
+
+### Frameworks y Librerías 
+*   [![Angular](https://img.shields.io/badge/Angular-19.1.2-DD0031?style=flat&logo=angular&logoColor=white)](https://angular.io/)
+*   [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+*   [![Font Awesome](https://img.shields.io/badge/Font_Awesome-6.5.0-528DD7?style=flat&logo=fontawesome&logoColor=white)](https://fontawesome.com/)
+
+
+### Herramientas varias
+*   [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+*   [![npm](https://img.shields.io/badge/npm-9%2B-CB3837?style=flat&logo=npm&logoColor=white)](https://www.npmjs.com/)
 ---
 
 ## Documentacion y prototipos
 - Prototipo visual (frontend): https://xkfti.magicloops.app/
-- Historias de usuario: https://trello.com/invite/b/6862e7dca5c65a1ac3e0c315/ATTId497b92eabe2acf4bfafb3734af59c6cC685978C/webpotafolio
+- Gestión del proyecto (Trello): https://trello.com/invite/b/6862e7dca5c65a1ac3e0c315/ATTId497b92eabe2acf4bfafb3734af59c6cC685978C/webpotafolio
 
---- 
-
-## Formato general de proyecto
-- Componentes
-- Models
-- Servicies
-- README.md
 
 --- 
 
@@ -29,7 +42,7 @@ Herramientas de inteligencia artificial implementadas:
 - ChatGPT (sugerencias esteticas/visuales y de componentes)
 - ClaudeIA (generacion estructura documentacion)
 - GitHub Copilot (manejo de errores)
-- MagicLoops (para prototipado visual de la web)
+- MagicLoops (para prototipado visual de la interfaz web)
 
 
 ---
@@ -41,7 +54,7 @@ ProyEK-FRONTEND-/
 ├── 📁 public/                    # Recursos estáticos (imágenes, iconos, etc.)
 ├── 📁 src/                       
 │   ├── 📁 app/                   
-│   │   ├── 📁 Components/        # Componentes reutilizables donde se define formato y estilos
+│   │   ├── 📁 Components/        # Componentes reutilizables donde se define formato y estilos (HTML, TS, CSS)
 │   │   ├── 📁 Guards/            # Guards para protección de rutas
 │   │   ├── 📁 Modelos/           # Modelos de datos (interfaces/enums)
 │   │   ├── 📁 Servicios/         # Servicios para lógica de negocio y API
@@ -51,8 +64,8 @@ ProyEK-FRONTEND-/
 │   └── 📁 environments/          # Configuraciones por entorno (development/production)
 │
 ├── 📄 package.json               # Dependencias del proyecto 
-├── 📄 angular.json              
-├── 📄 tsconfig.json             
+├── 📄 angular.json               # Configuración del workspace de Angular
+├── 📄 tsconfig.json              # Configuración base de TypeScript
 └── 📄 README.md                  # Archivo actual (presentación/documentación)
 ```
 
@@ -80,6 +93,7 @@ ProyEK-FRONTEND-/
 ```
 
 3. **Configurar variables de entorno:**
+   - Este proyecto utiliza archivos de entorno para manejar configuraciones como la URL de la API.
    - Edita los archivos en `src/environments/` según tu configuración (URLs de API, etc.)
 
 4. **Ejecutar en modo desarrollo:**
@@ -97,7 +111,7 @@ ProyEK-FRONTEND-/
 
 
 ## 📖 Licencias
-- 'ESTE PROYECTO FUE CREADO CON FINES EDUCATIVOS Y PARA USO PERSONAL'
-- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2.
+- 'Este proyecto tiene una licensia MIT y sirve para fines educativos'. 
+
 
 
