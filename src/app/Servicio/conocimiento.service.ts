@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Conocimiento } from '../Modelo/conocimiento';
 import { catchError, Observable, of, throwError } from 'rxjs';
-
+export type TipoConocimiento = 'FRONTEND' | 'BACKEND' | 'BASE_DATOS' | 'TESTING' | 'OTROS' | 'IA' | 'PROTOTIPO';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,8 +23,17 @@ export class ConocimientoService {
           );
       }
   
-
-findFrontend(): Observable<Conocimiento[]> {
+  // MÉTODO ÚNICO para filtrar por tipo (usando Query Param)
+  findByTipo(tipo: TipoConocimiento): Observable<Conocimiento[]> {
+    return this.http.get<Conocimiento[]>(`${this.apiUrl}/conocimientos/filtrar`, { params: { tipo } })
+      .pipe(
+        catchError(error => {
+          console.error(`Error fetching conocimientos ${tipo}:`, error);
+          return of([]);
+        })
+      );
+  }
+/*findFrontend(): Observable<Conocimiento[]> {
     return this.http.get<Conocimiento[]>(this.apiUrl + '/frontend')
       .pipe(
         catchError(error => {
@@ -69,8 +78,6 @@ findFrontend(): Observable<Conocimiento[]> {
         })
       );
   }
-/**AGREGAR SERVICIO TRAER LISTA ia Y testing  */
-
 findIA(): Observable<Conocimiento[]> {
     return this.http.get<Conocimiento[]>(this.apiUrl + '/ia')
       .pipe(
@@ -90,7 +97,7 @@ findIA(): Observable<Conocimiento[]> {
         })
       );
   }
-  
+  */
 
 
   save(conocimiento: Conocimiento): Observable<Conocimiento> {

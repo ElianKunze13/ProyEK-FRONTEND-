@@ -17,47 +17,44 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           
           <!-- Tarjeta Frontend -->
-          <div class="animated-border-card" >
-            <h3 class="text-xl text-center font-bold mb-4" 
-            style="color: rgb(210, 169, 248);">Frontend</h3>
+          <div class="animated-border-card">
+            <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(210, 169, 248);">Frontend</h3>
             <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conFront; track conocimiento.id) {
+              @for (conocimiento of conocimientos['FRONTEND']; track conocimiento.id) {
                 <div class="skill-card flex flex-col items-center w-20 relative">
                   <div class="mb-3 p-3 bg-white/10 rounded-lg">
                     <img 
                       [src]="conocimiento.imagenes[0]?.url" 
-                      [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre"
-                      class="w-14 h-14 object-cover" >
+                      [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre || 'Imagen de herramienta'"
+                      [title]="conocimiento?.nombre || 'Herramienta'"
+
+                      class="w-14 h-14 object-cover">
                   </div>
                   <span class="text-sm font-medium text-center" style="color: aliceblue;">
                     {{ conocimiento?.nombre }}
                   </span>
-                  <!-- Nivel (solo visible en hover) -->
-        <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-  </div>
-                
+                  <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                </div>
               }
             </div>
           </div>
 
           <!-- Tarjeta Backend -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(157, 224, 255);">Backend</h3>
+            <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(157, 224, 255);">Backend</h3>
             <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conBack; track conocimiento.id) {
-                <div class="flex flex-col items-center w-20" >
+              @for (conocimiento of conocimientos['BACKEND']; track conocimiento.id) {
+                <div class="flex flex-col items-center w-20">
                   <div class="mb-2 p-2 bg-white/10 rounded-lg">
                     <img 
                       [src]="conocimiento.imagenes[0]?.url" 
-                      [alt]="conocimiento.imagenes[0]?.alt"
+                      [alt]="conocimiento.imagenes[0]?.alt || conocimiento.nombre"
                       class="w-12 h-12 object-contain">
                   </div>
                   <span class="text-sm font-medium text-center" style="color: aliceblue;">
                     {{ conocimiento?.nombre }}
                   </span>
-
-    
-  </div>
+                </div>
               }
             </div>
           </div>
@@ -68,9 +65,9 @@
           
           <!-- Tarjeta Base de datos -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(250, 142, 201);">Base Datos</h3>
+            <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(250, 142, 201);">Base Datos</h3>
             <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conBD; track conocimiento.id) {
+              @for (conocimiento of conocimientos['BASE_DATOS']; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
                   <div class="mb-2 p-2 bg-white/10 rounded-lg">
                     <img 
@@ -88,9 +85,9 @@
 
           <!-- Tarjeta Testing -->
           <div class="animated-border-card">
-            <h3 class="text-xl text-center font-bold mb-4 " style="color: rgb(169, 248, 202);">Testing</h3>
+            <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(169, 248, 202);">Testing</h3>
             <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conTest; track conocimiento.id) { <!-- CAMBIADO -->
+              @for (conocimiento of conocimientos['TESTING']; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
                   <div class="mb-2 p-2 bg-white/10 rounded-lg">
                     <img 
@@ -114,7 +111,7 @@
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(165, 165, 165);">Otras</h3>
             <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conOtros; track conocimiento.id) {
+              @for (conocimiento of conocimientos['OTROS']; track conocimiento.id) {
                 <div class="flex flex-col items-center w-20">
                   <div class="mb-2 p-2 bg-white/10 rounded-lg">
                     <img 
@@ -131,11 +128,8 @@
           </div>
         </div>
 
-      
-
         <!-- Sección Herramientas -->
-        <div id="herramientas"
-         class="mt-10" >
+        <div id="herramientas" class="mt-10">
           <h3 class="text-2xl font-bold mb-4 text-[color:var(--text-primary)]">Tecnologias y Herramientas que uso</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
@@ -143,7 +137,7 @@
             <div class="animated-border-card">
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">IA</h4>
               <div class="flex flex-wrap gap-4 justify-center">
-                @for (conocimiento of conIA; track conocimiento.id) { <!-- NUEVO -->
+                @for (conocimiento of conocimientos['IA']; track conocimiento.id) {
                   <div class="flex flex-col items-center w-20">
                     <div class="mb-2 p-2 bg-white/10 rounded-lg">
                       <img 
@@ -163,7 +157,7 @@
             <div class="animated-border-card">
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Prototipos-Presentaciones</h4>
               <div class="flex flex-wrap gap-4 justify-center">
-                @for (conocimiento of conProt; track conocimiento.id) { <!-- NUEVO -->
+                @for (conocimiento of conocimientos['PROTOTIPO']; track conocimiento.id) {
                   <div class="flex flex-col items-center w-20">
                     <div class="mb-2 p-2 bg-white/10 rounded-lg">
                       <img 
