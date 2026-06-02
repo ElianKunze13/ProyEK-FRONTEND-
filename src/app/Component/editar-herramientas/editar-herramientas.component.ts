@@ -123,7 +123,7 @@ export class EditarHerramientasComponent implements OnInit {
       nombre: this.conocimientoForm.value.nombre,
       nivel: nivelEnum,
       tipoConocimiento: tipoEnum,
-      imagenes: imagenes
+      imagen: imagenes[0]
     };
 
     console.log('Enviando conocimiento a guardar:', nuevoConocimiento);
@@ -173,8 +173,8 @@ export class EditarHerramientasComponent implements OnInit {
     this.conocimientoEditado = { ...conocimiento };
 
     // Obtener la primera imagen si existe
-    const primeraImagen = conocimiento.imagenes && conocimiento.imagenes.length > 0 
-      ? conocimiento.imagenes[0] 
+    const primeraImagen = conocimiento.imagen && conocimiento.imagen 
+      ? conocimiento.imagen 
       : { url: '', alt: '' };
 
     // Convertir enum a string para el formulario
@@ -239,7 +239,7 @@ export class EditarHerramientasComponent implements OnInit {
       nombre: this.editarConocimientoForm.value.nombre,
       nivel: nivelEnum,
       tipoConocimiento: tipoEnum,
-      imagenes: imagenes
+      imagen: imagenes[0]
     };
 
     console.log('Actualizando conocimiento:', conocimientoActualizado);

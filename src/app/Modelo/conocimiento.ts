@@ -7,5 +7,7 @@ export interface Conocimiento {
     nombre: string;
     nivel: Nivel;
     tipoConocimiento: TipoConocimiento;
-    imagenes: Imagen[] ;
+    imagen?: Imagen;  // Cambiado de lista a imagen unica
+
+    // imagenes: Imagen[] ;
 }
