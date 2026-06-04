@@ -7,7 +7,10 @@ export interface Conocimiento {
     nombre: string;
     nivel: Nivel;
     tipoConocimiento: TipoConocimiento;
-    imagen?: Imagen;  // Cambiado de lista a imagen unica
 
+///AGREGAR VALORES FALTANTES
+
+    imagen?: Imagen;  // Cambiado de lista a imagen unica
     // imagenes: Imagen[] ;
+
 }

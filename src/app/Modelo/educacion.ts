@@ -4,7 +4,9 @@ import { Imagen } from "./imagen";
 export interface Educacion{
     id: any;
     titulo: string;
-    //fechaObtencion: Date;
+
+    ///AGREGAR VALORES FALTANTES Y ARREGLAR TIPOS DE DATOS
+
         descripcion: string;
         tipoEducacion: TipoEducacion;
         imagenes: Imagen[];
