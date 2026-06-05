@@ -1,13 +1,13 @@
 import { TipoEducacion } from "./Enums/tipoEducacion";
 import { Imagen } from "./imagen";
 
-export interface Educacion{
+export interface Educacion {
     id: any;
     titulo: string;
-
-    ///AGREGAR VALORES FALTANTES Y ARREGLAR TIPOS DE DATOS
-
-        descripcion: string;
-        tipoEducacion: TipoEducacion;
-        imagenes: Imagen[];
+    fechaInicio: Date;
+    fechaObtencion: Date;
+    descripcion: string;
+    tipoEducacion: TipoEducacion;
+    imagen?: Imagen;  // Cambiado de lista a imagen unica
+    //imagenes: Imagen[];
 }
