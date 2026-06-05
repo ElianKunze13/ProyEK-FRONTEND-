@@ -32,7 +32,7 @@ private apiUrl = environment.apiUrl;
         );
     }
   
-      updatExperiencia(id: number, experiencia : Experiencia): Observable<Experiencia> {
+      updateExperiencia(id: number, experiencia : Experiencia): Observable<Experiencia> {
       console.log(JSON.stringify(experiencia));
       return this.http.put<Experiencia>(`${this.apiUrl}/auth/modificar/experiencia/${id}`, experiencia)
       .pipe(

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TecnologiaUsada } from '../../Modelo/Enums/tecnologiaUsada';
 import { TipoExperiencia } from '../../Modelo/Enums/tipoExperiencia';
+import { Imagen } from '../../Modelo/imagen';
 
 @Component({
   selector: 'app-editar-experiencias',
@@ -72,19 +73,23 @@ export class EditarExperienciasComponent implements OnInit {
     // Formulario para crear nueva experiencia
     this.experienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
-      fechaHora: ['', [Validators.required]],
+      fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
-      tecnologiaUsada: ['', [Validators.required]]
+      tecnologiaUsada: ['', [Validators.required]],
+      imagenUrl: [''],
+      imagenAlt: ['']
     });
     
     // Formulario para editar experiencia
     this.editarExperienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
-      fechaHora: ['', [Validators.required]],
+      fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
-      tecnologiaUsada: ['', [Validators.required]]
+      tecnologiaUsada: ['', [Validators.required]],
+      imagenUrl: [''],
+      imagenAlt: ['']
     });
   }
 
@@ -106,7 +111,6 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  // CREAR NUEVA EXPERIENCIA
   guardarExperiencia(): void {
     if (this.experienciaForm.invalid) {
       this.marcarControlesComoTocados(this.experienciaForm);
@@ -117,14 +121,32 @@ export class EditarExperienciasComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    
+        // Preparar array de imágenes
+        const imagenes: Imagen[] = [];
+        const imagenUrl = this.experienciaForm.value.imagenUrl;
+        const imagenAlt = this.experienciaForm.value.imagenAlt;
+    
+        if (imagenUrl) {
+          imagenes.push({
+            url: imagenUrl,
+            alt: imagenAlt || `Logo de ${this.experienciaForm.value.titulo}`
+          });
+        }
+    
     const nuevaExperiencia: Experiencia = {
       id: null,
       titulo: this.experienciaForm.value.titulo,
-      fechaHora: this.experienciaForm.value.fechaHora,
+      fechaFinProyecto: this.experienciaForm.value.fechaFinProyecto,
       descripcion: this.experienciaForm.value.descripcion,
       tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
-      tecnologiaUsada: this.experienciaForm.value.tecnologiaUsada
+      tecnologiaUsada: this.experienciaForm.value.tecnologiaUsada,
+      imagen: imagenes[0]
+
     };
+
+    console.log('Enviando experiencia a guardar:', nuevaExperiencia);
+
 
     this.experienciaService.save(nuevaExperiencia).subscribe({
       next: (experienciaGuardada) => {
@@ -146,13 +168,21 @@ export class EditarExperienciasComponent implements OnInit {
 
   // EDITAR EXPERIENCIA
   cargarExperienciaParaEditar(experiencia: Experiencia): void {
+
+ // Obtener la primera imagen si existe
+    const primeraImagen = experiencia.imagen && experiencia.imagen 
+      ? experiencia.imagen 
+      : { url: '', alt: '' };
+
     this.experienciaEditada = experiencia;
     this.editarExperienciaForm.patchValue({
       titulo: experiencia.titulo,
-      fechaHora: this.formatDateForInput(experiencia.fechaHora),
+      fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto),
       descripcion: experiencia.descripcion,
       tipoExperiencia: experiencia.tipoExperiencia,
-      tecnologiaUsada: experiencia.tecnologiaUsada
+      tecnologiaUsada: experiencia.tecnologiaUsada,
+      imagenUrl: primeraImagen.url,
+      imagenAlt: primeraImagen.alt
     });
     this.mostrarModalEditar = true;
     this.mensaje = '';
@@ -175,17 +205,32 @@ export class EditarExperienciasComponent implements OnInit {
 
     this.actualizando = true;
     this.mensaje = '';
+ 
+    
+    // Preparar array de imágenes
+    const imagenes: Imagen[] = [];
+    const imagenUrl = this.editarExperienciaForm.value.imagenUrl;
+    const imagenAlt  = this.editarExperienciaForm.value.imagenAlt;
+
+    if (imagenUrl) {
+      imagenes.push({
+        url: imagenUrl,
+        alt: imagenAlt || `Logo de ${this.editarExperienciaForm.value.titulo}`
+      });
+    }
 
     const experienciaActualizada: Experiencia = {
       id: this.experienciaEditada.id,
       titulo: this.editarExperienciaForm.value.titulo,
-      fechaHora: this.editarExperienciaForm.value.fechaHora,
+      fechaFinProyecto: this.editarExperienciaForm.value.fechaFinProyecto,
       descripcion: this.editarExperienciaForm.value.descripcion,
       tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia,
-      tecnologiaUsada: this.editarExperienciaForm.value.tecnologiaUsada
+      tecnologiaUsada: this.editarExperienciaForm.value.tecnologiaUsada,
+      imagen: imagenes[0]
+
     };
 
-    this.experienciaService.updatExperiencia(this.experienciaEditada.id, experienciaActualizada).subscribe({
+    this.experienciaService.updateExperiencia(this.experienciaEditada.id, experienciaActualizada).subscribe({
       next: (experienciaActualizada) => {
         const index = this.experiencias.findIndex(e => e.id === experienciaActualizada.id);
         if (index !== -1) {

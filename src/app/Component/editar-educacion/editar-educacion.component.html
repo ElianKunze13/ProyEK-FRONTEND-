@@ -92,8 +92,8 @@
           @for (educacion of educaciones; track educacion.id) {
             <div class="card">
               <div class="p-4" style="position: relative; display: inline-block;">
-                <img [src]="educacion.imagenes[0]?.url || 'assets/default-image.jpg'" 
-                     [alt]="educacion.imagenes[0]?.alt || 'Imagen de educación'" 
+                <img [src]="educacion.imagen?.url || 'assets/default-image.jpg'" 
+                     [alt]="educacion.imagen?.alt || 'Imagen de educación'" 
                      class="campaign-img rounded">
                 
                 <!-- Contenedor para botones de acción -->

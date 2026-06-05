@@ -34,8 +34,8 @@
   <div class="popup-content" (click)="$event.stopPropagation()">
     <div class="contenedor">
   <h2 style="color: black;">{{educacion.titulo}}</h2>
- <img  [src]="educacion.imagenes[0].url" 
-                      [alt]="educacion.imagenes[0].alt"
+ <img  [src]="educacion.imagen?.url" 
+                      [alt]="educacion.imagen?.alt"
             class="w-full h-full object-cover p-2">     
     <button id="cerrarPopup" class="btn d-grid btn-primary btn-lg mt-6" (click)="cerrarPopup()" >Cerrar</button>
   </div>

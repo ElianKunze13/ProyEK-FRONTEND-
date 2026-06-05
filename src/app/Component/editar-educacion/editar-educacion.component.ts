@@ -26,9 +26,14 @@ export class EditarEducacionComponent implements OnInit {
   educacionEditada: Educacion = {
     id: 0,
     titulo: '',
+    fechaInicio: new Date(),
+    fechaObtencion: new Date(),
     descripcion: '',
     tipoEducacion: TipoEducacion.OTROS,
-    imagenes: []
+    imagen:{
+      url: '',
+      alt: ''
+    }
   };
   
   // Variables para la educación a eliminar
@@ -62,6 +67,8 @@ export class EditarEducacionComponent implements OnInit {
     this.educacionForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
+      fechaInicio: [new Date(), Validators.required],
+      fechaObtencion: [new Date(), Validators.required],
       tipoEducacion: ['', Validators.required],
       imagenUrl: [''],
       imagenAlt: ['']
@@ -71,6 +78,8 @@ export class EditarEducacionComponent implements OnInit {
     this.editarEducacionForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
+      fechaInicio: [new Date(), Validators.required],
+      fechaObtencion: [new Date(), Validators.required],
       tipoEducacion: ['', Validators.required],
       imagenUrl: [''],
       imagenAlt: ['']
@@ -122,9 +131,12 @@ export class EditarEducacionComponent implements OnInit {
     const nuevaEducacion: Educacion = {
       id: null,
       titulo: this.educacionForm.value.titulo,
+      fechaInicio: this.actualizando ? this.educacionEditada.fechaInicio : new Date(),
+      fechaObtencion: this.actualizando ? this.educacionEditada.fechaObtencion : new Date(),
       descripcion: this.educacionForm.value.descripcion,
       tipoEducacion: this.educacionForm.value.tipoEducacion as TipoEducacion,
-      imagenes: imagenes
+      //imagen es unica, no una lista
+      imagen: imagenes[0] || null
     };
 
     this.educacionService.save(nuevaEducacion).subscribe({
@@ -161,14 +173,16 @@ export class EditarEducacionComponent implements OnInit {
     };
 
     // Obtener la primera imagen si existe
-    const primeraImagen = educacion.imagenes && educacion.imagenes.length > 0 
-      ? educacion.imagenes[0] 
+    const primeraImagen = educacion.imagen && educacion.imagen 
+      ? educacion.imagen 
       : { url: '', alt: '' };
 
     // Actualizar el formulario con los datos
     this.editarEducacionForm.patchValue({
       titulo: educacion.titulo,
       descripcion: educacion.descripcion,
+      fechaInicio: educacion.fechaInicio,
+      fechaObtencion: educacion.fechaObtencion,
       tipoEducacion: educacion.tipoEducacion,
       imagenUrl: primeraImagen.url,
       imagenAlt: primeraImagen.alt
@@ -224,8 +238,10 @@ export class EditarEducacionComponent implements OnInit {
       id: this.educacionEditada.id,
       titulo: this.editarEducacionForm.value.titulo,
       descripcion: this.editarEducacionForm.value.descripcion,
+      fechaInicio: this.editarEducacionForm.value.fechaInicio,
+      fechaObtencion: this.editarEducacionForm.value.fechaObtencion,
       tipoEducacion: this.editarEducacionForm.value.tipoEducacion as TipoEducacion,
-      imagenes: imagenes
+      imagen: imagenes[0] || null
     };
 
     // Llamar al servicio update
