@@ -10,8 +10,11 @@ export interface Usuario {
     
     introduccion: string;
     descripcion: string;
-    fotoUsuario: Imagen[];
     
+    //fotoUsuario: Imagen[];
+    fotoPerfil?: Imagen;  // Cambiado de lista a imagen unica
+    fotoPortada?: Imagen;  // Cambiado de lista a imagen unica
+
       active: boolean;
 
 }

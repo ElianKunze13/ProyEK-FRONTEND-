@@ -26,7 +26,8 @@ export class PerfilComponent implements OnInit {
     rol: Role.ADMIN,
     introduccion: "",
     descripcion: "",
-    fotoUsuario: [],
+    fotoPerfil: undefined,
+    fotoPortada: undefined,
     active: true
   };
   loading = true;
@@ -157,31 +158,38 @@ export class PerfilComponent implements OnInit {
     this.usuarioService.getById(1).subscribe({
       next: (data) => {
         console.log('Usuario recibido:', data);
-        console.log('FotoUsuario:', data.fotoUsuario);
-        console.log('Tipo de fotoUsuario:', typeof data.fotoUsuario);
-        console.log('Es array?', Array.isArray(data.fotoUsuario));
+        console.log('FotoPerfil:', data.fotoPerfil);
+        console.log('FotoPortada:', data.fotoPortada);
+        console.log('Tipo de fotoPerfil:', typeof data.fotoPerfil);
+        console.log('Tipo de fotoPortada:', typeof data.fotoPortada);
 
         // DEPURACIÓN DETALLADA
-        if (data.fotoUsuario) {
-          console.log('Longitud del array:', data.fotoUsuario.length);
-          if (data.fotoUsuario.length > 0) {
-            console.log('Primer elemento:', data.fotoUsuario[0]);
-            console.log('URL del primer elemento:', data.fotoUsuario[0]?.url);
-            console.log('Alt del primer elemento:', data.fotoUsuario[0]?.alt);
+        if (data.fotoPerfil) {
+          console.log('Longitud del array:', data.fotoPerfil);
+          if (data.fotoPerfil) {
+            console.log('Primer elemento:', data.fotoPerfil);
+            console.log('URL del primer elemento:', data.fotoPerfil?.url);
+            console.log('Alt del primer elemento:', data.fotoPerfil?.alt);
           }
         } else {
-          console.log('fotoUsuario es null o undefined');
+          console.log('fotoPerfil es null o undefined');
         }
 
-        // Normalizar fotoUsuario
-        if (!data.fotoUsuario || !Array.isArray(data.fotoUsuario)) {
-          data.fotoUsuario = [];
+        if (data.fotoPortada) {
+          console.log('FotoPortada:', data.fotoPortada);
+        } else {
+          console.log('fotoPortada es null o undefined');
+        }
+
+        // Normalizar fotoPerfil
+        if (!data.fotoPerfil || !Array.isArray(data.fotoPerfil)) {
+          data.fotoPerfil;
         }
 
         // Filtrar elementos vacíos o sin URL
-        data.fotoUsuario = data.fotoUsuario.filter(foto =>
+        /*data.fotoPerfil = data.fotoPerfil?.filter(foto =>
           foto && foto.url && foto.url.trim() !== ''
-        );
+        );*/
 
         this.usuario = data;
         this.loading = false;

@@ -8,8 +8,9 @@ export interface Experiencia {
     titulo: string;
     fechaFinProyecto: string | Date;
     descripcion: string;
+    link: string;
+    imagen?: Imagen; 
     tipoExperiencia: TipoExperiencia;
     tecnologiaUsada: TecnologiaUsada;
-    imagen?: Imagen;
 
 }
