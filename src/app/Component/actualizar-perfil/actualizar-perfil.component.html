@@ -1,37 +1,39 @@
 <div id="fondo" class="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative">
 
+  <!-- Notificación Toast -->
+  <div *ngIf="showNotification" 
+       [class]="'fixed top-5 right-5 z-50 animate-slide-in-right ' + 
+                (notificationType === 'success' ? 'bg-green-500' : 'bg-red-500')"
+       class="text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between min-w-[300px] max-w-md">
+    <div class="flex items-center">
+      <span class="text-xl mr-3">
+        {{ notificationType === 'success' ? '✅' : '❌' }}
+      </span>
+      <span>{{ notificationMessage }}</span>
+    </div>
+    <button (click)="cerrarNotificacion()" class="ml-4 text-white hover:text-gray-200">
+      ✕
+    </button>
+  </div>
+
 
   <!-- Card del formulario -->
-  <div id="main" class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+  <div id="main" class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
 
     <!-- Encabezado con imagen o inicial -->
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center">
-        <!-- Mostrar imagen si existe, si no, mostrar inicial -->
-        <div *ngIf="imagenUrl" class="mr-3">
-          <img [src]="imagenUrl" [alt]="imagenAlt" class="rounded-full w-12 h-12 object-cover">
+        <!-- Mostrar imagen de perfil si existe, si no, mostrar inicial -->
+        <div *ngIf="fotoPerfilUrl" class="mr-3">
+          <img [src]="fotoPerfilUrl" [alt]="fotoPerfilAlt" class="rounded-full w-12 h-12 object-cover">
         </div>
-        <div *ngIf="!imagenUrl" class="rounded-full bg-blue-500 text-white w-12 h-12 flex items-center justify-center text-lg font-bold mr-3">
+        <div *ngIf="!fotoPerfilUrl" class="rounded-full bg-blue-500 text-white w-12 h-12 flex items-center justify-center text-lg font-bold mr-3">
           {{ getInicialUsuario() }}
         </div>
         <div class="text-xl font-semibold text-gray-800">
           {{ EditarUsuarioForm.get('nombre')?.value || 'Usuario' }}
         </div>
       </div>
-
-
-
-    <!-- Encabezado con inicial y nombre
-    <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center">
-        <div
-          class="rounded-full bg-blue-500 text-white w-12 h-12 flex items-center justify-center text-lg font-bold mr-3">
-          {{ getInicialUsuario() }}
-        </div>
-        <div class="text-xl font-semibold text-gray-800">
-          {{ EditarUsuarioForm.get('username')?.value || 'Usuario' }}
-        </div>
-      </div>--->
 
       <!-- Botón lápiz para activar edición -->
       <button *ngIf="!editable" (click)="activarEdicion()" id="editar"
@@ -40,17 +42,21 @@
       </button>
     </div>
 
-    
     <!-- Formulario -->
     <form [formGroup]="EditarUsuarioForm" class="space-y-4">
 
+      <!-- Nombre -->
       <div>
         <label for="nombre" class="block text-gray-700 mb-1">Nombre de Usuario</label>
         <input formControlName="nombre" type="text" id="nombre"
           class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           [readonly]="!editable">
+        <div *ngIf="EditarUsuarioForm.get('nombre')?.invalid && EditarUsuarioForm.get('nombre')?.touched" class="text-red-500 text-sm mt-1">
+          El nombre es requerido
+        </div>
       </div>
 
+      <!-- Email (username) -->
       <div>
         <label for="email-register" class="block text-gray-700 mb-1">Username (correo)</label>
         <input formControlName="username" type="email" id="email-register"
@@ -58,64 +64,131 @@
           readonly>
       </div>
 
+      <!-- Introducción -->
       <div>
-        <label for="introduccion-register" class="block text-gray-700 mb-1">Introduccion</label>
-        <input formControlName="introduccion" type="text" id="introduccion-register"
-          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          [readonly]="!editable">
+        <label for="introduccion-register" class="block text-gray-700 mb-1">Introducción</label>
+        <textarea formControlName="introduccion" type="text" id="introduccion-register" rows="2"
+          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          [readonly]="!editable"
+          placeholder="Breve introducción sobre ti..."></textarea>
+        <div *ngIf="EditarUsuarioForm.get('introduccion')?.invalid && EditarUsuarioForm.get('introduccion')?.touched" class="text-red-500 text-sm mt-1">
+          La introducción debe tener entre 5 y 500 caracteres
+        </div>
       </div>
 
-       <div>
-        <label for="descripcion-register" class="block text-gray-700 mb-1">Descripcion</label>
-        <input formControlName="descripcion" type="text" id="descripcion-register"
-          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          [readonly]="!editable">
+      <!-- Descripción -->
+      <div>
+        <label for="descripcion-register" class="block text-gray-700 mb-1">Descripción</label>
+        <textarea formControlName="descripcion" type="text" id="descripcion-register" rows="3"
+          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          [readonly]="!editable"
+          placeholder="Descripción más detallada..."></textarea>
+        <div *ngIf="EditarUsuarioForm.get('descripcion')?.invalid && EditarUsuarioForm.get('descripcion')?.touched" class="text-red-500 text-sm mt-1">
+          La descripción debe tener entre 5 y 500 caracteres
+        </div>
       </div>
 
-    <!-- Campos para la imagen -->
-        <div >
-          <label for="imagenUrl" class="block text-gray-700 mb-1">Foto perfil</label>
-          <input formControlName="imagenUrl" type="text" id="imagenUrl"
-            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable">
+      <!-- Sección de imágenes - Foto de Perfil -->
+      <div class="border-t pt-4 mt-2">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Perfil</h3>
+        
+        <!-- Vista previa de la foto de perfil -->
+        <div *ngIf="fotoPerfilUrl" class="mb-3 flex justify-center">
+          <img [src]="fotoPerfilUrl" [alt]="fotoPerfilAlt" class="rounded-full w-24 h-24 object-cover border-2 border-blue-500">
         </div>
 
         <div>
-          <label for="imagenAlt" class="block text-gray-700 mb-1">Texto alternativo de imagen</label>
-          <input formControlName="imagenAlt" type="text" id="imagenAlt"
+          <label for="fotoPerfilUrl" class="block text-gray-700 mb-1">URL de la foto de perfil</label>
+          <input formControlName="fotoPerfilUrl" type="text" id="fotoPerfilUrl"
             class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable">
+            [readonly]="!editable"
+            placeholder="https://ejemplo.com/mi-foto.jpg">
         </div>
 
+        <div>
+          <label for="fotoPerfilAlt" class="block text-gray-700 mb-1">Texto alternativo</label>
+          <input formControlName="fotoPerfilAlt" type="text" id="fotoPerfilAlt"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [readonly]="!editable"
+            placeholder="Foto de perfil de usuario">
+        </div>
 
-
-
-
-
-      <div>
-        <label for="password-register" class="block text-gray-700 mb-1">Contraseña</label>
-        <input formControlName="password" type="password" id="password-register"
-          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <!-- Botón para eliminar foto de perfil (solo en modo edición y si existe imagen) -->
+        <div *ngIf="editable && fotoPerfilUrl" class="mt-2">
+          <button type="button" (click)="eliminarFotoPerfil()" 
+            class="text-red-600 hover:text-red-800 text-sm font-medium">
+            🗑️ Eliminar foto de perfil
+          </button>
+        </div>
       </div>
 
-      <div>
-        <label for="password-confirm" class="block text-gray-700 mb-1">Confirmar Contraseña</label>
-        <input formControlName="repeatpassword" type="password" id="password-confirm"
-          class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-         >
+      <!-- Sección de imágenes - Foto de Portada -->
+      <div class="border-t pt-4 mt-2">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Portada</h3>
+        
+        <!-- Vista previa de la foto de portada -->
+        <div *ngIf="fotoPortadaUrl" class="mb-3 flex justify-center">
+          <img [src]="fotoPortadaUrl" [alt]="fotoPortadaAlt" class="w-40 h-40 object-cover rounded-lg border border-gray-300">
+        </div>
+
+        <div>
+          <label for="fotoPortadaUrl" class="block text-gray-700 mb-1">URL de la foto de portada</label>
+          <input formControlName="fotoPortadaUrl" type="text" id="fotoPortadaUrl"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [readonly]="!editable"
+            placeholder="https://ejemplo.com/mi-portada.jpg">
+        </div>
+
+        <div>
+          <label for="fotoPortadaAlt" class="block text-gray-700 mb-1">Texto alternativo</label>
+          <input formControlName="fotoPortadaAlt" type="text" id="fotoPortadaAlt"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [readonly]="!editable"
+            placeholder="Foto de portada del perfil">
+        </div>
+
+        <!-- Botón para eliminar foto de portada (solo en modo edición y si existe imagen) -->
+        <div *ngIf="editable && fotoPortadaUrl" class="mt-2">
+          <button type="button" (click)="eliminarFotoPortada()" 
+            class="text-red-600 hover:text-red-800 text-sm font-medium">
+            🗑️ Eliminar foto de portada
+          </button>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="border-t pt-4 mt-2">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Cambiar Contraseña</h3>
+        <div>
+          <label for="password-register" class="block text-gray-700 mb-1">Nueva Contraseña</label>
+          <input formControlName="password" type="password" id="password-register"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Dejar en blanco para mantener la actual">
+        </div>
+
+        <div class="mt-2">
+          <label for="password-confirm" class="block text-gray-700 mb-1">Confirmar Contraseña</label>
+          <input formControlName="repeatpassword" type="password" id="password-confirm"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Repite la nueva contraseña">
+        </div>
+        <div *ngIf="EditarUsuarioForm.get('password')?.invalid && EditarUsuarioForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+          La contraseña debe tener al menos 8 caracteres
+        </div>
       </div>
 
       <!-- Mensaje de error -->
-      <div *ngIf="loginError" class="text-red-500 text-sm">{{ loginError }}</div>
+      <div *ngIf="loginError" class="text-red-500 text-sm p-2 bg-red-50 rounded-lg">
+        {{ loginError }}
+      </div>
 
       <!-- Botones de acción -->
-      <div class="flex justify-between pt-4" *ngIf="editable">
-        <button type="button" (click)="guardarCambios()" class="btn btn-primary">
-          Guardar cambios
+      <div class="flex justify-between pt-4 gap-3" *ngIf="editable">
+        <button type="button" (click)="guardarCambios()" class="btn btn-primary flex-1">
+          💾 Guardar cambios
         </button>
-        <button type="button" (click)="cancelarEdicion()" class="btn btn-secondary">
-          Cancelar
+        <button type="button" (click)="cancelarEdicion()" class="btn btn-secondary flex-1">
+          ❌ Cancelar
         </button>
       </div>
 

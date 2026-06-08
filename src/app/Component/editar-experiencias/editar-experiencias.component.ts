@@ -139,6 +139,7 @@ export class EditarExperienciasComponent implements OnInit {
       titulo: this.experienciaForm.value.titulo,
       fechaFinProyecto: this.experienciaForm.value.fechaFinProyecto,
       descripcion: this.experienciaForm.value.descripcion,
+      link: this.experienciaForm.value.link,
       tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
       tecnologiaUsada: this.experienciaForm.value.tecnologiaUsada,
       imagen: imagenes[0]
@@ -224,6 +225,7 @@ export class EditarExperienciasComponent implements OnInit {
       titulo: this.editarExperienciaForm.value.titulo,
       fechaFinProyecto: this.editarExperienciaForm.value.fechaFinProyecto,
       descripcion: this.editarExperienciaForm.value.descripcion,
+      link: this.experienciaForm.value.link,
       tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia,
       tecnologiaUsada: this.editarExperienciaForm.value.tecnologiaUsada,
       imagen: imagenes[0]

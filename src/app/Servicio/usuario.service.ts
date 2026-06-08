@@ -18,7 +18,7 @@ export class UsuarioService {
         
       map(usuario => ({
       ...usuario,
-      fotoUsuario: usuario.fotoUsuario || [] // Convierte null a array vacío
+      fotoPerfil: usuario.fotoPerfil  // Convierte null a array vacío
     })
       )
       );

@@ -7,13 +7,11 @@ export interface Usuario {
     username: string;
     password: string;
     rol: Role;
-    
     introduccion: string;
     descripcion: string;
     
-    //fotoUsuario: Imagen[];
-    fotoPerfil?: Imagen;  // Cambiado de lista a imagen unica
-    fotoPortada?: Imagen;  // Cambiado de lista a imagen unica
+    fotoPerfil?: Imagen; 
+    fotoPortada?: Imagen;  
 
       active: boolean;
 

@@ -105,3 +105,28 @@ input[readonly] {
     transform: translateY(0); /* Vuelve a la posición inicial */
   }
 }
+
+/* Animación para la notificación */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Mejora para la notificación en móviles */
+@media (max-width: 640px) {
+  .fixed {
+    left: 1rem;
+    right: 1rem;
+    min-width: auto;
+  }
+}
