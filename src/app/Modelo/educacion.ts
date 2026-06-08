@@ -8,6 +8,5 @@ export interface Educacion {
     fechaObtencion: Date;
     descripcion: string;
     tipoEducacion: TipoEducacion;
-    imagen?: Imagen;  // Cambiado de lista a imagen unica
-    //imagenes: Imagen[];
+    imagen?: Imagen;
 }

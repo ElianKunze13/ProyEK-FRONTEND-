@@ -1,22 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Habilidad } from '../../Modelo/habilidad';
 import { HabilidadService } from '../../Servicio/habilidad.service';
 import { Usuario } from '../../Modelo/usuario';
 import { UsuarioService } from '../../Servicio/usuario.service';
 import { Role } from '../../Modelo/Enums/role';
-import { NgClass } from "../../../../node_modules/@angular/common/common_module.d-NEF7UaHr";
 import { ExperienciaService } from '../../Servicio/experiencia.service';
 import { Experiencia } from '../../Modelo/experiencia';
 
 @Component({
   selector: 'app-perfil',
-  imports: [],
+  standalone: true, // Importante: si es standalone
+  imports: [CommonModule], // Importar CommonModule para usar ngIf, ngFor
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit {
   expandedIndex: number | null = null;
+  
+  // Propiedades para el popup/modal
+  showModal: boolean = false;
+  selectedExperiencia: Experiencia | null = null;
 
   usuario: Usuario = {
     id: 0,
@@ -45,7 +50,6 @@ export class PerfilComponent implements OnInit {
     private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    // Agregar animación de entrada cuando se carga el componente
     setTimeout(() => {
       const mainPage = document.getElementById('main-page');
       if (mainPage) {
@@ -58,42 +62,62 @@ export class PerfilComponent implements OnInit {
     this.cargarExperiencias();
   }
 
+  // Método para abrir el modal con Bootstrap
+  abrirModal(experiencia: Experiencia): void {
+    console.log('Abriendo modal para:', experiencia.titulo); // Debug
+    this.selectedExperiencia = experiencia;
+    this.showModal = true;
+    
+    // Usar Bootstrap modal si está disponible
+    const modalElement = document.getElementById('experienciaModal');
+    if (modalElement) {
+      // @ts-ignore
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
 
+  // Método para cerrar el modal
+  cerrarModal(): void {
+    this.showModal = false;
+    this.selectedExperiencia = null;
+  }
+
+  // Método para abrir el link
+  abrirLink(url: string | undefined): void {
+    if (url) {
+      window.open(url, '_blank');
+    }
+  }
 
   // Configuración del carrusel automático
   intervalo: any;
-  velocidad = 5000; // Milisegundos entre transiciones
+  velocidad = 5000;
   direccion: 'derecha' | 'izquierda' = 'derecha';
-
 
   cargarExperiencias(): void {
     this.experienciaService.findAll().subscribe({
       next: (data: Experiencia[]) => {
         this.experiencias = data;
         console.log('📊 Número de experiencias:', data.length);
-        console.log(JSON.stringify(this.experiencias))
-
       },
       error: (err) => {
         this.experiencias = [];
-        console.log(JSON.stringify(this.experiencias))
         console.log("Error al cargar lista")
         console.error('📄 Detalles del error:', err.error);
       }
     });
-
   }
+
   cargarHabilidades(): void {
     this.habilidadService.findAll().subscribe({
       next: (data) => {
         this.habilidades = data;
-        // Iniciar carrusel automático después de cargar datos
         this.iniciarCarruselAutomatico();
         console.log(JSON.stringify(this.habilidades))
-
       },
       error: (err) => {
-        console.error('Error cargando habilidades', err),
+        console.error('Error cargando habilidades', err);
         this.habilidades = [];
       }
     });
@@ -103,7 +127,6 @@ export class PerfilComponent implements OnInit {
     if (this.intervalo) {
       clearInterval(this.intervalo);
     }
-
     this.intervalo = setInterval(() => {
       this.moverAutomatico();
     }, this.velocidad);
@@ -112,8 +135,6 @@ export class PerfilComponent implements OnInit {
   moverAutomatico(): void {
     if (this.direccion === 'derecha') {
       this.mover(1);
-
-      // Cambiar dirección si llegamos al final
       const maxDesplazamiento = -((this.habilidades.length - this.itemsVisibles) * this.itemWidth);
       if (this.desplazamiento <= maxDesplazamiento) {
         setTimeout(() => {
@@ -123,8 +144,6 @@ export class PerfilComponent implements OnInit {
       }
     } else {
       this.mover(-1);
-
-      // Cambiar dirección si volvemos al inicio
       if (this.desplazamiento >= 0) {
         setTimeout(() => {
           this.direccion = 'derecha';
@@ -138,67 +157,26 @@ export class PerfilComponent implements OnInit {
     this.desplazamiento += direccion * this.itemWidth;
   }
 
- 
   loadUsuario(): void {
     this.loading = true;
     this.usuarioService.getById(1).subscribe({
       next: (data) => {
-        console.log('Usuario recibido:', data);
-        console.log('FotoPerfil:', data.fotoPerfil);
-        console.log('FotoPortada:', data.fotoPortada);
-        console.log('Tipo de fotoPerfil:', typeof data.fotoPerfil);
-        console.log('Tipo de fotoPortada:', typeof data.fotoPortada);
-
-        // DEPURACIÓN DETALLADA
-        if (data.fotoPerfil) {
-          console.log('Longitud del array:', data.fotoPerfil);
-          if (data.fotoPerfil) {
-            console.log('Primer elemento:', data.fotoPerfil);
-            console.log('URL del primer elemento:', data.fotoPerfil?.url);
-            console.log('Alt del primer elemento:', data.fotoPerfil?.alt);
-          }
-        } else {
-          console.log('fotoPerfil es null o undefined');
-        }
-
-        if (data.fotoPortada) {
-          console.log('FotoPortada:', data.fotoPortada);
-        } else {
-          console.log('fotoPortada es null o undefined');
-        }
-
-        // Normalizar fotoPerfil
-        if (!data.fotoPerfil || !Array.isArray(data.fotoPerfil)) {
-          data.fotoPerfil;
-        }
-
-        // Filtrar elementos vacíos o sin URL
-        /*data.fotoPerfil = data.fotoPerfil?.filter(foto =>
-          foto && foto.url && foto.url.trim() !== ''
-        );*/
-
         this.usuario = data;
         this.loading = false;
       },
       error: (err) => {
         console.error('Error al cargar usuario:', err);
-        console.error('Detalles del error:', err.error);
         this.loading = false;
       }
     });
   }
 
-  // Método para obtener iniciales para avatar por defecto
   getIniciales(nombreCompleto: string | undefined): string {
     if (!nombreCompleto) return 'EK';
-
     const nombres = nombreCompleto.split(' ');
     if (nombres.length >= 2) {
       return (nombres[0].charAt(0) + nombres[1].charAt(0)).toUpperCase();
     }
     return nombreCompleto.substring(0, 2).toUpperCase();
   }
-
-
 }
-

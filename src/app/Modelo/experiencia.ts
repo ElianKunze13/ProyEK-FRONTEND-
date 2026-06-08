@@ -6,6 +6,11 @@ export interface Experiencia {
 
     id: any;
     titulo: string;
+    
+    // INCLUIR FECHA DE INICIO Y FIN PARA PROYECTOS, EN CASO DE QUE SEA UN PROYECTO EN CURSO,
+    // LA FECHA DE FIN PUEDE SER NULL O UN VALOR ESPECIAL
+    
+    // fechaInicioProyecto: string | Date;
     fechaFinProyecto: string | Date;
     descripcion: string;
     link: string;
