@@ -9,5 +9,16 @@
         "nested-interactive": "off"
       }
     ]
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not and_chr <= 145",
+    "not and_ff <= 147",
+    "not chrome <= 146",
+    "not edge <= 145",
+    "not firefox <= 148",
+    "not opera <= 127",
+    "not samsung <= 29"
+  ]
 }

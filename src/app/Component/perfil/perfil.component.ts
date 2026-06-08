@@ -43,20 +43,6 @@ export class PerfilComponent implements OnInit {
     private habilidadService: HabilidadService,
     private experienciaService: ExperienciaService,
     private usuarioService: UsuarioService) { }
-  ///metodo para descargar pdf curriculo
-  descargarPdf() {
-    this.http.get('assets/Curriculum Vitae Profesional sin Foto (EK).pdf', { responseType: 'blob' })
-      .subscribe(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Curriculum EK.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      });
-  }
 
   ngOnInit(): void {
     // Agregar animación de entrada cuando se carga el componente
