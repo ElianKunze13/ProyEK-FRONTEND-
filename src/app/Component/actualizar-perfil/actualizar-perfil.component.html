@@ -16,14 +16,12 @@
     </button>
   </div>
 
-
   <!-- Card del formulario -->
   <div id="main" class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
 
     <!-- Encabezado con imagen o inicial -->
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center">
-        <!-- Mostrar imagen de perfil si existe, si no, mostrar inicial -->
         <div *ngIf="fotoPerfilUrl" class="mr-3">
           <img [src]="fotoPerfilUrl" [alt]="fotoPerfilAlt" class="rounded-full w-12 h-12 object-cover">
         </div>
@@ -35,7 +33,6 @@
         </div>
       </div>
 
-      <!-- Botón lápiz para activar edición -->
       <button *ngIf="!editable" (click)="activarEdicion()" id="editar"
         class="text-gray-500 hover:text-blue-600 transition-colors">
         ✏️
@@ -92,7 +89,6 @@
       <div class="border-t pt-4 mt-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Perfil</h3>
         
-        <!-- Vista previa de la foto de perfil -->
         <div *ngIf="fotoPerfilUrl" class="mb-3 flex justify-center">
           <img [src]="fotoPerfilUrl" [alt]="fotoPerfilAlt" class="rounded-full w-24 h-24 object-cover border-2 border-blue-500">
         </div>
@@ -113,6 +109,79 @@
             placeholder="Foto de perfil de usuario">
         </div>
 
+        <!-- SECCIÓN PARA EDITAR/CARGAR VIDEOS -->
+        <div class="border-t pt-4 mt-2">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">Video de Presentación</h3>
+          
+          <!-- Vista previa del video existente -->
+          <div *ngIf="videoPath" class="mb-4">
+            <label class="block text-gray-700 mb-2">Vista previa del video actual</label>
+            <video controls class="w-full rounded-lg shadow-md" style="max-height: 300px;">
+              <source [src]="videoPath" [type]="'video/' + videoTipo">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+
+          <!-- Campos solo visibles en modo edición -->
+          <div *ngIf="editable">
+            <!-- Subir archivo de video desde dispositivo -->
+            <div class="mb-3">
+              <label class="block text-gray-700 mb-1">Subir video desde dispositivo</label>
+              <input type="file" (change)="onVideoSelected($event)" accept="video/*"
+                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <div class="text-xs text-gray-500 mt-1">
+                Formatos soportados: MP4, WEBM, OGG, AVI, MKV, MOV, WMV, FLV<br>
+                Tamaño máximo: 1000MB (1GB)
+              </div>
+            </div>
+
+            <!-- Nombre original del video (automático) -->
+            <div class="mb-3">
+              <label for="videoNombreOriginal" class="block text-gray-700 mb-1">Nombre del video</label>
+              <input formControlName="videoNombreOriginal" type="text" id="videoNombreOriginal"
+                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                placeholder="Se autocompletará al seleccionar el archivo"
+                readonly>
+              <div class="text-xs text-gray-500 mt-1">El nombre se tomará automáticamente del archivo seleccionado</div>
+            </div>
+
+            <!-- Tipo de video (automático según extensión) -->
+            <div class="mb-3">
+              <label for="videoTipo" class="block text-gray-700 mb-1">Formato del video</label>
+              <select formControlName="videoTipo" id="videoTipo"
+                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                aria-disabled="true">
+                <option value="">Se detectará automáticamente</option>
+                <option *ngFor="let tipo of tipoVideoKeys" [value]="tipo">
+                  {{ tipo }}
+                </option>
+              </select>
+              <div class="text-xs text-gray-500 mt-1">El formato se detectará automáticamente según la extensión del archivo</div>
+            </div>
+
+            <!-- Botón para eliminar video actual -->
+            <div *ngIf="videoPath" class="mt-2">
+              <button type="button" (click)="eliminarVideo()" 
+                class="text-red-600 hover:text-red-800 text-sm font-medium">
+                🗑️ Eliminar video actual
+              </button>
+            </div>
+          </div>
+
+          <!-- Información del video actual (modo solo lectura) -->
+          <div *ngIf="!editable && videoPath" class="mt-2 p-3 bg-gray-50 rounded-lg">
+            <p class="text-sm text-gray-600">
+              <strong>Video actual:</strong> {{ videoNombreOriginal || 'Sin título' }}<br>
+              <strong>Formato:</strong> {{ videoTipo }}
+            </p>
+          </div>
+
+          <!-- Mensaje cuando no hay video -->
+          <div *ngIf="!editable && !videoPath" class="mt-2 p-3 bg-gray-50 rounded-lg text-center">
+            <p class="text-gray-500">No hay video de presentación configurado</p>
+          </div>
+        </div>
+
         <!-- Botón para eliminar foto de perfil (solo en modo edición y si existe imagen) -->
         <div *ngIf="editable && fotoPerfilUrl" class="mt-2">
           <button type="button" (click)="eliminarFotoPerfil()" 
@@ -126,7 +195,6 @@
       <div class="border-t pt-4 mt-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Portada</h3>
         
-        <!-- Vista previa de la foto de portada -->
         <div *ngIf="fotoPortadaUrl" class="mb-3 flex justify-center">
           <img [src]="fotoPortadaUrl" [alt]="fotoPortadaAlt" class="w-40 h-40 object-cover rounded-lg border border-gray-300">
         </div>

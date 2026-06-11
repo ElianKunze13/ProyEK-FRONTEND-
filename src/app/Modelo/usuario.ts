@@ -1,5 +1,6 @@
 import { Role } from "./Enums/role";
 import { Imagen } from "./imagen";
+import { Video } from "./video";
 
 export interface Usuario {
     id: any;
@@ -9,9 +10,11 @@ export interface Usuario {
     rol: Role;
     introduccion: string;
     descripcion: string;
-    
+
     fotoPerfil?: Imagen; 
-    fotoPortada?: Imagen;  
+    fotoPortada?: Imagen; 
+
+video?: Video;
 
       active: boolean;
 

@@ -6,6 +6,8 @@ import { UsuarioService } from '../../Servicio/usuario.service';
 import { Role } from '../../Modelo/Enums/role';
 import { Router } from '@angular/router';
 import { Imagen } from '../../Modelo/imagen';
+import { Video } from '../../Modelo/video';
+import { TipoVideo } from '../../Modelo/Enums/tipoVideo';
 
 @Component({
   selector: 'app-actualizar-perfil',
@@ -32,6 +34,15 @@ export class ActualizarPerfilComponent implements OnInit {
   fotoPortadaUrl: string = '';
   fotoPortadaAlt: string = '';
   
+  // Propiedades para el video
+  videoPath: string = '';
+  videoNombreOriginal: string = '';
+  videoTipo: TipoVideo | string = '';
+  videoId: any = null;
+  
+  // Lista de tipos de video
+  tipoVideoKeys = Object.keys(TipoVideo).filter(key => isNaN(Number(key)));
+  
   usuarioOriginal: Usuario | null = null;
 
   constructor(
@@ -51,15 +62,17 @@ export class ActualizarPerfilComponent implements OnInit {
       fotoPerfilUrl: [''],
       fotoPerfilAlt: [''],
       fotoPortadaUrl: [''],
-      fotoPortadaAlt: ['']
+      fotoPortadaAlt: [''],
+      // Campos de video
+      videoPath: [''],
+      videoNombreOriginal: [''],
+      videoTipo: ['']
     });
 
     this.cargarUsuario();
   }
 
-  // Método para mostrar notificaciones
   mostrarNotificacion(mensaje: string, tipo: 'success' | 'error'): void {
-    // Limpiar timeout anterior si existe
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
     }
@@ -68,13 +81,11 @@ export class ActualizarPerfilComponent implements OnInit {
     this.notificationType = tipo;
     this.showNotification = true;
     
-    // Auto-ocultar después de 4 segundos
     this.notificationTimeout = setTimeout(() => {
       this.showNotification = false;
     }, 4000);
   }
 
-  // Método para cerrar notificación manualmente
   cerrarNotificacion(): void {
     this.showNotification = false;
     if (this.notificationTimeout) {
@@ -90,13 +101,18 @@ export class ActualizarPerfilComponent implements OnInit {
           this.usuarioId = usuario.id;
           this.usuarioOriginal = { ...usuario };
           
-          // Cargar imagen de perfil si existe
           this.fotoPerfilUrl = usuario.fotoPerfil?.url || '';
           this.fotoPerfilAlt = usuario.fotoPerfil?.alt || '';
-          
-          // Cargar imagen de portada si existe
           this.fotoPortadaUrl = usuario.fotoPortada?.url || '';
           this.fotoPortadaAlt = usuario.fotoPortada?.alt || '';
+          
+          // Cargar datos del video si existe
+          if (usuario.video) {
+            this.videoId = usuario.video.id;
+            this.videoPath = usuario.video.path;
+            this.videoNombreOriginal = usuario.video.nombreOriginal;
+            this.videoTipo = usuario.video.tipo;
+          }
           
           this.EditarUsuarioForm.patchValue({
             nombre: usuario.nombre,
@@ -108,7 +124,10 @@ export class ActualizarPerfilComponent implements OnInit {
             fotoPerfilUrl: usuario.fotoPerfil?.url || '',
             fotoPerfilAlt: usuario.fotoPerfil?.alt || '',
             fotoPortadaUrl: usuario.fotoPortada?.url || '',
-            fotoPortadaAlt: usuario.fotoPortada?.alt || ''
+            fotoPortadaAlt: usuario.fotoPortada?.alt || '',
+            videoPath: usuario.video?.path || '',
+            videoNombreOriginal: usuario.video?.nombreOriginal || '',
+            videoTipo: usuario.video?.tipo || ''
           });
         }
       });
@@ -122,16 +141,65 @@ export class ActualizarPerfilComponent implements OnInit {
 
   activarEdicion(): void {
     this.editable = true;
-    // Limpiar notificaciones al activar edición
     this.cerrarNotificacion();
     this.loginError = "";
   }
 
   cancelarEdicion(): void {
     this.editable = false;
-    this.cargarUsuario(); // Recargar datos originales
+    this.cargarUsuario();
     this.cerrarNotificacion();
     this.loginError = "";
+  }
+
+  // Manejar selección de archivo de video
+  onVideoSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Validar tamaño máximo (1000MB = 1GB)
+      if (file.size > 1000 * 1024 * 1024) {
+        this.mostrarNotificacion("El video es demasiado grande. Máximo 1000MB (1GB)", "error");
+        return;
+      }
+      
+      // Validar tipo de video por extensión
+      const fileExtension = file.name.split('.').pop()?.toUpperCase();
+      if (!this.tipoVideoKeys.includes(fileExtension || '')) {
+        this.mostrarNotificacion(`Formato de video no soportado. Formatos permitidos: ${this.tipoVideoKeys.join(', ')}`, "error");
+        return;
+      }
+      
+      // Crear URL temporal para previsualización
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.videoPath = e.target.result;
+        this.videoNombreOriginal = file.name;
+        this.videoTipo = fileExtension || '';
+        
+        this.EditarUsuarioForm.patchValue({
+          videoPath: e.target.result,
+          videoNombreOriginal: file.name,
+          videoTipo: fileExtension || ''
+        });
+        
+        this.mostrarNotificacion("Video cargado correctamente", "success");
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Eliminar video
+  eliminarVideo(): void {
+    this.EditarUsuarioForm.patchValue({
+      videoPath: '',
+      videoNombreOriginal: '',
+      videoTipo: ''
+    });
+    this.videoPath = '';
+    this.videoNombreOriginal = '';
+    this.videoTipo = '';
+    this.videoId = null;
+    this.mostrarNotificacion("Video eliminado", "success");
   }
 
   guardarCambios(): void {
@@ -139,7 +207,6 @@ export class ActualizarPerfilComponent implements OnInit {
       this.loginError = "";
       this.cerrarNotificacion();
 
-      // Validar contraseñas
       const password = this.EditarUsuarioForm.value.password;
       const repeatpassword = this.EditarUsuarioForm.value.repeatpassword;
       
@@ -179,6 +246,24 @@ export class ActualizarPerfilComponent implements OnInit {
         };
       }
 
+      // Preparar video
+      let video: Video | undefined = undefined;
+      const videoPath = this.EditarUsuarioForm.value.videoPath;
+      const videoNombreOriginal = this.EditarUsuarioForm.value.videoNombreOriginal;
+      const videoTipo = this.EditarUsuarioForm.value.videoTipo;
+
+      if (videoPath && videoPath.trim() !== '' && videoNombreOriginal && videoTipo) {
+        video = {
+          path: videoPath.trim(),
+          nombreOriginal: videoNombreOriginal.trim(),
+          tipo: videoTipo
+        };
+        
+        if (this.videoId) {
+          video.id = this.videoId;
+        }
+      }
+
       // Construir objeto usuario actualizado
       const usuarioActualizado: Usuario = {
         id: this.usuarioId,
@@ -190,7 +275,8 @@ export class ActualizarPerfilComponent implements OnInit {
         introduccion: this.EditarUsuarioForm.value.introduccion || '',
         descripcion: this.EditarUsuarioForm.value.descripcion || '',
         fotoPerfil: fotoPerfil,
-        fotoPortada: fotoPortada
+        fotoPortada: fotoPortada,
+        video: video
       };
 
       this.usuarioService.updateUsuario(this.usuarioId, usuarioActualizado).subscribe({
@@ -198,28 +284,30 @@ export class ActualizarPerfilComponent implements OnInit {
           console.log('Usuario actualizado correctamente', res);
           this.editable = false;
           
-          // Actualizar las imágenes mostradas con los nuevos valores
           this.fotoPerfilUrl = res.fotoPerfil?.url || '';
           this.fotoPerfilAlt = res.fotoPerfil?.alt || '';
           this.fotoPortadaUrl = res.fotoPortada?.url || '';
           this.fotoPortadaAlt = res.fotoPortada?.alt || '';
           
-          // Actualizar el usuario original con los nuevos datos
-          this.usuarioOriginal = { ...res };
+          if (res.video) {
+            this.videoId = res.video.id;
+            this.videoPath = res.video.path;
+            this.videoNombreOriginal = res.video.nombreOriginal;
+            this.videoTipo = res.video.tipo;
+          }
           
-          // Actualizar en localStorage si es necesario
+          this.usuarioOriginal = { ...res };
           localStorage.setItem('username', res.username);
           
-          // Limpiar campos de contraseña del formulario
           this.EditarUsuarioForm.patchValue({
             password: '',
             repeatpassword: ''
           });
           
-          // Mostrar mensaje de éxito
           this.mostrarNotificacion("✅ ¡Perfil actualizado correctamente!", "success");
+          //mostar en consola el objeto usuario actualizado para verificar los cambios
+          console.log('Usuario actualizado:', res);
           
-          // Opcional: Recargar datos después de 2 segundos
           setTimeout(() => {
             this.cargarUsuario();
           }, 2000);
@@ -229,7 +317,6 @@ export class ActualizarPerfilComponent implements OnInit {
           
           let errorMessage = '';
           
-          // Manejar errores específicos
           if (err.status === 400 && err.error) {
             const errores = [];
             for (const key in err.error) {
@@ -247,7 +334,6 @@ export class ActualizarPerfilComponent implements OnInit {
             this.loginError = errorMessage;
           }
           
-          // Mostrar mensaje de error
           this.mostrarNotificacion(`❌ ${errorMessage}`, "error");
         }
       });
@@ -255,7 +341,6 @@ export class ActualizarPerfilComponent implements OnInit {
       this.loginError = "Por favor completa todos los campos correctamente.";
       this.mostrarNotificacion("Por favor completa todos los campos correctamente", "error");
       
-      // Marcar todos los campos como tocados
       Object.keys(this.EditarUsuarioForm.controls).forEach(key => {
         const control = this.EditarUsuarioForm.get(key);
         if (control && control.invalid) {
@@ -265,7 +350,6 @@ export class ActualizarPerfilComponent implements OnInit {
     }
   }
 
-  // Método auxiliar para eliminar imagen de perfil
   eliminarFotoPerfil(): void {
     this.EditarUsuarioForm.patchValue({
       fotoPerfilUrl: '',
@@ -276,7 +360,6 @@ export class ActualizarPerfilComponent implements OnInit {
     this.mostrarNotificacion("Foto de perfil eliminada", "success");
   }
 
-  // Método auxiliar para eliminar imagen de portada
   eliminarFotoPortada(): void {
     this.EditarUsuarioForm.patchValue({
       fotoPortadaUrl: '',
@@ -287,11 +370,10 @@ export class ActualizarPerfilComponent implements OnInit {
     this.mostrarNotificacion("Foto de portada eliminada", "success");
   }
 
-  // Método para previsualizar imagen
   onFileSelected(event: any, tipo: 'perfil' | 'portada'): void {
     const file = event.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB límite
+      if (file.size > 5 * 1024 * 1024) {
         this.mostrarNotificacion("La imagen es demasiado grande. Máximo 5MB", "error");
         return;
       }
