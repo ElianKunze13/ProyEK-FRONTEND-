@@ -66,7 +66,7 @@ export class ActualizarPerfilComponent implements OnInit {
       // Campos de video
       videoPath: [''],
       videoNombreOriginal: [''],
-      videoTipo: ['']
+      // videoTipo: ['']
     });
 
     this.cargarUsuario();
@@ -107,11 +107,11 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaAlt = usuario.fotoPortada?.alt || '';
           
           // Cargar datos del video si existe
-          if (usuario.video) {
-            this.videoId = usuario.video.id;
-            this.videoPath = usuario.video.path;
-            this.videoNombreOriginal = usuario.video.nombreOriginal;
-            this.videoTipo = usuario.video.tipo;
+          if (usuario.videoPresentacion) {
+            this.videoId = usuario.videoPresentacion.id;
+            this.videoPath = usuario.videoPresentacion.path;
+            this.videoNombreOriginal = usuario.videoPresentacion.nombreOriginal;
+           //this.videoTipo = usuario.videoPresentacion.tipo;
           }
           
           this.EditarUsuarioForm.patchValue({
@@ -125,9 +125,9 @@ export class ActualizarPerfilComponent implements OnInit {
             fotoPerfilAlt: usuario.fotoPerfil?.alt || '',
             fotoPortadaUrl: usuario.fotoPortada?.url || '',
             fotoPortadaAlt: usuario.fotoPortada?.alt || '',
-            videoPath: usuario.video?.path || '',
-            videoNombreOriginal: usuario.video?.nombreOriginal || '',
-            videoTipo: usuario.video?.tipo || ''
+            videoPath: usuario.videoPresentacion?.path || '',
+            videoNombreOriginal: usuario.videoPresentacion?.nombreOriginal || '',
+           // videoTipo: usuario.videoPresentacion?.tipo || ''
           });
         }
       });
@@ -163,23 +163,23 @@ export class ActualizarPerfilComponent implements OnInit {
       }
       
       // Validar tipo de video por extensión
-      const fileExtension = file.name.split('.').pop()?.toUpperCase();
+      /*const fileExtension = file.name.split('.').pop()?.toUpperCase();
       if (!this.tipoVideoKeys.includes(fileExtension || '')) {
         this.mostrarNotificacion(`Formato de video no soportado. Formatos permitidos: ${this.tipoVideoKeys.join(', ')}`, "error");
         return;
-      }
+      }*/
       
       // Crear URL temporal para previsualización
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.videoPath = e.target.result;
         this.videoNombreOriginal = file.name;
-        this.videoTipo = fileExtension || '';
+        //this.videoTipo = fileExtension || '';
         
         this.EditarUsuarioForm.patchValue({
           videoPath: e.target.result,
           videoNombreOriginal: file.name,
-          videoTipo: fileExtension || ''
+          //videoTipo: fileExtension || ''
         });
         
         this.mostrarNotificacion("Video cargado correctamente", "success");
@@ -193,11 +193,11 @@ export class ActualizarPerfilComponent implements OnInit {
     this.EditarUsuarioForm.patchValue({
       videoPath: '',
       videoNombreOriginal: '',
-      videoTipo: ''
+      //videoTipo: ''
     });
     this.videoPath = '';
     this.videoNombreOriginal = '';
-    this.videoTipo = '';
+    //this.videoTipo = '';
     this.videoId = null;
     this.mostrarNotificacion("Video eliminado", "success");
   }
@@ -250,13 +250,13 @@ export class ActualizarPerfilComponent implements OnInit {
       let video: Video | undefined = undefined;
       const videoPath = this.EditarUsuarioForm.value.videoPath;
       const videoNombreOriginal = this.EditarUsuarioForm.value.videoNombreOriginal;
-      const videoTipo = this.EditarUsuarioForm.value.videoTipo;
+      //const videoTipo = this.EditarUsuarioForm.value.videoTipo;
 
-      if (videoPath && videoPath.trim() !== '' && videoNombreOriginal && videoTipo) {
+      if (videoPath && videoPath.trim() !== '' && videoNombreOriginal && videoNombreOriginal.trim() !== '') {
         video = {
           path: videoPath.trim(),
           nombreOriginal: videoNombreOriginal.trim(),
-          tipo: videoTipo
+         // tipo: videoTipo
         };
         
         if (this.videoId) {
@@ -276,7 +276,7 @@ export class ActualizarPerfilComponent implements OnInit {
         descripcion: this.EditarUsuarioForm.value.descripcion || '',
         fotoPerfil: fotoPerfil,
         fotoPortada: fotoPortada,
-        video: video
+        videoPresentacion: video
       };
 
       this.usuarioService.updateUsuario(this.usuarioId, usuarioActualizado).subscribe({
@@ -289,11 +289,11 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaUrl = res.fotoPortada?.url || '';
           this.fotoPortadaAlt = res.fotoPortada?.alt || '';
           
-          if (res.video) {
-            this.videoId = res.video.id;
-            this.videoPath = res.video.path;
-            this.videoNombreOriginal = res.video.nombreOriginal;
-            this.videoTipo = res.video.tipo;
+          if (res.videoPresentacion) {
+            this.videoId = res.videoPresentacion.id;
+            this.videoPath = res.videoPresentacion.path;
+            this.videoNombreOriginal = res.videoPresentacion.nombreOriginal;
+            //this.videoTipo = res.videoPresentacion.tipo;
           }
           
           this.usuarioOriginal = { ...res };

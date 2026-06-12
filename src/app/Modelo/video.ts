@@ -5,5 +5,5 @@ export interface Video{
         id?: any;
         path: string;
         nombreOriginal: string;
-tipo: TipoVideo;
+//tipo: TipoVideo;
 }

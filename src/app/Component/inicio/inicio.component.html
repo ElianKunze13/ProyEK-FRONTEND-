@@ -18,12 +18,14 @@
          <h3 class="video-title mb-3" style="font-family: monospace; color: #fff;">
           Video de presentación
         </h3>
+        <!--modificar para que se autoreproduzca y permita varios formatos de video 
+        (mp4, webm, ogv)-->
         <video 
           [src]="videoPath"
           class="video-player"
           controls
           controlsList="nodownload"
-          preload="metadata">
+          autoplay>
           Tu navegador no soporta el elemento de video.
         </video>
       </div>

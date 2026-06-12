@@ -14,7 +14,7 @@ export interface Usuario {
     fotoPerfil?: Imagen; 
     fotoPortada?: Imagen; 
 
-video?: Video;
+videoPresentacion?: Video;
 
       active: boolean;
 

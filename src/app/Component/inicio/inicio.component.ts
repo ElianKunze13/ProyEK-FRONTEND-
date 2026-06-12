@@ -5,16 +5,37 @@ import { Router, RouterLink } from '@angular/router';
 import { UsuarioService } from '../../Servicio/usuario.service';
 import { Usuario } from '../../Modelo/usuario';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Role } from '../../Modelo/Enums/role';
 
 @Component({
   selector: 'app-inicio',
+  standalone: true, // Importante: si es standalone
   imports: [CommonModule, RouterLink],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
   
-  usuarioActual: Usuario | null = null;
+  //usuarioActual: Usuario | null = null;
+  usuarioActual: Usuario = {
+      id: 0,
+      nombre: "",
+      username: "",
+      password: "",
+      rol: Role.ADMIN,
+      introduccion: "",
+      descripcion: "",
+      fotoPerfil: undefined,
+      fotoPortada: undefined,
+      videoPresentacion: 
+        {
+          id: 0,
+          path: "",
+          nombreOriginal: ""
+          }
+      ,
+      active: true
+    };
   videoPath: string = '';
   tieneVideo: boolean = false;
   cargando: boolean = true;
@@ -36,18 +57,18 @@ export class InicioComponent implements OnInit {
     this.cargarUsuarioConVideo();
   }
 
-  cargarUsuarioConVideo() {
+ cargarUsuarioConVideo() {
     this.cargando = true;
     this.errorVideo = false;
     
-    const usuarioId = this.obtenerIdUsuarioActual();
+    //const usuarioId = this.obtenerIdUsuarioActual();
     
-    this.usuarioService.getById(usuarioId).subscribe({
-      next: (usuario) => {
-        this.usuarioActual = usuario;
-        console.log('Usuario cargado:', usuario);
-        console.log('Video del usuario:', usuario.video);
-        this.procesarVideo(usuario.video);
+    this.usuarioService.getById(1).subscribe({
+      next: (data) => {
+        this.usuarioActual = data;
+        console.log('Usuario cargado:', data);
+        console.log('Video del usuario:', data.videoPresentacion);
+        this.procesarVideo(data.videoPresentacion);
         this.cargando = false;
       },
       error: (error) => {
@@ -57,6 +78,19 @@ export class InicioComponent implements OnInit {
       }
     });
   }
+
+    //modificar metodo para cargar usuario con video trayendo el id del usuario desde localStorage o por username
+   /* cargarUsuarioConVideo(): void {
+    this.cargando = true;
+    this.errorVideo = false;
+      this.usuarioService.getById(1).subscribe({
+next: (data) =>{
+  this.usuarioActual = data;
+  this.cargando = false;
+  console.log('Usuario cargado:', this.usuarioActual);
+}
+  });
+}*/
 
   procesarVideo(video: any) {
     // CORRECCIÓN: Usar 'path' en lugar de 'url'
@@ -75,7 +109,7 @@ export class InicioComponent implements OnInit {
       this.videoPath = urlSegura;
       console.log('Video cargado correctamente - Path:', video.path);
       console.log('Nombre original:', video.nombreOriginal);
-      console.log('Tipo:', video.tipo);
+     // console.log('Tipo:', video.tipo);
       console.log('URL segura:', urlSegura);
     } else {
       this.tieneVideo = false;
@@ -87,7 +121,7 @@ export class InicioComponent implements OnInit {
     }
   }
 
-  obtenerIdUsuarioActual(): number {
+  /*obtenerIdUsuarioActual(): number {
     const userId = localStorage.getItem('userId');
     // Si no hay userId en localStorage, intentar obtener por username
     if (!userId) {
@@ -98,5 +132,5 @@ export class InicioComponent implements OnInit {
       }
     }
     return userId ? parseInt(userId) : 1;
-  }
+  }*/
 }
