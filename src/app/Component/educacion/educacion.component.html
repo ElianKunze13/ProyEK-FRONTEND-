@@ -1,0 +1,63 @@
+<!-- Seccion EDUCACION -->
+  <div id="main-content" class="pt-25 md:pt-25 slide-left-enter"  >
+  
+    <!-- Main Content Sections -->
+    <main class="container mx-auto px-4 pb-16" >
+     
+      
+
+       <!-- Courses Section -->
+      <section id="courses" class="section pt-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2">Cursos y Talleres</h2>
+          <p class="text-lg text-[color:var(--text-secondary)]">Formación académica y certificaciones</p>
+        </div>
+
+              @for ( educacion of educaciones; track educacion.id) {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Course 1 -->
+          <div class="card">
+            
+            <div class="p-5">
+              <span class="text-sm text-[color:var(--accent)]">Tipo de educacion: 
+                <span class="badge text-bg-secondary">{{educacion.tipoEducacion}}</span></span>
+              <h3 class="text-xl font-semibold my-2">{{educacion.titulo}}</h3>
+              <p class="mb-4 text-[color:var(--text-secondary)]">{{educacion.descripcion}}</p>
+  
+              <button id="btn-Certificado" class="btn btn-secondary w-100" (click)="verdetalles(educacion)">
+                Ver certificado <i class="fas fa-external-link-alt ml-1"></i>
+              </button> 
+            </div>
+          </div>
+
+  <div class="popup-overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <div class="contenedor">
+  <h2 style="color: black;">{{educacion.titulo}}</h2>
+ <img  [src]="educacion.imagen?.url" 
+                      [alt]="educacion.imagen?.alt"
+            class="w-full h-full object-cover p-2">     
+    <button id="cerrarPopup" class="btn d-grid btn-primary btn-lg mt-6" (click)="cerrarPopup()" >Cerrar</button>
+  </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+        </div>}
+
+      </section>
+      
+
+    
+    
+      
+    
+    </main>
+
+ 
+  </div>

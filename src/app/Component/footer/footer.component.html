@@ -1,0 +1,71 @@
+
+   <!-- Footer -->
+    <footer class="py-4 md:pt-40" >
+      <div class="container mx-auto px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <button id="footer-home-button" class="flex items-center justify-center md:justify-start transform transition-transform duration-200" routerLink="/inicio">
+             <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+                EK
+              </div>
+              <span class="font-semibold text-lg">Mi Portafolio</span>
+            </button>
+          </div>
+          <div class="text-center md:text-right">
+            <p>© 2025 - Diseñado y desarrollado con <i class="fas fa-heart text-red-500"></i></p>
+          </div>
+        </div>
+      </div>
+
+        @if (loginOn) {
+<!-- Usuario logueado -->
+          <div id="seccion-logeado" class="dropdown- mt-auto">
+            <button id="btn-habilitado" class="
+            btn user-dropdown-btn dropdown-toggle d-flex align-items-center"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              
+              <span class="d-none d-md-inline user-name">{{ usuario || 'Usuario' }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+              <li>
+                <span class="dropdown-item-text small text-muted">
+                  <i class="fas fa-user me-2"></i>{{ usuario }}
+                </span>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item dropdown-item-custom" routerLink="/actualizarPerfil">
+                  <i class="fa-solid fa-bars-progress"></i> Mi Perfil
+                </a>
+              </li>
+              <!--iconos sacados de FontAwesome-->
+              <li>
+                <a class="dropdown-item dropdown-item-custom" routerLink="/actualizarPortofolio">
+                  <i class="fa-solid fa-pen-to-square"></i> Actualizar portofolio
+                </a>
+              </li>
+              
+
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item dropdown-item-custom text-danger" (click)="logout()" style="cursor: pointer;">
+                  <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                </a>
+              </li>
+            </ul>
+          </div>
+              } @else {
+<div  id="seccion-login"
+      class="mt-auto" >
+        <!-- Login Button 
+         DEBE ESTAR ESCONDIDO Y SOLO AL PASAR CURSOR DEBE APARECER BOTON-->
+        <button id="login-button" class="btn w-full" aria-disabled="true" 
+        routerLink="/login" >
+          <i class="fas fa-user mr-2"></i>Ingresar
+        </button>
+      </div>}
+
+
+    </footer> 

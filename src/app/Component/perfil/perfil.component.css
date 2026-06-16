@@ -1,0 +1,120 @@
+#main-content{
+     background-color: #1e293b;
+color: white;
+}
+
+/*botones de curriculo*/
+#mi-curriculo button:hover{
+ transform: translateY(-10px);
+  box-shadow: 0 4px 12px rgba(216, 216, 216, 0.1);
+}
+
+
+/* perfil.component.css */
+.seccion-habilidades {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Contenedor del carrusel */
+.carrusel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 1rem 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 100%);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.carrusel-wrapper {
+  overflow: hidden;
+  margin: 0 auto;
+  width: calc(150px * 3); /* 3 elementos visibles */
+}
+
+.carrusel-track {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem;
+  width: max-content;
+  animation: scroll 40s linear infinite; /* Animación infinita */
+}
+
+/* Definición de colores por clase */
+.habilidad-item {
+  width: 140px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de vidrio */
+.habilidad-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  z-index: 1;
+}
+
+
+.habilidad-item > * {
+  position: relative;
+  z-index: 2;
+}
+
+.habilidad-nombre {
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación de scroll infinito */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-150px * 8)); /* 8 elementos duplicados */
+  }
+}
+
+
+
+
+
+
+
+
+

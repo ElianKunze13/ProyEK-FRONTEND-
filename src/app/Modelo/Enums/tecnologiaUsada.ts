@@ -1,0 +1,17 @@
+export enum TecnologiaUsada{
+    ANGULAR = 'ANGULAR',
+    REACT = 'REACT',
+    VUE = 'VUE',
+    SPRINGBOOT = 'SPRINGBOOT',
+    DJANGO = 'DJANGO',
+    JAVA = 'JAVA',
+    JAVASCRIPT = 'JAVASCRIPT',
+    TYPESCRIPT = 'TYPESCRIPT',
+    BOOTSTRAP = 'BOOTSTRAP',
+    TAILWIND = 'TAILWIND',
+    PYTHON = 'PYTHON',
+    PHP = 'PHP',
+    MYSQL = 'MYSQL',
+    MONGODB = 'MONGODB',
+    POSTGRESQL = 'POSTGRESQL'
+}

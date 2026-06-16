@@ -1,0 +1,52 @@
+#fondo {
+    background-color: black;
+    background-size:contain;
+    background-repeat: repeat;
+    border-style: groove;
+}
+
+#main {
+    padding: 60px;
+    border-radius: 2ch;
+    border-style: groove;
+    border-radius: 2ch;
+}
+
+
+input {
+    margin: 5px;
+    width: min-content;
+    cursor: pointer;
+}
+
+.card {
+    width: 18rem;
+    height: auto;
+    margin: 1%;
+    padding: 0%;
+    border-radius: 2ch;
+    align-items: center;
+
+}
+
+.btn {
+    font-weight: 500;
+    cursor: pointer;
+    width: max-content;
+
+}
+
+.btn-primary {
+    background-color: #35ac2f;
+    color: rgb(224, 224, 224);
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 2rem;
+}
+
+
+#enviar:hover{
+background-color: #47df3f;
+color: black;
+}

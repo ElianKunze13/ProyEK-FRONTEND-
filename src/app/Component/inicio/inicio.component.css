@@ -1,0 +1,190 @@
+#homepage {
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Nuevo fondo con imagen */
+  background: 
+    linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)), /* Overlay oscuro para mejorar legibilidad */
+    url('/assets/fondo.png') no-repeat center center fixed; /* Imagen de fondo */
+  background-size: cover; /* Cubre todo el área */
+  background-attachment: fixed; /* Efecto parallax opcional */
+  /*overflow: hidden;*/
+  overflow-y: auto; /* Cambiado a auto para permitir scroll si es necesario */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Resto del CSS se mantiene igual */
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+#titulo {
+  font-family: monospace;
+  font: 1.5em sans-serif; 
+  font-weight: bold;
+}
+
+#texto { 
+  font-family: monospace; 
+  font: 1.5em sans-serif; 
+  font-weight: normal;
+}
+
+#enter-button {
+  width: 200px;
+  background-color: #4f9b9e;
+  color: white; 
+  margin: 10%; 
+  padding: 0.75rem 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font: 1.5em sans-serif; 
+  font-weight: normal;
+  font-size: large;
+  border-radius: 1rem;
+}
+
+#enter-button:hover {
+  background-color: #6bfaff;
+  color: rgb(0, 0, 0); 
+  font: 1.2em sans-serif; 
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
+
+/* Estilos para el video */
+.video-container {
+  margin: 20px auto;
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  z-index: 10;
+}
+
+.video-wrapper {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.video-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.video-title {
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem !important;
+}
+
+.video-player {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los controles del video */
+.video-player::-webkit-media-controls-panel {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.video-player::-webkit-media-controls-play-button {
+  background-color: #4f9b9e;
+  border-radius: 50%;
+}
+
+.video-player::-webkit-media-controls-volume-slider {
+  background-color: #4f9b9e;
+}
+
+.no-video-message {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 30px;
+  backdrop-filter: blur(5px);
+  text-align: center;
+}
+
+.no-video-message p {
+  margin: 10px 0 0 0;
+  font-size: 1.1rem;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.error-message {
+  background: rgba(220, 53, 69, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid rgba(220, 53, 69, 0.5);
+}
+
+.error-message p {
+  margin: 10px 0 0 0;
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .video-container {
+    width: 95%;
+    margin: 15px auto;
+  }
+  
+  .video-wrapper {
+    padding: 10px;
+  }
+  
+  .video-title {
+    font-size: 1rem;
+  }
+  
+  .no-video-message {
+    padding: 20px;
+  }
+  
+  .no-video-message i {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-container {
+    width: 100%;
+  }
+  
+  .video-wrapper {
+    padding: 8px;
+  }
+}
