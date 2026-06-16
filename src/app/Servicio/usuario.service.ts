@@ -20,7 +20,7 @@ export class UsuarioService {
       ...usuario,
       fotoPerfil: usuario.fotoPerfil,  // Convierte null a array vacío
       fotoPortada: usuario.fotoPortada,  // Convierte null a array vacío
-      videoPresentacion: usuario.videoPresentacion  // Convierte null a array vacío
+      //videoPresentacion: usuario.videoPresentacion  // Convierte null a array vacío
     })
       )
       );
