@@ -16,8 +16,7 @@ import { Role } from '../../Modelo/Enums/role';
 })
 export class InicioComponent implements OnInit {
   
-  //usuarioActual: Usuario | null = null;
-  usuarioActual: Usuario = {
+  /*usuarioActual: Usuario = {
       id: 0,
       nombre: "",
       username: "",
@@ -27,15 +26,9 @@ export class InicioComponent implements OnInit {
       descripcion: "",
       fotoPerfil: undefined,
       fotoPortada: undefined,
-      videoPresentacion: 
-        {
-          id: 0,
-          path: "",
-          nombreOriginal: ""
-          }
-      ,
+     
       active: true
-    };
+    };*/
   videoPath: string = '';
   tieneVideo: boolean = false;
   cargando: boolean = true;
@@ -54,10 +47,10 @@ export class InicioComponent implements OnInit {
       }
     }, 70);
 
-    this.cargarUsuarioConVideo();
+   // this.cargarUsuarioConVideo();
   }
 
- cargarUsuarioConVideo() {
+ /*cargarUsuarioConVideo() {
     this.cargando = true;
     this.errorVideo = false;
     
@@ -121,6 +114,6 @@ convertirUrlGoogleDrive(url: string): string {
     return `https://drive.google.com/uc?export=download&id=${fileId}`;
   }
   return url;
-}
+}*/
   
 }

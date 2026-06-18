@@ -11,43 +11,7 @@
     </h2>
 
     <!-- Video Section -->
-    <!--<div class="video-container mt-4" *ngIf="!cargando">
-      <div *ngIf="tieneVideo && videoPath" class="video-wrapper">
-      
-         <h3 class="video-title mb-3" style="font-family: monospace; color: #fff;">
-          Video de presentación
-        </h3>
-        
-        <video 
-          [src]="videoPath"
-          class="video-player"
-          autoplay muted controls
-          controlsList="nodownload"
-          >
-          Tu navegador no soporta el elemento de video.
-        </video>
-      </div>
-      
-      <div *ngIf="!tieneVideo && !cargando" class="no-video-message">
-        <i class="fas fa-video-slash" style="font-size: 3rem; color: #fff; margin-bottom: 1rem;"></i>
-        <p style="color: #fff; font-family: monospace;">
-          No hay video de presentación disponible
-        </p>
-      </div>
-      
-      <div *ngIf="cargando" class="loading-spinner">
-        <div class="spinner-border text-light" role="status">
-          <span class="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-      
-      <div *ngIf="errorVideo" class="error-message">
-        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ffc107;"></i>
-        <p style="color: #fff; font-family: monospace;">
-          Error al cargar el video. Por favor, intenta más tarde.
-        </p>
-      </div>
-    </div>-->
+    <!--traer video desde assets y mostrarlo (reproduccion debe ser automatica)-->
 
     <button id="enter-button" class="btn text-lg group float-animation" routerLink="/perfilUsuario">
       <span class="boton-inicio"> Ingresar </span>
