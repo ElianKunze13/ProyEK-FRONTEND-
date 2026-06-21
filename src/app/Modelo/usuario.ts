@@ -13,7 +13,8 @@ export interface Usuario {
     fotoPerfil?: Imagen; 
     fotoPortada?: Imagen; 
 
-//videoPresentacion?: Video;
+//atributo video no se incluye en el modelo de usuario, ya que no es relevante para la información
+//  básica del usuario. Si es necesario, se puede agregar y traer desde assets
 
       active: boolean;
 

@@ -3,11 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Usuario } from '../../Modelo/usuario';
 import { UsuarioService } from '../../Servicio/usuario.service';
-import { Role } from '../../Modelo/Enums/role';
 import { Router } from '@angular/router';
 import { Imagen } from '../../Modelo/imagen';
-import { Video } from '../../Modelo/video';
-import { TipoVideo } from '../../Modelo/Enums/tipoVideo';
 
 @Component({
   selector: 'app-actualizar-perfil',
@@ -35,13 +32,13 @@ export class ActualizarPerfilComponent implements OnInit {
   fotoPortadaAlt: string = '';
   
   // Propiedades para el video
-  videoPath: string = '';
+  /*videoPath: string = '';
   videoNombreOriginal: string = '';
   videoTipo: TipoVideo | string = '';
-  videoId: any = null;
+  videoId: any = null;*/
   
   // Lista de tipos de video
-  tipoVideoKeys = Object.keys(TipoVideo).filter(key => isNaN(Number(key)));
+  //tipoVideoKeys = Object.keys(TipoVideo).filter(key => isNaN(Number(key)));
   
   usuarioOriginal: Usuario | null = null;
 
@@ -64,9 +61,8 @@ export class ActualizarPerfilComponent implements OnInit {
       fotoPortadaUrl: [''],
       fotoPortadaAlt: [''],
       // Campos de video
-      videoPath: [''],
-      videoNombreOriginal: [''],
-      // videoTipo: ['']
+      /*videoPath: [''],
+      videoNombreOriginal: [''],*/
     });
 
     this.cargarUsuario();
@@ -107,12 +103,12 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaAlt = usuario.fotoPortada?.alt || '';
           
           // Cargar datos del video si existe
-          if (usuario.videoPresentacion) {
+         /* if (usuario.videoPresentacion) {
             this.videoId = usuario.videoPresentacion.id;
             this.videoPath = usuario.videoPresentacion.path;
             this.videoNombreOriginal = usuario.videoPresentacion.nombreOriginal;
            //this.videoTipo = usuario.videoPresentacion.tipo;
-          }
+          }*/
           
           this.EditarUsuarioForm.patchValue({
             nombre: usuario.nombre,
@@ -125,9 +121,8 @@ export class ActualizarPerfilComponent implements OnInit {
             fotoPerfilAlt: usuario.fotoPerfil?.alt || '',
             fotoPortadaUrl: usuario.fotoPortada?.url || '',
             fotoPortadaAlt: usuario.fotoPortada?.alt || '',
-            videoPath: usuario.videoPresentacion?.path || '',
-            videoNombreOriginal: usuario.videoPresentacion?.nombreOriginal || '',
-           // videoTipo: usuario.videoPresentacion?.tipo || ''
+           // videoPath: usuario.videoPresentacion?.path || '',
+            //videoNombreOriginal: usuario.videoPresentacion?.nombreOriginal || '',
           });
         }
       });
@@ -153,14 +148,14 @@ export class ActualizarPerfilComponent implements OnInit {
   }
 
   // Manejar selección de archivo de video
-  onVideoSelected(event: any): void {
+  /*onVideoSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       // Validar tamaño máximo (1000MB = 1GB)
       if (file.size > 1000 * 1024 * 1024) {
         this.mostrarNotificacion("El video es demasiado grande. Máximo 1000MB (1GB)", "error");
         return;
-      }
+      }*/
       
       // Validar tipo de video por extensión
       /*const fileExtension = file.name.split('.').pop()?.toUpperCase();
@@ -170,7 +165,7 @@ export class ActualizarPerfilComponent implements OnInit {
       }*/
       
       // Crear URL temporal para previsualización
-      const reader = new FileReader();
+      /*const reader = new FileReader();
       reader.onload = (e: any) => {
         this.videoPath = e.target.result;
         this.videoNombreOriginal = file.name;
@@ -200,7 +195,7 @@ export class ActualizarPerfilComponent implements OnInit {
     //this.videoTipo = '';
     this.videoId = null;
     this.mostrarNotificacion("Video eliminado", "success");
-  }
+  }*/
 
   guardarCambios(): void {
     if (this.EditarUsuarioForm.valid) {
@@ -247,7 +242,7 @@ export class ActualizarPerfilComponent implements OnInit {
       }
 
       // Preparar video
-      let video: Video | undefined = undefined;
+     /* let video: Video | undefined = undefined;
       const videoPath = this.EditarUsuarioForm.value.videoPath;
       const videoNombreOriginal = this.EditarUsuarioForm.value.videoNombreOriginal;
       //const videoTipo = this.EditarUsuarioForm.value.videoTipo;
@@ -262,7 +257,7 @@ export class ActualizarPerfilComponent implements OnInit {
         if (this.videoId) {
           video.id = this.videoId;
         }
-      }
+      }*/
 
       // Construir objeto usuario actualizado
       const usuarioActualizado: Usuario = {
@@ -276,7 +271,7 @@ export class ActualizarPerfilComponent implements OnInit {
         descripcion: this.EditarUsuarioForm.value.descripcion || '',
         fotoPerfil: fotoPerfil,
         fotoPortada: fotoPortada,
-        videoPresentacion: video
+       // videoPresentacion: video
       };
 
       this.usuarioService.updateUsuario(this.usuarioId, usuarioActualizado).subscribe({
@@ -289,12 +284,12 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaUrl = res.fotoPortada?.url || '';
           this.fotoPortadaAlt = res.fotoPortada?.alt || '';
           
-          if (res.videoPresentacion) {
+          /*if (res.videoPresentacion) {
             this.videoId = res.videoPresentacion.id;
             this.videoPath = res.videoPresentacion.path;
             this.videoNombreOriginal = res.videoPresentacion.nombreOriginal;
             //this.videoTipo = res.videoPresentacion.tipo;
-          }
+          }*/
           
           this.usuarioOriginal = { ...res };
           localStorage.setItem('username', res.username);
