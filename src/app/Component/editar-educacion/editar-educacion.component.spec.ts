@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditarEducacionComponent } from './editar-educacion.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('EditarEducacionComponent', () => {
   let component: EditarEducacionComponent;

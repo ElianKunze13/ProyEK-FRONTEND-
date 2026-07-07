@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EducacionComponent } from './educacion.component';
+import { describe, beforeEach, it } from 'node:test';
 
 describe('EducacionComponent', () => {
   let component: EducacionComponent;

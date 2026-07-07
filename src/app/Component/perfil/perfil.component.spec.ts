@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PerfilComponent } from './perfil.component';
+import { describe, beforeEach, it } from 'node:test';
 
 describe('PerfilComponent', () => {
   let component: PerfilComponent;

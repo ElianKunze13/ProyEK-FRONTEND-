@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActualizarPerfilComponent } from './actualizar-perfil.component';
+import { describe, beforeEach, it } from 'node:test';
 
-describe('ActualizarPerfilComponent', () => {
+describe('ActualizarPerfilComponent', () => { 
   let component: ActualizarPerfilComponent;
   let fixture: ComponentFixture<ActualizarPerfilComponent>;
 

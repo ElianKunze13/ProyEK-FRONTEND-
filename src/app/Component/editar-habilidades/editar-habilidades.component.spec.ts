@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditarHabilidadesComponent } from './editar-habilidades.component';
+import { describe, beforeEach, it } from 'node:test';
 
 describe('EditarHabilidadesComponent', () => {
   let component: EditarHabilidadesComponent;
