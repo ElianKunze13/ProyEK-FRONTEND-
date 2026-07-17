@@ -10,6 +10,10 @@
     "serve:ssr:Curriculum": "node dist/curriculum/server/server.mjs"
   },
   "private": true,
+   "engines": {
+    "node": ">=20.0.0 <22.0.0",
+    "npm": ">=10.0.0"
+  },
   "dependencies": {
     "@angular/animations": "^19.1.0",
     "@angular/common": "^19.1.0",
