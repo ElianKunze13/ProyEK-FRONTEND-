@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Conocimiento } from '../Modelo/conocimiento';
 import { catchError, Observable, of, throwError } from 'rxjs';
