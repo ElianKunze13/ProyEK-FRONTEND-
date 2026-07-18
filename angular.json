@@ -18,7 +18,6 @@
     },
     "index": "src/index.html",
     "browser": "src/main.ts",
-    "server": "src/main.server.ts",
     "prerender": false,
     "outputMode": "static",
     "polyfills": ["zone.js"],
