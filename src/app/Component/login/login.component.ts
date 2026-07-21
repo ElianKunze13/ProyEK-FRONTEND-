@@ -20,7 +20,7 @@ loginError:string="";
 
     this.loginForm=this.formBuilder.group({
     username:['',[Validators.required,Validators.email]],
-    password: ['',[Validators.required, Validators.minLength(8)]],
+    password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(10)]],
   })
   }
 
