@@ -23,7 +23,7 @@ export class LoginService {
 
   login(credentials: LoginRequest): Observable<any> {
 
-//URL en produccion: https://proyek-backend.onrender.com/api/v1/auth/login
+//URL completa: https://proyek-backend.onrender.com/api/v1/auth/login
     return this.http.post<any>(this.apiUrl + "/auth/login", credentials).pipe(
     tap((userData) => {
       localStorage.setItem("token", userData.token);  // 💾 Persistencia
@@ -38,7 +38,7 @@ export class LoginService {
 
 register(credentials: Usuario): Observable<any> {
 
-    return this.http.post<any>(this.apiUrl + "api/v1/auth/register", credentials).pipe(
+    return this.http.post<any>(this.apiUrl + "/auth/register", credentials).pipe(
     tap((userData) => {
       localStorage.setItem("token", userData.token);  // 💾 Persistencia
       this.usuarioToken.next(userData.token);           // 🔄 Actualiza token
