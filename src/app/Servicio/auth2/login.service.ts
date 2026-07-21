@@ -10,6 +10,7 @@ import { Usuario } from '../../Modelo/usuario';
   providedIn: 'root'
 })
 export class LoginService {
+  private apiUrl =environment.apiUrl;
 
   usuarioLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   usuarioToken: BehaviorSubject<String> =new BehaviorSubject<String>("");
@@ -19,12 +20,11 @@ export class LoginService {
     this.usuarioToken=new BehaviorSubject<String>(this.getToken() || "");
   }
 
-  private apiUrl =environment.apiUrl;
 
   login(credentials: LoginRequest): Observable<any> {
 
 //URL en produccion: https://proyek-backend.onrender.com/api/v1/auth/login
-    return this.http.post<any>(this.apiUrl + "api/v1/auth/login", credentials).pipe(
+    return this.http.post<any>(this.apiUrl + "/auth/login", credentials).pipe(
     tap((userData) => {
       localStorage.setItem("token", userData.token);  // 💾 Persistencia
       this.usuarioToken.next(userData.token);           // 🔄 Actualiza token
