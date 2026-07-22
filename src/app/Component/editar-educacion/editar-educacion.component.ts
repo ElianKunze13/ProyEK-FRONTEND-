@@ -244,6 +244,7 @@ export class EditarEducacionComponent implements OnInit {
       tipoEducacion: this.editarEducacionForm.value.tipoEducacion as TipoEducacion,
       imagen: imagenes[0] || null
     };
+    console.log('Actualizando educación:', educacionActualizada);
 
     // Llamar al servicio update
     this.educacionService.updateEducacion(this.educacionEditada.id, educacionActualizada).subscribe({
