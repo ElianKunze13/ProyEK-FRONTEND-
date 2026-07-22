@@ -244,7 +244,7 @@ export class EditarHerramientasComponent implements OnInit {
 
     console.log('Actualizando conocimiento:', conocimientoActualizado);
 
-    this.conocimientoService.updateReporte(this.conocimientoEditado.id, conocimientoActualizado).subscribe({
+    this.conocimientoService.updateConocimiento(this.conocimientoEditado.id, conocimientoActualizado).subscribe({
       next: (conocimientoActualizadoResp) => {
         console.log('✅ Conocimiento actualizado exitosamente:', conocimientoActualizadoResp);
         

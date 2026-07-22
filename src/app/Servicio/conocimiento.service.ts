@@ -110,7 +110,7 @@ findIA(): Observable<Conocimiento[]> {
       );
   }
 
-    updateReporte(id: number, conocimiento : Conocimiento): Observable<Conocimiento> {
+    updateConocimiento(id: number, conocimiento : Conocimiento): Observable<Conocimiento> {
     console.log(JSON.stringify(conocimiento));
     return this.http.put<Conocimiento>(`${this.apiUrl}/auth/modificar/conocimiento/${id}`, conocimiento)
     .pipe(

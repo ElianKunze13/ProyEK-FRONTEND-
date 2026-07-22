@@ -45,7 +45,7 @@ export class EducacionService {
     }
         
     delete(id: number): Observable<any> {
-      return this.http.delete<void>(this.apiUrl + '/borrar/educacion' + id)
+      return this.http.delete<void>(this.apiUrl + '/borrar/educacion/' + id)
         .pipe(
           catchError(error => {
             console.error('Error fetching conocimientos:', error);
