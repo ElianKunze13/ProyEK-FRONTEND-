@@ -3,7 +3,7 @@ import { Imagen } from "./imagen";
 
 export interface Educacion {
     id: any;
-    titulo: string;
+    titulo: string | undefined;
     fechaInicio: Date | undefined;
     fechaObtencion: Date | undefined;
     descripcion: string;
