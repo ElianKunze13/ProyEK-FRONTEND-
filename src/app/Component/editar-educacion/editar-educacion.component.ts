@@ -23,7 +23,8 @@ export class EditarEducacionComponent implements OnInit {
   editarEducacionForm!: FormGroup;
   
   // Variables para la educación que se está editando
-  educacionEditada: Educacion = {
+  educacionEditada: Educacion | null = null;
+  /*educacionEditada: Educacion = {
     id: 0,
     titulo: '',
     fechaInicio: new Date(),
@@ -34,7 +35,7 @@ export class EditarEducacionComponent implements OnInit {
       url: '',
       alt: ''
     }
-  };
+  };*/
   
   // Variables para la educación a eliminar
   educacionAEliminar: Educacion | null = null;
@@ -131,8 +132,8 @@ export class EditarEducacionComponent implements OnInit {
     const nuevaEducacion: Educacion = {
       id: null,
       titulo: this.educacionForm.value.titulo,
-      fechaInicio: this.actualizando ? this.educacionEditada.fechaInicio : new Date(),
-      fechaObtencion: this.actualizando ? this.educacionEditada.fechaObtencion : new Date(),
+      fechaInicio: this.actualizando ? this.educacionEditada?.fechaInicio : new Date(),
+      fechaObtencion: this.actualizando ? this.educacionEditada?.fechaObtencion : new Date(),
       descripcion: this.educacionForm.value.descripcion,
       tipoEducacion: this.educacionForm.value.tipoEducacion as TipoEducacion,
       //imagen es unica, no una lista
@@ -213,7 +214,7 @@ export class EditarEducacionComponent implements OnInit {
       return;
     }
 
-    if (!this.educacionEditada.id) {
+    if (!this.educacionEditada?.id) {
       this.mostrarMensaje('No hay educación seleccionada para editar', 'error');
       return;
     }
@@ -253,7 +254,7 @@ export class EditarEducacionComponent implements OnInit {
         this.actualizando = false;
         
         // Actualizar la educación en la lista
-        const index = this.educaciones.findIndex(e => e.id === this.educacionEditada.id);
+        const index = this.educaciones.findIndex(e => e.id === this.educacionEditada?.id);
         if (index !== -1) {
           this.educaciones[index] = { ...educacionActualizadaResp };
         }

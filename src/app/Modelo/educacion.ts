@@ -4,8 +4,8 @@ import { Imagen } from "./imagen";
 export interface Educacion {
     id: any;
     titulo: string;
-    fechaInicio: Date;
-    fechaObtencion: Date;
+    fechaInicio: Date | undefined;
+    fechaObtencion: Date | undefined;
     descripcion: string;
     tipoEducacion: TipoEducacion;
     imagen?: Imagen;
