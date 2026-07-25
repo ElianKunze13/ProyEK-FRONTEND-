@@ -166,7 +166,7 @@ export class EditarEducacionComponent implements OnInit {
     });
   }
 
-  cargarEducacionParaEditar(educacion: Educacion): void {
+ /* cargarEducacionParaEditar(educacion: Educacion): void {
     console.log('Cargando educación para editar:', educacion);
     
     this.educacionEditada = { ...educacion };
@@ -194,12 +194,110 @@ export class EditarEducacionComponent implements OnInit {
     this.mostrarModal = true;
     
     // Desplazar la página hacia arriba si es necesario
-    /*setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);*/
+    //setTimeout(() => {
+      //window.scrollTo({ top: 0, behavior: 'smooth' });
+    //}, 100);
+  }*/
+
+    actualizarEducacion(): void {
+  console.log('=== INICIANDO ACTUALIZACIÓN ===');
+  console.log('Formulario válido:', this.editarEducacionForm.valid);
+  console.log('Valores del formulario:', this.editarEducacionForm.value);
+  console.log('Errores del formulario:', this.editarEducacionForm.errors);
+  
+  // Verificar cada campo individualmente
+  Object.keys(this.editarEducacionForm.controls).forEach(key => {
+    const control = this.editarEducacionForm.get(key);
+    console.log(`Campo ${key}:`, {
+      value: control?.value,
+      valid: control?.valid,
+      errors: control?.errors,
+      touched: control?.touched
+    });
+  });
+
+  if (this.editarEducacionForm.invalid) {
+    // Marcar todos los campos como tocados
+    Object.keys(this.editarEducacionForm.controls).forEach(key => {
+      const control = this.editarEducacionForm.get(key);
+      if (control?.invalid) {
+        control.markAsTouched();
+      }
+    });
+    this.mostrarMensaje('Por favor completa todos los campos correctamente', 'error');
+    return;
   }
 
-  actualizarEducacion(): void {
+  if (!this.educacionEditada?.id) {
+    this.mostrarMensaje('No hay educación seleccionada para editar', 'error');
+    return;
+  }
+
+  this.actualizando = true;
+  this.mensaje = '';
+
+  // Preparar array de imágenes
+  const imagenes: Imagen[] = [];
+  const imagenUrl = this.editarEducacionForm.value.imagenUrl;
+  const imagenAlt = this.editarEducacionForm.value.imagenAlt;
+
+  if (imagenUrl) {
+    imagenes.push({
+      url: imagenUrl,
+      alt: imagenAlt || 'Imagen de educación'
+    });
+  }
+
+  // Crear objeto Educacion actualizado
+  const educacionActualizada: Educacion = {
+    id: this.educacionEditada.id,
+    titulo: this.editarEducacionForm.value.titulo,
+    descripcion: this.editarEducacionForm.value.descripcion,
+    fechaInicio: this.editarEducacionForm.value.fechaInicio,
+    fechaObtencion: this.editarEducacionForm.value.fechaObtencion,
+    tipoEducacion: this.editarEducacionForm.value.tipoEducacion as TipoEducacion,
+    imagen: imagenes[0] || null
+  };
+  
+  console.log('Objeto a actualizar:', educacionActualizada);
+
+  // Llamar al servicio update
+  this.educacionService.updateEducacion(this.educacionEditada.id, educacionActualizada).subscribe({
+    next: (educacionActualizadaResp) => {
+      console.log('✅ Educación actualizada exitosamente:', educacionActualizadaResp);
+      
+      this.mostrarMensaje('¡Educación actualizada con éxito!', 'success');
+      this.actualizando = false;
+      
+      // Actualizar la educación en la lista
+      const index = this.educaciones.findIndex(e => e.id === this.educacionEditada?.id);
+      if (index !== -1) {
+        this.educaciones[index] = { ...educacionActualizadaResp };
+      }
+      
+      // Cerrar el modal después de 2 segundos
+      setTimeout(() => {
+        this.cerrarModal();
+      }, 2000);
+    },
+    error: (error) => {
+      console.error('❌ Error al actualizar educación:', error);
+      this.actualizando = false;
+      
+      if (error.status === 404) {
+        this.mostrarMensaje('Error: No se encontró la educación', 'error');
+      } else if (error.status === 400) {
+        this.mostrarMensaje('Error: Datos inválidos. Verifica los campos.', 'error');
+        console.error('Detalles del error 400:', error.error);
+      } else if (error.status === 401 || error.status === 403) {
+        this.mostrarMensaje('No tiene permisos para realizar esta acción', 'error');
+      } else {
+        this.mostrarMensaje('Error al actualizar la educación. Intente nuevamente.', 'error');
+      }
+    }
+  });
+}
+  /*actualizarEducacion(): void {
     if (this.editarEducacionForm.invalid) {
       // Marcar todos los campos como tocados
       Object.keys(this.editarEducacionForm.controls).forEach(key => {
@@ -278,7 +376,7 @@ export class EditarEducacionComponent implements OnInit {
         }
       }
     });
-  }
+  }*/
 
   // Método para confirmar eliminación
   confirmarEliminacion(educacion: Educacion): void {
