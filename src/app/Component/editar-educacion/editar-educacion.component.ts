@@ -165,7 +165,45 @@ export class EditarEducacionComponent implements OnInit {
       }
     });
   }
+cargarEducacionParaEditar(educacion: Educacion): void {
+  console.log('Cargando educación para editar:', educacion);
+  
+  this.educacionEditada = { ...educacion };
 
+  // Obtener la primera imagen si existe
+  const primeraImagen = educacion.imagen && educacion.imagen 
+    ? educacion.imagen 
+    : { url: '', alt: '' };
+
+  // Asegurarse de que las fechas sean objetos Date válidos
+  const fechaInicio = educacion.fechaInicio ? new Date(educacion.fechaInicio) : new Date();
+  const fechaObtencion = educacion.fechaObtencion ? new Date(educacion.fechaObtencion) : new Date();
+
+  // Actualizar el formulario con los datos
+  this.editarEducacionForm.patchValue({
+    titulo: educacion.titulo || '',
+    descripcion: educacion.descripcion || '',
+    fechaInicio: fechaInicio,
+    fechaObtencion: fechaObtencion,
+    tipoEducacion: educacion.tipoEducacion || '',
+    imagenUrl: primeraImagen.url || '',
+    imagenAlt: primeraImagen.alt || ''
+  });
+
+  // Marcar todos los campos como "touched" para mostrar validaciones si es necesario
+  Object.keys(this.editarEducacionForm.controls).forEach(key => {
+    const control = this.editarEducacionForm.get(key);
+    if (control) {
+      control.markAsTouched();
+    }
+  });
+
+  this.mensaje = `Editando: "${educacion.titulo}"`;
+  this.mensajeTipo = 'info';
+  
+  // Mostrar el modal
+  this.mostrarModal = true;
+}
  /* cargarEducacionParaEditar(educacion: Educacion): void {
     console.log('Cargando educación para editar:', educacion);
     
