@@ -13,7 +13,7 @@ import { TipoEducacion } from '../../Modelo/Enums/tipoEducacion';
   styleUrl: './editar-educacion.component.css'
 })
 export class EditarEducacionComponent implements OnInit {
-  expandedIndex: number | null = null;
+  //expandedIndex: number | null = null;
   educaciones: Educacion[] = [];
   
   // Formulario para crear nueva educación
@@ -169,9 +169,7 @@ export class EditarEducacionComponent implements OnInit {
   cargarEducacionParaEditar(educacion: Educacion): void {
     console.log('Cargando educación para editar:', educacion);
     
-    this.educacionEditada = {
-      ...educacion
-    };
+    this.educacionEditada = { ...educacion };
 
     // Obtener la primera imagen si existe
     const primeraImagen = educacion.imagen && educacion.imagen 
@@ -196,9 +194,9 @@ export class EditarEducacionComponent implements OnInit {
     this.mostrarModal = true;
     
     // Desplazar la página hacia arriba si es necesario
-    setTimeout(() => {
+    /*setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
+    }, 100);*/
   }
 
   actualizarEducacion(): void {
