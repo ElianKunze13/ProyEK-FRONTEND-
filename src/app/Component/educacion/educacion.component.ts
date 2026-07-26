@@ -9,59 +9,53 @@ import { CommonModule } from '@angular/common';
   templateUrl: './educacion.component.html',
   styleUrl: './educacion.component.css'
 })
-export class EducacionComponent implements OnInit{
-    expandedIndex: number | null = null;
- educaciones: Educacion[]=[];
+export class EducacionComponent implements OnInit {
+  expandedIndex: number | null = null;
+  educaciones: Educacion[] = [];
+  mostrarPopup = false;
+  educacionSeleccionada: Educacion | null = null;
 
-constructor(private educacionService: EducacionService){}
+  constructor(private educacionService: EducacionService) {}
 
-ngOnInit() {
-  this.cargarEducaciones();
-    // Agregar animación de entrada cuando se carga el componente
+  ngOnInit() {
+    this.cargarEducaciones();
     setTimeout(() => {
       const mainPage = document.getElementById('main-page');
       if (mainPage) {
         mainPage.classList.add('slide-left-enter');
       }
-    }, 50); // Pequeño delay para que Angular renderice primero
+    }, 50);
   }
 
   cargarEducaciones(): void {
     this.educacionService.findAll().subscribe({
-        next: (data: Educacion[])=>{
-           console.log('✅ Datos recibidos:', data);
-          console.log('📊 Cantidad de items:', data.length);
-          console.log('🔍 Estructura del primer item:', data[0]);
-          
-          this.educaciones=data;
-          console.log(JSON.stringify(this.educaciones))
-        },
-        error: () =>{
-          this.educaciones=[];
-          console.log(JSON.stringify(this.educaciones))
-  
-          console.log("Error al cargar lista")
-        }
-      })
-  
-  
-  
-  
+      next: (data: Educacion[]) => {
+        console.log('✅ Datos recibidos:', data);
+        console.log('📊 Cantidad de items:', data.length);
+        this.educaciones = data;
+      },
+      error: () => {
+        this.educaciones = [];
+        console.log("Error al cargar lista");
+      }
+    });
   }
 
-  
-mostrarPopup = false;
+  verdetalles(educacion: Educacion): void {
+    console.log('Ver certificado de:', educacion.titulo);
+    this.educacionSeleccionada = educacion;
+    this.mostrarPopup = true;
+  }
 
-verdetalles(reencuentro: any) {
-  this.mostrarPopup = true;
-}
+  cerrarPopup(): void {
+    this.mostrarPopup = false;
+    this.educacionSeleccionada = null;
+  }
 
-cerrarPopup() {
-  this.mostrarPopup = false;
-}
-
-abrirPopup(reencuentro: any) {
-  console.log('Ver certificado');
-  this.mostrarPopup = true;
-}
+  // Método auxiliar para formatear fechas si el pipe date no funciona
+  formatDate(date: Date | undefined): string {
+    if (!date) return 'No disponible';
+    const d = new Date(date);
+    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+  }
 }

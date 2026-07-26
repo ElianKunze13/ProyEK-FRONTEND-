@@ -1,60 +1,63 @@
-#main-content{
-     background-color: #1e293b;
-color: white;
+#main-content {
+  background-color: #1e293b;
+  color: white;
+  min-height: 100vh;
 }
 
-
-.contenedor{
+.contenedor {
   background-color: rgb(228, 227, 227);
-   border-radius: 15px;
-   margin:auto;
-   padding: 2%;
-   width: fit-content;
+  border-radius: 15px;
+  margin: auto;
+  padding: 2%;
+  width: fit-content;
+  max-width: 100%;
 }
-#btn-Certificado{
+
+/* Botón personalizado manteniendo compatibilidad con Bootstrap */
+#btn-Certificado {
   background-color: #cecece;
   color: #016dda;
-  font-weight:600;
+  font-weight: 600;
   border-color: white;
+  transition: all 0.3s ease;
 }
+
 #btn-Certificado:hover {
   background-color: rgb(255, 255, 255);
-  font-weight:800;
+  font-weight: 800;
+  transform: scale(1.02);
 }
 
-#cerrarpopup{
-    width:120%;
-background-color: #016dda;
-color: white;
-}
-
+/* Popup mejorado */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
 }
 
 .popup-content {
   background: rgb(245, 244, 244);
-  padding: 2rem; 
+  padding: 2rem;
   border-radius: 15px;
-  max-width: 1200px; 
-  width: 95%; 
-  max-height: 80vh; 
-  height: auto; 
+  max-width: 800px;
+  width: 95%;
+  max-height: 90vh;
+  height: auto;
   text-align: left;
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  animation: fadeIn 0.3s ease; 
-  overflow-y: auto; /* Habilita el scroll vertical si es necesario */
-  margin: 2rem auto;
-  position: relative; 
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+  margin: 1rem auto;
+  position: relative;
 }
 
 .popup-img {
@@ -68,18 +71,71 @@ color: white;
   display: block;
   margin-left: auto;
   margin-right: auto;
-
 }
 
+/* Las cards usan las clases de Bootstrap, solo mejoramos algunos detalles */
 .card {
-  background: rgb(218, 217, 217);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #e5e7eb;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Badges de Bootstrap */
+.badge.bg-secondary {
+  background-color: #6b7280 !important;
+}
+
+/* Responsive adicional */
+@media (max-width: 768px) {
+  .contenedor {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .popup-content {
+    padding: 1rem;
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-content {
+    padding: 0.75rem;
+    max-width: 98%;
+  }
+  
+  .contenedor {
+    padding: 0.5rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.slide-left-enter {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
