@@ -73,16 +73,73 @@
   margin-right: auto;
 }
 
-/* Las cards usan las clases de Bootstrap, solo mejoramos algunos detalles */
+/* ============================================ */
+/* ESTILOS MEJORADOS PARA CARDS CON CONTRASTE */
+/* ============================================ */
+
+/* Las cards usan las clases de Bootstrap, con colores mejorados */
 .card {
+  background: #2d3748; /* Fondo gris oscuro para contraste */
+  border: 1px solid #4a5568; /* Borde más visible */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #e5e7eb;
+  color: #e2e8f0; /* Texto claro para legibilidad */
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  border-color: #63b3ed; /* Borde azul al hacer hover */
 }
+
+/* Título de la card */
+.card .card-title {
+  color: #f7fafc; /* Blanco para título */
+  font-weight: 600;
+}
+
+/* Texto de descripción */
+.card .card-text {
+  color: #cbd5e0; /* Gris claro para descripción */
+}
+
+/* Texto de fechas */
+.card .text-gray-700 {
+  color: #e2e8f0 !important; /* Texto claro para fechas */
+}
+
+.card .text-muted {
+  color: #a0aec0 !important; /* Gris medio para etiquetas */
+}
+
+/* Badge de tipo de educación */
+.card .badge.bg-secondary {
+  background-color: #4a5568 !important; /* Fondo más oscuro para badge */
+  color: #e2e8f0 !important; /* Texto claro */
+}
+
+/* Borde separador de fechas */
+.card .border-top {
+  border-top-color: #4a5568 !important; /* Borde más visible */
+}
+
+/* Botón de la card */
+.card #btn-Certificado {
+  background-color: #4a5568;
+  color: #bee3f8;
+  border-color: #63b3ed;
+  font-weight: 600;
+}
+
+.card #btn-Certificado:hover {
+  background-color: #63b3ed;
+  color: #1a202c;
+  border-color: #63b3ed;
+}
+
+/* ============================================ */
+/* FIN ESTILOS DE CARDS MEJORADOS */
+/* ============================================ */
 
 /* Badges de Bootstrap */
 .badge.bg-secondary {
