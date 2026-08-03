@@ -102,7 +102,8 @@
           </h3>
 
           <div class="row">
-            @for (experiencia of experiencias; track experiencia.id; let i = $index) {
+           @if(experiencias && experiencias.length > 0){
+             @for (experiencia of experiencias; track experiencia.id; let i = $index) {
               <div class="col-md-4 mb-4">
                 <div class="card  border border-gray-700 bg-gray-800/50 h-100" style="background-color:rgba(83, 35, 128, 0.767);">
                   <div class="card-body">
@@ -119,6 +120,11 @@
                 </div>
               </div>
             }
+          }@else {
+            <div class="col-12">
+              <p class="text-center text-gray-300">No hay proyectos disponibles actualmente.</p>
+            </div>
+          }
           </div>
         </div>
 
@@ -145,8 +151,8 @@
           
         <!-- Imagen -->
         <div *ngIf="selectedExperiencia.imagen?.url" class="text-center mb-3">
-          <img [src]="selectedExperiencia.imagen?.url" 
-               [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
+          <img [src]="selectedExperiencia.imagen.url" 
+               [alt]="selectedExperiencia.imagen.alt || selectedExperiencia.titulo"
                class="img-fluid rounded">
         </div>
         <div *ngIf="!selectedExperiencia.imagen?.url" class="text-center text-muted mb-3">
