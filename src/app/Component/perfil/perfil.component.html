@@ -26,9 +26,9 @@
           
           <!-- Texto de Presentación -->
           <div class="flex-1 max-w-2xl">
-            <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy {{usuario.nombre || '...vacio...'}}</h2>
+            <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy {{usuario.nombre || '...cargando...'}}</h2>
             <p id="parrafo-estatico" class="text-lg mb-6">
-              {{usuario.introduccion || 'Desarrollador web fullstack apasionado por aprender sobre las herramientas digitales y su implementación en todo tipo de proyectos.'}}
+              {{usuario.introduccion || 'Cargando introduccion...'}}
             </p>    
           </div>
 
@@ -55,7 +55,7 @@
             </h3>
             <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
               <p class="text-lg leading-relaxed text-gray-300 text-left">
-                {{usuario.descripcion || 'Esta información se puede editar desde el panel de administración'}}
+                {{usuario.descripcion || 'Cargando descripción...'}}
               </p>
             </div>
           </div>
