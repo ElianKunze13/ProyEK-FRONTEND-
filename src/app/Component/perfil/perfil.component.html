@@ -69,17 +69,24 @@
               <div class="carrusel-wrapper">
                 <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
                   [style.transition]="'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'">
-                  @for (habilidad of habilidades; track habilidad.id; let i = $index) {
-                    <div class="habilidad-item">
-                      <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
-                    </div>
-                  }
+                  @if (habilidades && habilidades.length > 0) {
+                    @for (habilidad of habilidades; track habilidad.id; let i = $index) {
+                      <div class="habilidad-item">
+                        <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
+                      </div>
+                    }
+                  
                   @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
                     <div class="habilidad-item">
                       <span class="habilidad-nombre mb-2">{{ habilidad.nombre }}</span>
                       <div class="progress-bar">
                         <div class="progress-fill"></div>
                       </div>
+                    </div>
+                  }
+                }@else {
+                    <div class="habilidad-item">
+                      <span class="habilidad-nombre">Habilidades no disponibles</span>
                     </div>
                   }
                 </div>
