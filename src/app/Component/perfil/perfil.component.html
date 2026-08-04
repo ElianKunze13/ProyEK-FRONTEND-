@@ -1,5 +1,3 @@
-
-
 <!-- Main Content -->
 <div id="main-content" class="pt-25 md:pt-25 slide-left-enter">
 
@@ -76,15 +74,15 @@
                       </div>
                     }
                   
-                  @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
-                    <div class="habilidad-item">
-                      <span class="habilidad-nombre mb-2">{{ habilidad.nombre }}</span>
-                      <div class="progress-bar">
-                        <div class="progress-fill"></div>
+                    @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
+                      <div class="habilidad-item">
+                        <span class="habilidad-nombre mb-2">{{ habilidad.nombre }}</span>
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
                       </div>
-                    </div>
-                  }
-                }@else {
+                    }
+                  } @else {
                     <div class="habilidad-item">
                       <span class="habilidad-nombre">Habilidades no disponibles</span>
                     </div>
@@ -102,29 +100,28 @@
           </h3>
 
           <div class="row">
-           @if(experiencias && experiencias.length > 0){
-             @for (experiencia of experiencias; track experiencia.id; let i = $index) {
-              <div class="col-md-4 mb-4">
-                <div class="card  border border-gray-700 bg-gray-800/50 h-100" style="background-color:rgba(83, 35, 128, 0.767);">
-                  <div class="card-body">
-                    <h5 class="card-title text-black" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{experiencia.titulo}}</h5>
-                    <p class="card-text text-gray-300 small" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >
-                      {{experiencia.descripcion | slice:0:100}}{{experiencia.descripcion.length > 100 ? '...' : ''}}
-                    </p>
-                    
-                   
-                    <button class="btn btn-primary w-100" (click)="abrirModal(experiencia)">
-                      🔍 Ver más detalles
-                    </button>
+            @if (experiencias && experiencias.length > 0) {
+              @for (experiencia of experiencias; track experiencia.id; let i = $index) {
+                <div class="col-md-4 mb-4">
+                  <div class="card border border-gray-700 bg-gray-800/50 h-100" style="background-color:rgba(83, 35, 128, 0.767);">
+                    <div class="card-body">
+                      <h5 class="card-title text-black" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{experiencia.titulo}}</h5>
+                      <p class="card-text text-gray-300 small" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                        {{experiencia.descripcion | slice:0:100}}{{experiencia.descripcion.length > 100 ? '...' : ''}}
+                      </p>
+                      
+                      <button class="btn btn-primary w-100" (click)="abrirModal(experiencia)">
+                        🔍 Ver más detalles
+                      </button>
+                    </div>
                   </div>
                 </div>
+              }
+            } @else {
+              <div class="col-12">
+                <p class="text-center text-gray-300">No hay proyectos disponibles actualmente.</p>
               </div>
             }
-          }@else {
-            <div class="col-12">
-              <p class="text-center text-gray-300">No hay proyectos disponibles actualmente.</p>
-            </div>
-          }
           </div>
         </div>
 
@@ -141,51 +138,55 @@
         <h5 class="modal-title" id="experienciaModalLabel">Detalles del Proyecto</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngIf="selectedExperiencia">
-        <!-- Título -->
-        <h4 class="mb-3">{{selectedExperiencia.titulo}} 
-          <!-- INCLUIR FECHA DE INICIO Y FIN -->
-
-        </h4>
+      <div class="modal-body">
+        @if (selectedExperiencia) {
+          <!-- Título -->
+          <h4 class="mb-3">{{selectedExperiencia.titulo}} 
+            <!-- INCLUIR FECHA DE INICIO Y FIN -->
+          </h4>
                      
-          
-        <!-- Imagen -->
-        <div *ngIf="selectedExperiencia.imagen?.url" class="text-center mb-3">
-          <img [src]="selectedExperiencia.imagen.url" 
-               [alt]="selectedExperiencia.imagen.alt || selectedExperiencia.titulo"
-               class="img-fluid rounded">
-        </div>
-        <div *ngIf="!selectedExperiencia.imagen?.url" class="text-center text-muted mb-3">
-          <p>📷 No hay imagen disponible</p>
-        </div>
+          <!-- Imagen -->
+          @if (selectedExperiencia.imagen?.url) {
+            <div class="text-center mb-3">
+              <img [src]="selectedExperiencia.imagen.url" 
+                   [alt]="selectedExperiencia.imagen.alt || selectedExperiencia.titulo"
+                   class="img-fluid rounded">
+            </div>
+          } @else {
+            <div class="text-center text-muted mb-3">
+              <p>📷 No hay imagen disponible</p>
+            </div>
+          }
 
+          <div class="mb-2">
+            Tipo de proyecto:
+            <span class="badge" style="background-color: rgb(19, 19, 88);">
+              {{selectedExperiencia.tipoExperiencia}}
+            </span>
+          </div>
+          <div class="mb-3">
+            Tecnologias usadas: 
+            <span class="badge" style="background-color: rgb(88, 19, 19);">
+              {{selectedExperiencia.tecnologiaUsada}}
+            </span>
+          </div>
 
-        <div class="mb-2" *ngIf="selectedExperiencia">
-                      Tipo de proyecto:
-                      <span class="badge" style="background-color: rgb(19, 19, 88);">
-                        {{selectedExperiencia.tipoExperiencia}}
-                      </span>
-                    </div>
-        <div class="mb-3" *ngIf="selectedExperiencia">
-                      Tecnologias usadas: 
-                      <span class="badge" style="background-color: rgb(88, 19, 19);">
-                        {{selectedExperiencia.tecnologiaUsada}}
-                      </span>
-                    </div>
-
-
-        <!-- Link -->
-        <div *ngIf="selectedExperiencia.link" class="text-center">
-          <a [href]="selectedExperiencia.link" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             class="btn btn-primary">
-            🔗 Visitar proyecto
-          </a>
-        </div>
-        <div *ngIf="!selectedExperiencia.link" class="text-center text-muted">
-          <p>🔗 No hay enlace disponible</p>
-        </div>
+          <!-- Link -->
+          @if (selectedExperiencia.link) {
+            <div class="text-center">
+              <a [href]="selectedExperiencia.link" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="btn btn-primary">
+                🔗 Visitar proyecto
+              </a>
+            </div>
+          } @else {
+            <div class="text-center text-muted">
+              <p>🔗 No hay enlace disponible</p>
+            </div>
+          }
+        }
       </div>
       <div class="modal-footer border-secondary">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
