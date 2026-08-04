@@ -1,3 +1,4 @@
+
 <div id="main-content" class="slide-left-enter">
   <main class="container pb-1">
     <section id="dashboard" class="section dashboard-section pt-40">
@@ -21,22 +22,25 @@
                 class="form-control" 
                 placeholder="Ej: Trabajo en equipo, Liderazgo, Comunicación"
               >
-              <div 
-                *ngIf="habilidadForm.get('nombre')?.invalid && habilidadForm.get('nombre')?.touched" 
-                class="text-red-500 text-sm mt-1"
-              >
-                El nombre es requerido (mínimo 2 caracteres)
-              </div>
+              @if (habilidadForm.get('nombre')?.invalid && habilidadForm.get('nombre')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  El nombre es requerido (mínimo 2 caracteres)
+                </div>
+              }
             </div>
             
             <!-- Mensajes de error/success -->
-            <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-              {{ errorMessage }}
-            </div>
+            @if (errorMessage) {
+              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {{ errorMessage }}
+              </div>
+            }
             
-            <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-              {{ successMessage }}
-            </div>
+            @if (successMessage) {
+              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ successMessage }}
+              </div>
+            }
             
             <button 
               type="submit" 
@@ -44,8 +48,11 @@
               class="btn-primary w-full py-3 flex items-center justify-center"
             >
               <i class="fas fa-plus-circle mr-2"></i>
-              <span *ngIf="!guardando">Añadir habilidad</span>
-              <span *ngIf="guardando">Guardando...</span>
+              @if (!guardando) {
+                <span>Añadir habilidad</span>
+              } @else {
+                <span>Guardando...</span>
+              }
             </button>
           </form>
         </div>
@@ -62,7 +69,6 @@
                 <div class="relative group">
                   <div class="flex flex-col items-center w-full p-4 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
                     
-                    
                     <!-- Nombre de la habilidad -->
                     <span class="text-sm font-medium text-center mb-1" style="color: aliceblue;">
                       {{ habilidad.nombre }}
@@ -73,10 +79,10 @@
                      style="position: relative;display:grid;">
                       <button 
                         type="button" 
-                        class=" btn btn-primary btn-action btn-editar" 
+                        class="btn btn-primary btn-action btn-editar" 
                         (click)="cargarHabilidadParaEditar(habilidad)"
                         title="Editar habilidad"
-              >
+                      >
                         ✏️ 
                       </button>
                       
@@ -96,7 +102,7 @@
           </div>
         } @else {
           <div class="text-center py-8">
-            <p class="text-gray-500">No hay habilidades registradas aún. Agrega la primera.</p>
+            <p class="text-gray-500">No hay habilidades registradas aún. Lo sentimos.</p>
           </div>
         }
 
@@ -120,13 +126,14 @@
               
               <div class="modal-body">
                 <div class="bg-white rounded-lg shadow-md p-6">
-                  <div 
-                    *ngIf="mensaje" 
-                    class="mensaje mb-4 p-3 rounded" 
-                    [class]="mensajeTipo === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'"
-                  >
-                    {{ mensaje }}
-                  </div>
+                  @if (mensaje) {
+                    <div 
+                      class="mensaje mb-4 p-3 rounded" 
+                      [class]="mensajeTipo === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'"
+                    >
+                      {{ mensaje }}
+                    </div>
+                  }
 
                   <form [formGroup]="editarHabilidadForm" (ngSubmit)="actualizarHabilidad()">
                     <!-- Nombre -->
@@ -138,12 +145,11 @@
                         class="form-control"
                         placeholder="Nombre de la habilidad"
                       >
-                      <div 
-                        *ngIf="editarHabilidadForm.get('nombre')?.invalid && editarHabilidadForm.get('nombre')?.touched" 
-                        class="text-red-500 text-sm mt-1"
-                      >
-                        El nombre es requerido (mínimo 2 caracteres)
-                      </div>
+                      @if (editarHabilidadForm.get('nombre')?.invalid && editarHabilidadForm.get('nombre')?.touched) {
+                        <div class="text-red-500 text-sm mt-1">
+                          El nombre es requerido (mínimo 2 caracteres)
+                        </div>
+                      }
                     </div>
 
                     <div class="form-actions flex justify-between mt-6">
@@ -152,12 +158,15 @@
                         class="btn btn-primary px-6 py-2" 
                         [disabled]="actualizando || editarHabilidadForm.invalid"
                       >
-                        <span *ngIf="!actualizando">
-                          <i class="fas fa-paper-plane me-2"></i>Actualizar habilidad
-                        </span>
-                        <span *ngIf="actualizando">
-                          <i class="fas fa-spinner fa-spin me-2"></i>Actualizando...
-                        </span>
+                        @if (!actualizando) {
+                          <span>
+                            <i class="fas fa-paper-plane me-2"></i>Actualizar habilidad
+                          </span>
+                        } @else {
+                          <span>
+                            <i class="fas fa-spinner fa-spin me-2"></i>Actualizando...
+                          </span>
+                        }
                       </button>
                       
                       <button 
@@ -217,12 +226,15 @@
                       (click)="eliminarHabilidad()" 
                       [disabled]="eliminando"
                     >
-                      <span *ngIf="!eliminando">
-                        <i class="fas fa-trash me-2"></i>Sí, eliminar
-                      </span>
-                      <span *ngIf="eliminando">
-                        <i class="fas fa-spinner fa-spin me-2"></i>Eliminando...
-                      </span>
+                      @if (!eliminando) {
+                        <span>
+                          <i class="fas fa-trash me-2"></i>Sí, eliminar
+                        </span>
+                      } @else {
+                        <span>
+                          <i class="fas fa-spinner fa-spin me-2"></i>Eliminando...
+                        </span>
+                      }
                     </button>
                     
                     <button 
