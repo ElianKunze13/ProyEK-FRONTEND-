@@ -1,56 +1,58 @@
- <!-- /Login -->
-    <div id="main-content" class=" slide-left-enter"  >
+<!-- /Login -->
+<div id="main-content" class="slide-left-enter">
+  <div id="fondo" class="min-h-screen flex flex-col items-center justify-center relative">
 
-<div id="fondo" class="min-h-screen flex flex-col items-center justify-center  relative">
+    <!-- Card Login -->
+    <div class="bg-grey rounded-lg shadow-md p-20 text-center" style="color: rgb(182, 182, 182);">
 
-  <!-- Card Login -->
-  <div class="bg-grey rounded-lg shadow-md p-20 text-center" style="color: rgb(182, 182, 182);">
+      <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
 
-
-    <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
-
-    <form [formGroup]="loginForm">
-    <p class="text-danger">{{loginError}}</p>
-    <div class="mb-3">
-      <label for="txtEmail" class="form-label">Email</label>
-      <input formControlName="username" type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp">
-        <div *ngIf="email.invalid && (email.dirty || email.touched)"
-            class="text-danger">
-            <div *ngIf="email.errors?.['required']">
-                El Email es requerido.
+      <form [formGroup]="loginForm">
+        <p class="text-danger">{{loginError}}</p>
+        
+        <div class="mb-3">
+          <label for="txtEmail" class="form-label">Email</label>
+          <input formControlName="username" type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp">
+          
+          @if (email.invalid && (email.dirty || email.touched)) {
+            <div class="text-danger">
+              @if (email.errors?.['required']) {
+                <div>El Email es requerido.</div>
+              }
+              @if (email.errors?.['email']) {
+                <div>El Email debe tener un formato válido.</div>
+              }
             </div>
-            <div *ngIf="email.errors?.['email']">
-                El Email debe tener un formato válido.
-            </div>
+          }
         </div>
-    </div>
-    <div class="mb-3">
-      <label for="txtPassword" class="form-label">Password</label>
-      <input formControlName="password" type="password" class="form-control" id="txtPassword" aria-describedby="passwordHelp">
-        <div *ngIf="password.invalid && (password.dirty || password.touched)"
-            class="text-danger">
-            <div *ngIf="password.errors?.['required']">
-                El Password es requerido.
+        
+        <div class="mb-3">
+          <label for="txtPassword" class="form-label">Password</label>
+          <input formControlName="password" type="password" class="form-control" id="txtPassword" aria-describedby="passwordHelp">
+          
+          @if (password.invalid && (password.dirty || password.touched)) {
+            <div class="text-danger">
+              @if (password.errors?.['required']) {
+                <div>El Password es requerido.</div>
+              }
+              @if (password.errors?.['minLength']) {
+                <div>El Password debe tener al menos 8 caracteres.</div>
+              }
             </div>
-            <div *ngIf="password.errors?.['minLength']">
-                El Password debe tener al menos 8 caracteres.
-            </div>
+          }
         </div>
+        
+        <button type="submit" id="enviar" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+      </form>
+
     </div>
-    <button type="submit" id="enviar" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
-</form>
 
-
-    
   </div>
-
 </div>
- </div>
  
- <!-- ------------------------------------------------------
+<!-- ------------------------------------------------------
   
  -->
-
 
 <!-- Contact Section 
        CREAR COMPONENTE NUEVO Y TRASLADARLO A ESTE
