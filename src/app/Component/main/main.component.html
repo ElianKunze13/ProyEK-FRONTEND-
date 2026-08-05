@@ -4,6 +4,21 @@
     <section id="home" class="section visible flex flex-col justify-center">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold mb-2">Lenguajes y Conocimientos que domino</h2>
+        
+        <!-- Indicador de carga global -->
+        @if (estaCargando()) {
+          <div class="flex justify-center items-center gap-2 text-gray-400">
+            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <span>Cargando conocimientos...</span>
+          </div>
+        }
+        
+        <!-- Contador de conocimientos -->
+        @if (!estaCargando() && getTotalConocimientos() > 0) {
+          <p class="text-sm text-gray-500 mt-2">
+            {{ getTotalConocimientos() }} conocimientos cargados
+          </p>
+        }
       </div>
     </section>
 
@@ -17,41 +32,80 @@
           <!-- Tarjeta Frontend -->
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(210, 169, 248);">Frontend</h3>
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conocimientos['FRONTEND']; track conocimiento.id) {
-              <div class="skill-card flex flex-col items-center w-20 relative">
-                <div class="mb-3 p-3 bg-white/10 rounded-lg">
-                  <img [src]="conocimiento.imagen?.url"
-                    [alt]="conocimiento.imagen?.alt || conocimiento.nombre || 'Imagen de herramienta'"
-                    [title]="conocimiento?.nombre || 'Herramienta'" class="w-14 h-14 object-cover">
-                </div>
-                <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                  {{ conocimiento?.nombre }}
-                </span>
-                <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+            
+            <!-- Estado de carga para Frontend -->
+            @if (loadingStates['FRONTEND']) {
+              <div class="flex justify-center items-center py-8">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
               </div>
-              }
-            </div>
+            } @else if (errorStates['FRONTEND']) {
+              <div class="text-center py-8 text-red-400">
+                <p>❌ Error al cargar conocimientos Frontend</p>
+                <button (click)="recargarPorTipo('FRONTEND')" 
+                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                  Reintentar
+                </button>
+              </div>
+            } @else {
+              <div class="flex flex-wrap gap-4 justify-center">
+                @for (conocimiento of conocimientos['FRONTEND']; track conocimiento.id) {
+                  <div class="skill-card flex flex-col items-center w-20 relative">
+                    <div class="mb-3 p-3 bg-white/10 rounded-lg">
+                      <img [src]="conocimiento.imagen?.url"
+                        [alt]="conocimiento.imagen?.alt || conocimiento.nombre || 'Imagen de herramienta'"
+                        [title]="conocimiento?.nombre || 'Herramienta'" 
+                        class="w-14 h-14 object-cover">
+                    </div>
+                    <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                      {{ conocimiento?.nombre }}
+                    </span>
+                    <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                  </div>
+                } @empty {
+                  <div class="text-center py-8 text-gray-400 w-full">
+                    <p>No hay conocimientos Frontend disponibles</p>
+                  </div>
+                }
+              </div>
+            }
           </div>
 
           <!-- Tarjeta Backend -->
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(157, 224, 255);">Backend</h3>
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conocimientos['BACKEND']; track conocimiento.id) {
-              <div class="flex flex-col items-center w-20">
-                <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                  <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                    class="w-12 h-12 object-contain">
-                </div>
-                <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                  {{ conocimiento?.nombre }}
-                </span>
-                <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+            
+            @if (loadingStates['BACKEND']) {
+              <div class="flex justify-center items-center py-8">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
               </div>
-              }
-            </div>
+            } @else if (errorStates['BACKEND']) {
+              <div class="text-center py-8 text-red-400">
+                <p>❌ Error al cargar conocimientos Backend</p>
+                <button (click)="recargarPorTipo('BACKEND')" 
+                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                  Reintentar
+                </button>
+              </div>
+            } @else {
+              <div class="flex flex-wrap gap-4 justify-center">
+                @for (conocimiento of conocimientos['BACKEND']; track conocimiento.id) {
+                  <div class="flex flex-col items-center w-20">
+                    <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                      <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                        class="w-12 h-12 object-contain">
+                    </div>
+                    <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                      {{ conocimiento?.nombre }}
+                    </span>
+                    <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                  </div>
+                } @empty {
+                  <div class="text-center py-8 text-gray-400 w-full">
+                    <p>No hay conocimientos Backend disponibles</p>
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -61,41 +115,77 @@
           <!-- Tarjeta Base de datos -->
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(250, 142, 201);">Base Datos</h3>
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conocimientos['BASE_DATOS']; track conocimiento.id) {
-              <div class="flex flex-col items-center w-20">
-                <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                  <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                    class="w-12 h-12 object-contain">
-                </div>
-                <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                  {{ conocimiento?.nombre }}
-                </span> 
-                <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+            
+            @if (loadingStates['BASE_DATOS']) {
+              <div class="flex justify-center items-center py-8">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
               </div>
-              }
-            </div>
+            } @else if (errorStates['BASE_DATOS']) {
+              <div class="text-center py-8 text-red-400">
+                <p>❌ Error al cargar conocimientos de Base de Datos</p>
+                <button (click)="recargarPorTipo('BASE_DATOS')" 
+                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                  Reintentar
+                </button>
+              </div>
+            } @else {
+              <div class="flex flex-wrap gap-4 justify-center">
+                @for (conocimiento of conocimientos['BASE_DATOS']; track conocimiento.id) {
+                  <div class="flex flex-col items-center w-20">
+                    <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                      <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                        class="w-12 h-12 object-contain">
+                    </div>
+                    <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                      {{ conocimiento?.nombre }}
+                    </span>
+                    <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                  </div>
+                } @empty {
+                  <div class="text-center py-8 text-gray-400 w-full">
+                    <p>No hay conocimientos de Base de Datos disponibles</p>
+                  </div>
+                }
+              </div>
+            }
           </div>
 
           <!-- Tarjeta Testing -->
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(169, 248, 202);">Testing</h3>
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conocimientos['TESTING']; track conocimiento.id) {
-              <div class="flex flex-col items-center w-20">
-                <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                  <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                    class="w-12 h-12 object-contain">
-                </div>
-                <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                  {{ conocimiento?.nombre }}
-                </span> 
-                <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+            
+            @if (loadingStates['TESTING']) {
+              <div class="flex justify-center items-center py-8">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
               </div>
-              }
-            </div>
+            } @else if (errorStates['TESTING']) {
+              <div class="text-center py-8 text-red-400">
+                <p>❌ Error al cargar conocimientos de Testing</p>
+                <button (click)="recargarPorTipo('TESTING')" 
+                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                  Reintentar
+                </button>
+              </div>
+            } @else {
+              <div class="flex flex-wrap gap-4 justify-center">
+                @for (conocimiento of conocimientos['TESTING']; track conocimiento.id) {
+                  <div class="flex flex-col items-center w-20">
+                    <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                      <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                        class="w-12 h-12 object-contain">
+                    </div>
+                    <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                      {{ conocimiento?.nombre }}
+                    </span>
+                    <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                  </div>
+                } @empty {
+                  <div class="text-center py-8 text-gray-400 w-full">
+                    <p>No hay conocimientos de Testing disponibles</p>
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -105,21 +195,39 @@
           <!-- Tarjeta Otros -->
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(165, 165, 165);">Otras</h3>
-            <div class="flex flex-wrap gap-4 justify-center">
-              @for (conocimiento of conocimientos['OTROS']; track conocimiento.id) {
-              <div class="flex flex-col items-center w-20">
-                <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                  <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                    class="w-12 h-12 object-contain">
-                </div>
-                <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                  {{ conocimiento?.nombre }}
-                </span> 
-                <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+            
+            @if (loadingStates['OTROS']) {
+              <div class="flex justify-center items-center py-8">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
               </div>
-              }
-            </div>
+            } @else if (errorStates['OTROS']) {
+              <div class="text-center py-8 text-red-400">
+                <p>❌ Error al cargar otros conocimientos</p>
+                <button (click)="recargarPorTipo('OTROS')" 
+                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                  Reintentar
+                </button>
+              </div>
+            } @else {
+              <div class="flex flex-wrap gap-4 justify-center">
+                @for (conocimiento of conocimientos['OTROS']; track conocimiento.id) {
+                  <div class="flex flex-col items-center w-20">
+                    <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                      <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                        class="w-12 h-12 object-contain">
+                    </div>
+                    <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                      {{ conocimiento?.nombre }}
+                    </span>
+                    <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                  </div>
+                } @empty {
+                  <div class="text-center py-8 text-gray-400 w-full">
+                    <p>No hay otros conocimientos disponibles</p>
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -131,41 +239,77 @@
             <!-- IA -->
             <div class="animated-border-card">
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">IA</h4>
-              <div class="flex flex-wrap gap-4 justify-center">
-                @for (conocimiento of conocimientos['IA']; track conocimiento.id) {
-                <div class="flex flex-col items-center w-20">
-                  <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                    <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                      class="w-12 h-12 object-contain">
-                  </div>
-                  <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                    {{ conocimiento?.nombre }}
-                  </span> 
-                  <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+              
+              @if (loadingStates['IA']) {
+                <div class="flex justify-center items-center py-8">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                 </div>
-                }
-              </div>
+              } @else if (errorStates['IA']) {
+                <div class="text-center py-8 text-red-400">
+                  <p>❌ Error al cargar conocimientos de IA</p>
+                  <button (click)="recargarPorTipo('IA')" 
+                          class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                    Reintentar
+                  </button>
+                </div>
+              } @else {
+                <div class="flex flex-wrap gap-4 justify-center">
+                  @for (conocimiento of conocimientos['IA']; track conocimiento.id) {
+                    <div class="flex flex-col items-center w-20">
+                      <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                        <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                          class="w-12 h-12 object-contain">
+                      </div>
+                      <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                        {{ conocimiento?.nombre }}
+                      </span>
+                      <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                    </div>
+                  } @empty {
+                    <div class="text-center py-8 text-gray-400 w-full">
+                      <p>No hay conocimientos de IA disponibles</p>
+                    </div>
+                  }
+                </div>
+              }
             </div>
 
             <!-- Prototipado -->
             <div class="animated-border-card">
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Prototipos-Presentaciones</h4>
-              <div class="flex flex-wrap gap-4 justify-center">
-                @for (conocimiento of conocimientos['PROTOTIPO']; track conocimiento.id) {
-                <div class="flex flex-col items-center w-20">
-                  <div class="mb-2 p-2 bg-white/10 rounded-lg">
-                    <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                      class="w-12 h-12 object-contain">
-                  </div>
-                  <span class="text-sm font-medium text-center" style="color: aliceblue;">
-                    {{ conocimiento?.nombre }}
-                  </span> 
-                  <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
-
+              
+              @if (loadingStates['PROTOTIPO']) {
+                <div class="flex justify-center items-center py-8">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                 </div>
-                }
-              </div>
+              } @else if (errorStates['PROTOTIPO']) {
+                <div class="text-center py-8 text-red-400">
+                  <p>❌ Error al cargar conocimientos de Prototipado</p>
+                  <button (click)="recargarPorTipo('PROTOTIPO')" 
+                          class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
+                    Reintentar
+                  </button>
+                </div>
+              } @else {
+                <div class="flex flex-wrap gap-4 justify-center">
+                  @for (conocimiento of conocimientos['PROTOTIPO']; track conocimiento.id) {
+                    <div class="flex flex-col items-center w-20">
+                      <div class="mb-2 p-2 bg-white/10 rounded-lg">
+                        <img [src]="conocimiento.imagen?.url" [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                          class="w-12 h-12 object-contain">
+                      </div>
+                      <span class="text-sm font-medium text-center" style="color: aliceblue;">
+                        {{ conocimiento?.nombre }}
+                      </span>
+                      <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
+                    </div>
+                  } @empty {
+                    <div class="text-center py-8 text-gray-400 w-full">
+                      <p>No hay conocimientos de Prototipado disponibles</p>
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
         </div>
