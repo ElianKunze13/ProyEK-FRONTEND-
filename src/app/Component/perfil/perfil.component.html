@@ -148,8 +148,8 @@
           <!-- Imagen -->
           @if (selectedExperiencia.imagen?.url) {
             <div class="text-center mb-3">
-              <img [src]="selectedExperiencia.imagen.url" 
-                   [alt]="selectedExperiencia.imagen.alt || selectedExperiencia.titulo"
+              <img [src]="selectedExperiencia.imagen?.url" 
+                   [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
                    class="img-fluid rounded">
             </div>
           } @else {
