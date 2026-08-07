@@ -73,10 +73,12 @@ export class EditarExperienciasComponent implements OnInit {
     // Formulario para crear nueva experiencia
     this.experienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
+      fechaInicioProyecto: ['', [Validators.required]],  // ✅ Añadido
       fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
       tecnologiaUsada: ['', [Validators.required]],
+      link: [''],  // ✅ Añadido (opcional)
       imagenUrl: [''],
       imagenAlt: ['']
     });
@@ -84,10 +86,12 @@ export class EditarExperienciasComponent implements OnInit {
     // Formulario para editar experiencia
     this.editarExperienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
+      fechaInicioProyecto: ['', [Validators.required]],  // ✅ Añadido
       fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
       tecnologiaUsada: ['', [Validators.required]],
+      link: [''],  // ✅ Añadido (opcional)
       imagenUrl: [''],
       imagenAlt: ['']
     });
@@ -121,36 +125,35 @@ export class EditarExperienciasComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    
-        // Preparar array de imágenes
-        const imagenes: Imagen[] = [];
-        const imagenUrl = this.experienciaForm.value.imagenUrl;
-        const imagenAlt = this.experienciaForm.value.imagenAlt;
-    
-        if (imagenUrl) {
-          imagenes.push({
-            url: imagenUrl,
-            alt: imagenAlt || `Logo de ${this.experienciaForm.value.titulo}`
-          });
-        }
-    
+    // Preparar array de imágenes
+    const imagenes: Imagen[] = [];
+    const imagenUrl = this.experienciaForm.value.imagenUrl;
+    const imagenAlt = this.experienciaForm.value.imagenAlt;
+
+    if (imagenUrl) {
+      imagenes.push({
+        url: imagenUrl,
+        alt: imagenAlt || `Logo de ${this.experienciaForm.value.titulo}`
+      });
+    }
+
     const nuevaExperiencia: Experiencia = {
       id: null,
       titulo: this.experienciaForm.value.titulo,
+      fechaInicioProyecto: this.experienciaForm.value.fechaInicioProyecto,  // ✅ Añadido
       fechaFinProyecto: this.experienciaForm.value.fechaFinProyecto,
       descripcion: this.experienciaForm.value.descripcion,
-      link: this.experienciaForm.value.link,
+      link: this.experienciaForm.value.link || '',  // ✅ Corregido: usa el valor del formulario
       tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
       tecnologiaUsada: this.experienciaForm.value.tecnologiaUsada,
       imagen: imagenes[0]
-
     };
 
-    console.log('Enviando experiencia a guardar:', nuevaExperiencia);
-
+    console.log('📤 Enviando experiencia a guardar:', JSON.stringify(nuevaExperiencia, null, 2));
 
     this.experienciaService.save(nuevaExperiencia).subscribe({
       next: (experienciaGuardada) => {
+        console.log('✅ Experiencia guardada exitosamente:', experienciaGuardada);
         this.experiencias.push(experienciaGuardada);
         this.successMessage = 'Experiencia creada exitosamente';
         this.experienciaForm.reset();
@@ -160,8 +163,8 @@ export class EditarExperienciasComponent implements OnInit {
         this.cargarExperiencias();
       },
       error: (err) => {
-        console.error('Error creando experiencia:', err);
-        this.errorMessage = 'Error al crear la experiencia: ' + (err.error?.message || err.message);
+        console.error('❌ Error creando experiencia:', err);
+        this.errorMessage = 'Error al crear la experiencia: ' + (err.error?.message || err.message || 'Error desconocido');
         this.guardando = false;
       }
     });
@@ -169,21 +172,22 @@ export class EditarExperienciasComponent implements OnInit {
 
   // EDITAR EXPERIENCIA
   cargarExperienciaParaEditar(experiencia: Experiencia): void {
-
- // Obtener la primera imagen si existe
-    const primeraImagen = experiencia.imagen && experiencia.imagen 
+    // Obtener la primera imagen si existe
+    const primeraImagen = experiencia.imagen 
       ? experiencia.imagen 
       : { url: '', alt: '' };
 
     this.experienciaEditada = experiencia;
     this.editarExperienciaForm.patchValue({
       titulo: experiencia.titulo,
+      fechaInicioProyecto: this.formatDateForInput(experiencia.fechaInicioProyecto),  // ✅ Añadido
       fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto),
       descripcion: experiencia.descripcion,
       tipoExperiencia: experiencia.tipoExperiencia,
       tecnologiaUsada: experiencia.tecnologiaUsada,
-      imagenUrl: primeraImagen.url,
-      imagenAlt: primeraImagen.alt
+      link: experiencia.link || '',  // ✅ Añadido
+      imagenUrl: primeraImagen.url || '',
+      imagenAlt: primeraImagen.alt || ''
     });
     this.mostrarModalEditar = true;
     this.mensaje = '';
@@ -202,16 +206,19 @@ export class EditarExperienciasComponent implements OnInit {
       return;
     }
 
-    if (!this.experienciaEditada?.id) return;
+    if (!this.experienciaEditada?.id) {
+      this.mensajeTipo = 'error';
+      this.mensaje = 'No se encontró la experiencia a actualizar';
+      return;
+    }
 
     this.actualizando = true;
     this.mensaje = '';
- 
-    
+
     // Preparar array de imágenes
     const imagenes: Imagen[] = [];
     const imagenUrl = this.editarExperienciaForm.value.imagenUrl;
-    const imagenAlt  = this.editarExperienciaForm.value.imagenAlt;
+    const imagenAlt = this.editarExperienciaForm.value.imagenAlt;
 
     if (imagenUrl) {
       imagenes.push({
@@ -223,17 +230,20 @@ export class EditarExperienciasComponent implements OnInit {
     const experienciaActualizada: Experiencia = {
       id: this.experienciaEditada.id,
       titulo: this.editarExperienciaForm.value.titulo,
+      fechaInicioProyecto: this.editarExperienciaForm.value.fechaInicioProyecto,  // ✅ Añadido
       fechaFinProyecto: this.editarExperienciaForm.value.fechaFinProyecto,
       descripcion: this.editarExperienciaForm.value.descripcion,
-      link: this.experienciaForm.value.link,
+      link: this.editarExperienciaForm.value.link || '',  // ✅ Corregido
       tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia,
       tecnologiaUsada: this.editarExperienciaForm.value.tecnologiaUsada,
       imagen: imagenes[0]
-
     };
+
+    console.log('📤 Enviando experiencia a actualizar:', JSON.stringify(experienciaActualizada, null, 2));
 
     this.experienciaService.updateExperiencia(this.experienciaEditada.id, experienciaActualizada).subscribe({
       next: (experienciaActualizada) => {
+        console.log('✅ Experiencia actualizada exitosamente:', experienciaActualizada);
         const index = this.experiencias.findIndex(e => e.id === experienciaActualizada.id);
         if (index !== -1) {
           this.experiencias[index] = experienciaActualizada;
@@ -241,6 +251,7 @@ export class EditarExperienciasComponent implements OnInit {
         
         this.mensajeTipo = 'success';
         this.mensaje = 'Experiencia actualizada exitosamente';
+        this.actualizando = false;
         
         setTimeout(() => {
           this.cerrarModalEditar();
@@ -248,12 +259,9 @@ export class EditarExperienciasComponent implements OnInit {
         }, 1500);
       },
       error: (err) => {
-        console.error('Error actualizando experiencia:', err);
+        console.error('❌ Error actualizando experiencia:', err);
         this.mensajeTipo = 'error';
-        this.mensaje = 'Error al actualizar la experiencia: ' + (err.error?.message || err.message);
-        this.actualizando = false;
-      },
-      complete: () => {
+        this.mensaje = 'Error al actualizar la experiencia: ' + (err.error?.message || err.message || 'Error desconocido');
         this.actualizando = false;
       }
     });
@@ -266,22 +274,25 @@ export class EditarExperienciasComponent implements OnInit {
   }
 
   eliminarExperiencia(): void {
-    if (!this.experienciaAEliminar?.id) return;
+    if (!this.experienciaAEliminar?.id) {
+      this.mostrarMensaje('No se encontró la experiencia a eliminar', 'error');
+      return;
+    }
 
     this.eliminando = true;
     
     this.experienciaService.delete(this.experienciaAEliminar.id).subscribe({
       next: () => {
+        console.log('✅ Experiencia eliminada exitosamente');
         this.experiencias = this.experiencias.filter(e => e.id !== this.experienciaAEliminar?.id);
         this.cancelarEliminacion();
         this.mostrarMensaje('Experiencia eliminada exitosamente', 'success');
+        this.eliminando = false;
+        this.cargarExperiencias();
       },
       error: (err) => {
-        console.error('Error eliminando experiencia:', err);
-        this.mostrarMensaje('Error al eliminar la experiencia: ' + (err.error?.message || err.message), 'error');
-        this.eliminando = false;
-      },
-      complete: () => {
+        console.error('❌ Error eliminando experiencia:', err);
+        this.mostrarMensaje('Error al eliminar la experiencia: ' + (err.error?.message || err.message || 'Error desconocido'), 'error');
         this.eliminando = false;
       }
     });
@@ -335,257 +346,3 @@ export class EditarExperienciasComponent implements OnInit {
     this.eliminando = false;
   }
 }
-
-/*export class EditarExperienciasComponent implements OnInit {
-  experiencias: Experiencia[] = [];
-  
-  // Enums para selectores
-  tiposExperiencia = Object.values(TipoExperiencia).filter(value => typeof value === 'string');
-  tecnologiasUsadas = Object.values(TecnologiaUsada).filter(value => typeof value === 'string');
-  
-  // Formularios
-  experienciaForm: FormGroup;
-  editarExperienciaForm: FormGroup;
-  
-  // Estados
-  guardando = false;
-  actualizando = false;
-  eliminando = false;
-  
-  // Mensajes
-  errorMessage = '';
-  successMessage = '';
-  mensaje = '';
-  mensajeTipo: 'error' | 'success' = 'success';
-  
-  // Modales
-  mostrarModalEditar = false;
-  mostrarModalConfirmacion = false;
-  
-  // Datos para editar/eliminar
-  experienciaEditada: Experiencia | null = null;
-  experienciaAEliminar: Experiencia | null = null;
-
-  constructor(
-    private experienciaService: ExperienciaService,
-    private fb: FormBuilder
-  ) {
-    // Formulario para crear nueva experiencia
-    this.experienciaForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2)]],
-      fechaHora: ['', [Validators.required]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
-      tipoExperiencia: ['', [Validators.required]],
-      tecnologiaUsada: ['', [Validators.required]]
-    });
-    
-    // Formulario para editar experiencia
-    this.editarExperienciaForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2)]],
-      fechaHora: ['', [Validators.required]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
-      tipoExperiencia: ['', [Validators.required]],
-      tecnologiaUsada: ['', [Validators.required]]
-    });
-  }
-
-  ngOnInit(): void {
-    this.cargarExperiencias();
-  }
-
-  cargarExperiencias(): void {
-    this.experienciaService.findAll().subscribe({
-      next: (data: Experiencia[]) => {
-        this.experiencias = data;
-        console.log('📊 Número de experiencias:', data.length);
-      },
-      error: (err) => {
-        this.experiencias = [];
-        console.error('📄 Detalles del error:', err.error);
-        this.mostrarMensaje('Error al cargar experiencias', 'error');
-      }
-    });
-  }
-
-  // CREAR NUEVA EXPERIENCIA
-  guardarExperiencia(): void {
-    if (this.experienciaForm.invalid) {
-      this.marcarControlesComoTocados(this.experienciaForm);
-      return;
-    }
-
-    this.guardando = true;
-    this.errorMessage = '';
-    this.successMessage = '';
-
-    const nuevaExperiencia: Experiencia = {
-      id: null,
-      titulo: this.experienciaForm.value.titulo,
-      fechaHora: this.experienciaForm.value.fechaHora,
-      descripcion: this.experienciaForm.value.descripcion,
-      tipoExperiencia: this.experienciaForm.value.tipoExperiencia as TipoExperiencia,
-      tecnologiaUsada: this.experienciaForm.value.tecnologiaUsada as TecnologiaUsada
-    };
-
-    this.experienciaService.save(nuevaExperiencia).subscribe({
-      next: (experienciaGuardada) => {
-        this.experiencias.push(experienciaGuardada);
-        this.successMessage = 'Experiencia creada exitosamente';
-        this.experienciaForm.reset();
-        this.guardando = false;
-        
-        // Recargar lista
-        this.cargarExperiencias();
-      },
-      error: (err) => {
-        console.error('Error creando experiencia:', err);
-        this.errorMessage = 'Error al crear la experiencia: ' + (err.error?.message || err.message);
-        this.guardando = false;
-      }
-    });
-  }
-
-  // EDITAR EXPERIENCIA
-  cargarExperienciaParaEditar(experiencia: Experiencia): void {
-    this.experienciaEditada = experiencia;
-    this.editarExperienciaForm.patchValue({
-      titulo: experiencia.titulo,
-      fechaHora: this.formatDateForInput(experiencia.fechaHora),
-      descripcion: experiencia.descripcion,
-      tipoExperiencia: experiencia.tipoExperiencia,
-      tecnologiaUsada: experiencia.tecnologiaUsada
-    });
-    this.mostrarModalEditar = true;
-    this.mensaje = '';
-  }
-
-  private formatDateForInput(date: string | Date): string {
-    if (!date) return '';
-    
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    return dateObj.toISOString().split('T')[0];
-  }
-
-  actualizarExperiencia(): void {
-    if (this.editarExperienciaForm.invalid) {
-      this.marcarControlesComoTocados(this.editarExperienciaForm);
-      return;
-    }
-
-    if (!this.experienciaEditada?.id) return;
-
-    this.actualizando = true;
-    this.mensaje = '';
-
-    const experienciaActualizada: Experiencia = {
-      id: this.experienciaEditada.id,
-      titulo: this.editarExperienciaForm.value.titulo,
-      fechaHora: this.editarExperienciaForm.value.fechaHora,
-      descripcion: this.editarExperienciaForm.value.descripcion,
-      tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia as TipoExperiencia,
-      tecnologiaUsada: this.editarExperienciaForm.value.tecnologiaUsada as TecnologiaUsada
-    };
-
-    this.experienciaService.updatExperiencia(this.experienciaEditada.id, experienciaActualizada).subscribe({
-      next: (experienciaActualizada) => {
-        const index = this.experiencias.findIndex(e => e.id === experienciaActualizada.id);
-        if (index !== -1) {
-          this.experiencias[index] = experienciaActualizada;
-        }
-        
-        this.mensajeTipo = 'success';
-        this.mensaje = 'Experiencia actualizada exitosamente';
-        
-        setTimeout(() => {
-          this.cerrarModalEditar();
-          this.cargarExperiencias();
-        }, 1500);
-      },
-      error: (err) => {
-        console.error('Error actualizando experiencia:', err);
-        this.mensajeTipo = 'error';
-        this.mensaje = 'Error al actualizar la experiencia: ' + (err.error?.message || err.message);
-        this.actualizando = false;
-      },
-      complete: () => {
-        this.actualizando = false;
-      }
-    });
-  }
-
-  // ELIMINAR EXPERIENCIA
-  confirmarEliminacion(experiencia: Experiencia): void {
-    this.experienciaAEliminar = experiencia;
-    this.mostrarModalConfirmacion = true;
-  }
-
-  eliminarExperiencia(): void {
-    if (!this.experienciaAEliminar?.id) return;
-
-    this.eliminando = true;
-    
-    this.experienciaService.delete(this.experienciaAEliminar.id).subscribe({
-      next: () => {
-        this.experiencias = this.experiencias.filter(e => e.id !== this.experienciaAEliminar?.id);
-        this.cancelarEliminacion();
-        this.mostrarMensaje('Experiencia eliminada exitosamente', 'success');
-      },
-      error: (err) => {
-        console.error('Error eliminando experiencia:', err);
-        this.mostrarMensaje('Error al eliminar la experiencia: ' + (err.error?.message || err.message), 'error');
-        this.eliminando = false;
-      },
-      complete: () => {
-        this.eliminando = false;
-      }
-    });
-  }
-
-  // UTILIDADES
-  private marcarControlesComoTocados(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-    });
-  }
-
-  private mostrarMensaje(mensaje: string, tipo: 'error' | 'success'): void {
-    if (tipo === 'error') {
-      this.errorMessage = mensaje;
-      this.successMessage = '';
-    } else {
-      this.successMessage = mensaje;
-      this.errorMessage = '';
-    }
-    
-    setTimeout(() => {
-      this.errorMessage = '';
-      this.successMessage = '';
-    }, 5000);
-  }
-
-  // Métodos para formatear enums para visualización
-  formatearTipoExperiencia(tipo: TipoExperiencia): string {
-    return tipo.toString().replace(/_/g, ' ').toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
-
-  formatearTecnologia(tecnologia: TecnologiaUsada): string {
-    return tecnologia.toString().charAt(0).toUpperCase() + tecnologia.toString().slice(1).toLowerCase();
-  }
-
-  // MODALES
-  cerrarModalEditar(): void {
-    this.mostrarModalEditar = false;
-    this.experienciaEditada = null;
-    this.editarExperienciaForm.reset();
-    this.mensaje = '';
-  }
-
-  cancelarEliminacion(): void {
-    this.mostrarModalConfirmacion = false;
-    this.experienciaAEliminar = null;
-    this.eliminando = false;
-  }
-}*/
