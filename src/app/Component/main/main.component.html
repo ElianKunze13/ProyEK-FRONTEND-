@@ -33,20 +33,21 @@
           <div class="animated-border-card">
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(210, 169, 248);">Frontend</h3>
             
-            <!-- Estado de carga para Frontend -->
             @if (loadingStates['FRONTEND']) {
-              <div class="flex justify-center items-center py-8">
+              <!-- Estado de carga -->
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span class="text-sm text-gray-400">Cargando conocimientos...</span>
               </div>
             } @else if (errorStates['FRONTEND']) {
-              <div class="text-center py-8 text-red-400">
-                <p>❌ Error al cargar conocimientos Frontend</p>
-                <button (click)="recargarPorTipo('FRONTEND')" 
-                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                  Reintentar
-                </button>
+              <!-- Estado de error -->
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
+                <div class="text-4xl">⚠️</div>
+                <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                <p class="text-sm text-gray-500">Intenta recargar la página</p>
               </div>
             } @else {
+              <!-- Estado normal o vacío -->
               <div class="flex flex-wrap gap-4 justify-center">
                 @for (conocimiento of conocimientos['FRONTEND']; track conocimiento.id) {
                   <div class="skill-card flex flex-col items-center w-20 relative">
@@ -62,8 +63,11 @@
                     <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                   </div>
                 } @empty {
-                  <div class="text-center py-8 text-gray-400 w-full">
-                    <p>No hay conocimientos Frontend disponibles</p>
+                  <!-- Mensaje de lista vacía -->
+                  <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                    <div class="text-4xl">📭</div>
+                    <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                    <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                   </div>
                 }
               </div>
@@ -75,16 +79,15 @@
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(157, 224, 255);">Backend</h3>
             
             @if (loadingStates['BACKEND']) {
-              <div class="flex justify-center items-center py-8">
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span class="text-sm text-gray-400">Cargando conocimientos...</span>
               </div>
             } @else if (errorStates['BACKEND']) {
-              <div class="text-center py-8 text-red-400">
-                <p>❌ Error al cargar conocimientos Backend</p>
-                <button (click)="recargarPorTipo('BACKEND')" 
-                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                  Reintentar
-                </button>
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
+                <div class="text-4xl">⚠️</div>
+                <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                <p class="text-sm text-gray-500">Intenta recargar la página</p>
               </div>
             } @else {
               <div class="flex flex-wrap gap-4 justify-center">
@@ -100,8 +103,10 @@
                     <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                   </div>
                 } @empty {
-                  <div class="text-center py-8 text-gray-400 w-full">
-                    <p>No hay conocimientos Backend disponibles</p>
+                  <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                    <div class="text-4xl">📭</div>
+                    <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                    <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                   </div>
                 }
               </div>
@@ -117,16 +122,15 @@
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(250, 142, 201);">Base Datos</h3>
             
             @if (loadingStates['BASE_DATOS']) {
-              <div class="flex justify-center items-center py-8">
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span class="text-sm text-gray-400">Cargando conocimientos...</span>
               </div>
             } @else if (errorStates['BASE_DATOS']) {
-              <div class="text-center py-8 text-red-400">
-                <p>❌ Error al cargar conocimientos de Base de Datos</p>
-                <button (click)="recargarPorTipo('BASE_DATOS')" 
-                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                  Reintentar
-                </button>
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
+                <div class="text-4xl">⚠️</div>
+                <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                <p class="text-sm text-gray-500">Intenta recargar la página</p>
               </div>
             } @else {
               <div class="flex flex-wrap gap-4 justify-center">
@@ -142,8 +146,10 @@
                     <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                   </div>
                 } @empty {
-                  <div class="text-center py-8 text-gray-400 w-full">
-                    <p>No hay conocimientos de Base de Datos disponibles</p>
+                  <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                    <div class="text-4xl">📭</div>
+                    <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                    <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                   </div>
                 }
               </div>
@@ -155,16 +161,15 @@
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(169, 248, 202);">Testing</h3>
             
             @if (loadingStates['TESTING']) {
-              <div class="flex justify-center items-center py-8">
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span class="text-sm text-gray-400">Cargando conocimientos...</span>
               </div>
             } @else if (errorStates['TESTING']) {
-              <div class="text-center py-8 text-red-400">
-                <p>❌ Error al cargar conocimientos de Testing</p>
-                <button (click)="recargarPorTipo('TESTING')" 
-                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                  Reintentar
-                </button>
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
+                <div class="text-4xl">⚠️</div>
+                <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                <p class="text-sm text-gray-500">Intenta recargar la página</p>
               </div>
             } @else {
               <div class="flex flex-wrap gap-4 justify-center">
@@ -180,8 +185,10 @@
                     <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                   </div>
                 } @empty {
-                  <div class="text-center py-8 text-gray-400 w-full">
-                    <p>No hay conocimientos de Testing disponibles</p>
+                  <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                    <div class="text-4xl">📭</div>
+                    <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                    <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                   </div>
                 }
               </div>
@@ -197,16 +204,15 @@
             <h3 class="text-xl text-center font-bold mb-4" style="color: rgb(165, 165, 165);">Otras</h3>
             
             @if (loadingStates['OTROS']) {
-              <div class="flex justify-center items-center py-8">
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span class="text-sm text-gray-400">Cargando conocimientos...</span>
               </div>
             } @else if (errorStates['OTROS']) {
-              <div class="text-center py-8 text-red-400">
-                <p>❌ Error al cargar otros conocimientos</p>
-                <button (click)="recargarPorTipo('OTROS')" 
-                        class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                  Reintentar
-                </button>
+              <div class="flex flex-col justify-center items-center py-8 gap-2">
+                <div class="text-4xl">⚠️</div>
+                <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                <p class="text-sm text-gray-500">Intenta recargar la página</p>
               </div>
             } @else {
               <div class="flex flex-wrap gap-4 justify-center">
@@ -222,8 +228,10 @@
                     <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                   </div>
                 } @empty {
-                  <div class="text-center py-8 text-gray-400 w-full">
-                    <p>No hay otros conocimientos disponibles</p>
+                  <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                    <div class="text-4xl">📭</div>
+                    <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                    <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                   </div>
                 }
               </div>
@@ -241,16 +249,15 @@
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">IA</h4>
               
               @if (loadingStates['IA']) {
-                <div class="flex justify-center items-center py-8">
+                <div class="flex flex-col justify-center items-center py-8 gap-2">
                   <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                  <span class="text-sm text-gray-400">Cargando conocimientos...</span>
                 </div>
               } @else if (errorStates['IA']) {
-                <div class="text-center py-8 text-red-400">
-                  <p>❌ Error al cargar conocimientos de IA</p>
-                  <button (click)="recargarPorTipo('IA')" 
-                          class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                    Reintentar
-                  </button>
+                <div class="flex flex-col justify-center items-center py-8 gap-2">
+                  <div class="text-4xl">⚠️</div>
+                  <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                  <p class="text-sm text-gray-500">Intenta recargar la página</p>
                 </div>
               } @else {
                 <div class="flex flex-wrap gap-4 justify-center">
@@ -266,8 +273,10 @@
                       <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                     </div>
                   } @empty {
-                    <div class="text-center py-8 text-gray-400 w-full">
-                      <p>No hay conocimientos de IA disponibles</p>
+                    <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                      <div class="text-4xl">📭</div>
+                      <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                      <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                     </div>
                   }
                 </div>
@@ -279,16 +288,15 @@
               <h4 class="text-lg font-bold mb-3 text-[color:var(--accent)]">Prototipos-Presentaciones</h4>
               
               @if (loadingStates['PROTOTIPO']) {
-                <div class="flex justify-center items-center py-8">
+                <div class="flex flex-col justify-center items-center py-8 gap-2">
                   <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                  <span class="text-sm text-gray-400">Cargando conocimientos...</span>
                 </div>
               } @else if (errorStates['PROTOTIPO']) {
-                <div class="text-center py-8 text-red-400">
-                  <p>❌ Error al cargar conocimientos de Prototipado</p>
-                  <button (click)="recargarPorTipo('PROTOTIPO')" 
-                          class="mt-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 text-sm">
-                    Reintentar
-                  </button>
+                <div class="flex flex-col justify-center items-center py-8 gap-2">
+                  <div class="text-4xl">⚠️</div>
+                  <p class="text-red-400 text-center">No se pudieron cargar los conocimientos</p>
+                  <p class="text-sm text-gray-500">Intenta recargar la página</p>
                 </div>
               } @else {
                 <div class="flex flex-wrap gap-4 justify-center">
@@ -304,8 +312,10 @@
                       <span class="nivel-conocimiento">Nivel: {{ conocimiento?.nivel }}</span>
                     </div>
                   } @empty {
-                    <div class="text-center py-8 text-gray-400 w-full">
-                      <p>No hay conocimientos de Prototipado disponibles</p>
+                    <div class="flex flex-col justify-center items-center py-8 w-full gap-2">
+                      <div class="text-4xl">📭</div>
+                      <p class="text-gray-400 text-center">Sin conocimientos disponibles</p>
+                      <p class="text-sm text-gray-500">Agrega conocimientos desde el panel de administración</p>
                     </div>
                   }
                 </div>
