@@ -5,20 +5,7 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold mb-2">Lenguajes y Conocimientos que domino</h2>
         
-        <!-- Indicador de carga global -->
-        @if (estaCargando()) {
-          <div class="flex justify-center items-center gap-2 text-gray-400">
-            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-            <span>Cargando conocimientos...</span>
-          </div>
-        }
-        
-        <!-- Contador de conocimientos -->
-        @if (!estaCargando() && getTotalConocimientos() > 0) {
-          <p class="text-sm text-gray-500 mt-2">
-            {{ getTotalConocimientos() }} conocimientos cargados
-          </p>
-        }
+       
       </div>
     </section>
 
