@@ -82,16 +82,6 @@ export class MainComponent implements OnInit {
     return !!(this.conocimientos[tipo] && this.conocimientos[tipo]!.length > 0);
   }
 
-  // Método para obtener el total de conocimientos
-  getTotalConocimientos(): number {
-    let total = 0;
-    this.tipos.forEach(tipo => {
-      if (this.conocimientos[tipo]) {
-        total += this.conocimientos[tipo]!.length;
-      }
-    });
-    return total;
-  }
 
   // Método para verificar si hay algún error
   hayError(): boolean {
