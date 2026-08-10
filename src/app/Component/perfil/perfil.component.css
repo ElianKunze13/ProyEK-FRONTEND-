@@ -110,7 +110,90 @@ h2 {
   }
 }
 
+/* ============================================ */
+/* ESTILOS MEJORADOS PARA CARDS DE EXPERIENCIAS */
+/* ============================================ */
 
+.experiencia-card {
+  background: linear-gradient(145deg, #1e293b, #2d3748);
+  border: 1px solid #4a5568;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  height: 100%;
+  color: #e2e8f0;
+}
+
+.experiencia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: #63b3ed;
+}
+
+/* Título de la card */
+.experiencia-card .card-title {
+  color: #f7fafc !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #4a5568;
+  padding-bottom: 0.5rem;
+}
+
+/* Contenedor de fechas */
+.fechas-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.fecha-label {
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.fecha-valor {
+  color: #e2e8f0;
+  font-weight: 400;
+}
+
+/* Descripción */
+.experiencia-card .card-text {
+  color: #cbd5e0 !important;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+/* Badges mejorados */
+.experiencia-card .badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+}
+
+.experiencia-card .badge.bg-primary {
+  background-color: #2b6cb0 !important;
+}
+
+.experiencia-card .badge.bg-secondary {
+  background-color: #4a5568 !important;
+}
+
+/* Botón mejorado */
+.experiencia-card .btn-primary {
+  background-color: #2b6cb0;
+  border: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.experiencia-card .btn-primary:hover {
+  background-color: #3182ce;
+  transform: scale(1.02);
+}
+
+/* ============================================ */
+/* FIN ESTILOS CARDS DE EXPERIENCIAS */
+/* ============================================ */
 
 
 

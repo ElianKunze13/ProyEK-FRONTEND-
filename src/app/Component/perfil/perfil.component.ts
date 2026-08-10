@@ -63,19 +63,21 @@ export class PerfilComponent implements OnInit {
   }
 
   // Método para abrir el modal con Bootstrap
-  abrirModal(experiencia: Experiencia): void {
-    console.log('Abriendo modal para:', experiencia.titulo); // Debug
-    this.selectedExperiencia = experiencia;
-    this.showModal = true;
-    
-    // Usar Bootstrap modal si está disponible
-    const modalElement = document.getElementById('experienciaModal');
-    if (modalElement) {
-      // @ts-ignore
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-    }
+abrirModal(experiencia: Experiencia): void {
+  console.log('Abriendo modal para:', experiencia.titulo);
+
+  
+  this.selectedExperiencia = experiencia;
+  this.showModal = true;
+  
+  // Usar Bootstrap modal si está disponible
+  const modalElement = document.getElementById('experienciaModal');
+  if (modalElement) {
+    // @ts-ignore
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
   }
+}
 
   // Método para cerrar el modal
   cerrarModal(): void {
