@@ -5,39 +5,37 @@
 
     <section id="home" class="section visible flex flex-col justify-center">
       <div class="text-center mb-1">
-        
+
         <!-- Sección de Presentación con Foto y Texto -->
         <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
-          
+
           <!-- Foto de Perfil -->
           <div class="flex-shrink-0">
             @if (usuario.fotoPerfil && usuario.fotoPerfil.url) {
-              <img [src]="usuario.fotoPerfil.url"
-                   [alt]="usuario.fotoPerfil.alt || usuario.nombre"
-                   class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-[color:var(--accent)] shadow-lg">
+            <img [src]="usuario.fotoPerfil.url" [alt]="usuario.fotoPerfil.alt || usuario.nombre"
+              class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-[color:var(--accent)] shadow-lg">
             } @else {
-              <div class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gray-700 flex items-center justify-center border-4 border-[color:var(--accent)]">
-                <span class="text-5xl font-bold text-white">{{getIniciales(usuario.nombre)}}</span>
-              </div>
+            <div
+              class="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gray-700 flex items-center justify-center border-4 border-[color:var(--accent)]">
+              <span class="text-5xl font-bold text-white">{{getIniciales(usuario.nombre)}}</span>
+            </div>
             }
           </div>
-          
+
           <!-- Texto de Presentación -->
           <div class="flex-1 max-w-2xl">
             <h2 class="text-3xl md:text-5xl font-bold mb-4">¡Hola! Soy {{usuario.nombre || '...cargando...'}}</h2>
             <p id="parrafo-estatico" class="text-lg mb-6">
               {{usuario.introduccion || 'Cargando introduccion...'}}
-            </p>    
+            </p>
           </div>
 
           <!-- Sección del Currículum -->
           <div id="mi-curriculo" class="max-w-4xl mx-auto max-w-2xl">
             <button style="background-color: rgb(4, 49, 88); border-radius: 2cap; margin-bottom: 8%;">
-              <a href="assets/Curriculum Vitae Profesional sin Foto (EK).pdf"  
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 class="px-6 py-3 bg-[color:var(--primary)] hover:bg-[color:var(--primary-dark)] rounded-lg transition-colors flex items-center justify-center gap-2" 
-                 style="color: white; text-decoration: none;">
+              <a href="assets/Curriculum Vitae Profesional sin Foto (EK).pdf" target="_blank" rel="noopener noreferrer"
+                class="px-6 py-3 bg-[color:var(--primary)] hover:bg-[color:var(--primary-dark)] rounded-lg transition-colors flex items-center justify-center gap-2"
+                style="color: white; text-decoration: none;">
                 <i class="fas fa-external-link-alt"></i>
                 Previsualizar Currículo
               </a>
@@ -68,24 +66,24 @@
                 <div class="carrusel-track" [style.transform]="'translateX(' + desplazamiento + 'px)'"
                   [style.transition]="'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'">
                   @if (habilidades && habilidades.length > 0) {
-                    @for (habilidad of habilidades; track habilidad.id; let i = $index) {
-                      <div class="habilidad-item">
-                        <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
-                      </div>
-                    }
-                  
-                    @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
-                      <div class="habilidad-item">
-                        <span class="habilidad-nombre mb-2">{{ habilidad.nombre }}</span>
-                        <div class="progress-bar">
-                          <div class="progress-fill"></div>
-                        </div>
-                      </div>
-                    }
-                  } @else {
-                    <div class="habilidad-item">
-                      <span class="habilidad-nombre">Habilidades no disponibles</span>
+                  @for (habilidad of habilidades; track habilidad.id; let i = $index) {
+                  <div class="habilidad-item">
+                    <span class="habilidad-nombre">{{ habilidad.nombre }}</span>
+                  </div>
+                  }
+
+                  @for (habilidad of habilidades; track habilidad.id + '-duplicate') {
+                  <div class="habilidad-item">
+                    <span class="habilidad-nombre mb-2">{{ habilidad.nombre }}</span>
+                    <div class="progress-bar">
+                      <div class="progress-fill"></div>
                     </div>
+                  </div>
+                  }
+                  } @else {
+                  <div class="habilidad-item">
+                    <span class="habilidad-nombre">Habilidades no disponibles</span>
+                  </div>
                   }
                 </div>
               </div>
@@ -93,66 +91,72 @@
           </div>
         </div>
 
-      <!-- Sección de Experiencias -->
-<div class="max-w-6xl mx-auto mb-12">
-  <h3 class="text-2xl md:text-4xl font-bold mb-4 text-[color:var(--accent)]">
-    Mis Proyectos . . .
-  </h3>
+        <!-- Sección de Experiencias -->
+        <div class="max-w-6xl mx-auto mb-12">
+          <h3 class="text-2xl md:text-4xl font-bold mb-4 text-[color:var(--accent)]">
+            Mis Proyectos . . .
+          </h3>
 
-  <div class="row">
-    @if (experiencias && experiencias.length > 0) {
-      @for (experiencia of experiencias; track experiencia.id; let i = $index) {
-        <div class="col-md-4 mb-4">
-          <div class="card experiencia-card h-100">
-            <div class="card-body d-flex flex-column">
-              <!-- Título -->
-              <h5 class="card-title text-white font-bold mb-2">
-                {{experiencia.titulo}}
-              </h5>
-              
-              <!-- Fechas en una sola línea -->
-              <div class="fechas-container mb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fecha-label">
-                    <i class="fas fa-calendar-alt me-1"></i> <p>Fecha de inicio</p><br>
-                    <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
-                  </span>
+          <div class="row">
+            @if (experiencias && experiencias.length > 0) {
+            @for (experiencia of experiencias; track experiencia.id; let i = $index) {
+            <div class="col-md-4 mb-4">
+              <div class="card experiencia-card h-100">
+                <div class="card-body d-flex flex-column">
+                  <!-- Título -->
+                  <h5 class="card-title text-white font-bold mb-2">
+                    {{experiencia.titulo}}
+                  </h5>
 
-                  <span class="fecha-separador">→</span>
+                  <!-- Fechas en una sola línea -->
+                  <div class="fechas-container mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
 
-                  <span class="fecha-label">
-                    <i class="fas fa-calendar-check me-1"></i>
-                    <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
-                  </span>
-                </div>
-              </div>
-              
-              <!-- Descripción (truncada) -->
-              <p class="card-text text-gray-300 flex-grow-1 small">
-                {{experiencia.descripcion | slice:0:100}}{{experiencia.descripcion.length > 100 ? '...' : ''}}
-              </p>
-              
-              <!-- Tecnología y Tipo 
+                      <div>
+                        <span class="fecha-label">
+                          <p>Fecha de inicio</p>
+                          <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
+                        </span>
+                      </div>
+
+                      <span class="fecha-separador">→</span>
+
+                      <div>
+                        <span class="fecha-label">
+                          <p>Fecha de finalización</p>
+                          <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- Descripción (truncada) -->
+                  <p class="card-text text-gray-300 flex-grow-1 small">
+                    {{experiencia.descripcion | slice:0:100}}{{experiencia.descripcion.length > 100 ? '...' : ''}}
+                  </p>
+
+                  <!-- Tecnología y Tipo 
               <div class="mb-3">
                 <span class="badge bg-primary me-1">{{experiencia.tecnologiaUsada}}</span>
                 <span class="badge bg-secondary">{{experiencia.tipoExperiencia}}</span>
               </div>-->
-              
-              <!-- Botón -->
-              <button class="btn btn-primary w-100 mt-auto" (click)="abrirModal(experiencia)">
-                🔍 Ver más detalles
-              </button>
+
+                  <!-- Botón -->
+                  <button class="btn btn-primary w-100 mt-auto" (click)="abrirModal(experiencia)">
+                    🔍 Ver más detalles
+                  </button>
+                </div>
+              </div>
             </div>
+            }
+            } @else {
+            <div class="col-12">
+              <p class="text-center text-gray-300">No hay proyectos disponibles actualmente.</p>
+            </div>
+            }
           </div>
         </div>
-      }
-    } @else {
-      <div class="col-12">
-        <p class="text-center text-gray-300">No hay proyectos disponibles actualmente.</p>
-      </div>
-    }
-  </div>
-</div>
 
       </div>
     </section>
@@ -169,79 +173,73 @@
       </div>
       <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
         @if (selectedExperiencia) {
-          <!-- Título -->
-          <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
-          
-          <!-- Fechas en una sola línea -->
-          <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
-            <div class="d-flex justify-content-between align-items-center">
-              <span>
-                <i class="fas fa-calendar-alt me-2"></i>
-                <strong>Inicio:</strong> 
-                {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
-              </span>
-              <span class="fecha-separador-modal">→</span>
-              <span>
-                <i class="fas fa-calendar-check me-2"></i>
-                <strong>Fin:</strong> 
-                {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
-              </span>
-            </div>
+        <!-- Título -->
+        <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
+
+        <!-- Fechas en una sola línea -->
+        <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              <i class="fas fa-calendar-alt me-2"></i>
+              <strong>Inicio:</strong>
+              {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+            </span>
+            <span class="fecha-separador-modal">→</span>
+            <span>
+              <i class="fas fa-calendar-check me-2"></i>
+              <strong>Fin:</strong>
+              {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
+            </span>
           </div>
-          
-          <!-- Imagen -->
-          @if (selectedExperiencia.imagen?.url) {
-            <div class="text-center mb-3">
-              <img [src]="selectedExperiencia.imagen?.url" 
-                   [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
-                   class="img-fluid rounded" 
-                   style="max-height: 200px; object-fit: contain;">
-            </div>
-          } @else {
-            <div class="text-center text-muted mb-3">
-              <p>📷 No hay imagen disponible</p>
-            </div>
-          }
+        </div>
 
-          <!-- Descripción completa con scroll interno -->
-          <div class="mb-3">
-            <h6>Descripción:</h6>
-            <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded" 
-                 style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
-              {{selectedExperiencia.descripcion}}
-            </div>
+        <!-- Imagen -->
+        @if (selectedExperiencia.imagen?.url) {
+        <div class="text-center mb-3">
+          <img [src]="selectedExperiencia.imagen?.url"
+            [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo" class="img-fluid rounded"
+            style="max-height: 200px; object-fit: contain;">
+        </div>
+        } @else {
+        <div class="text-center text-muted mb-3">
+          <p>📷 No hay imagen disponible</p>
+        </div>
+        }
+
+        <!-- Descripción completa con scroll interno -->
+        <div class="mb-3">
+          <h6>Descripción:</h6>
+          <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
+            style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+            {{selectedExperiencia.descripcion}}
           </div>
+        </div>
 
-          <!-- Tecnología y Tipo -->
-              <div class="mb-3">
-              </div>
+        <!-- Tecnología y Tipo -->
 
-          <div class="mb-2">
-            <strong>Tipo de proyecto:</strong>
-            <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
+        <div class="mb-2">
+          <strong>Tipo de proyecto:</strong>
+          <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
 
-          </div>
-          <div class="mb-3">
-            <strong>Tecnologias usadas:</strong> 
-            <span class="badge bg-primary me-1">{{selectedExperiencia.tecnologiaUsada}}</span>
+        </div>
+        <div class="mb-3">
+          <strong>Tecnologias usadas:</strong>
+          <span class="badge bg-primary me-1">{{selectedExperiencia.tecnologiaUsada}}</span>
 
-          </div>
+        </div>
 
-          <!-- Link -->
-          @if (selectedExperiencia.link) {
-            <div class="text-center">
-              <a [href]="selectedExperiencia.link" 
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 class="btn btn-primary">
-                🔗 Visitar proyecto
-              </a>
-            </div>
-          } @else {
-            <div class="text-center text-muted">
-              <p>🔗 No hay enlace disponible</p>
-            </div>
-          }
+        <!-- Link -->
+        @if (selectedExperiencia.link) {
+        <div class="text-center">
+          <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            🔗 Visitar proyecto
+          </a>
+        </div>
+        } @else {
+        <div class="text-center text-muted">
+          <p>🔗 No hay enlace disponible</p>
+        </div>
+        }
         }
       </div>
       <div class="modal-footer border-secondary">
