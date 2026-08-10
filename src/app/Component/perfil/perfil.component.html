@@ -114,12 +114,14 @@
               <div class="fechas-container mb-3">
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="fecha-label">
-                    <i class="fas fa-calendar-alt me-1">fecha de inicio</i>
+                    <i class="fas fa-calendar-alt me-1"></i> <p>Fecha de inicio</p><br>
                     <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
                   </span>
+
                   <span class="fecha-separador">→</span>
+
                   <span class="fecha-label">
-                    <i class="fas fa-calendar-check me-1">fecha de finalización</i>
+                    <i class="fas fa-calendar-check me-1"></i>
                     <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
                   </span>
                 </div>
@@ -212,21 +214,17 @@
 
           <!-- Tecnología y Tipo -->
               <div class="mb-3">
-                <span class="badge bg-primary me-1">{{selectedExperiencia.tecnologiaUsada}}</span>
-                <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
               </div>
 
           <div class="mb-2">
             <strong>Tipo de proyecto:</strong>
-            <span class="badge" style="background-color: rgb(19, 19, 88);">
-              {{selectedExperiencia.tipoExperiencia}}
-            </span>
+            <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
+
           </div>
           <div class="mb-3">
             <strong>Tecnologias usadas:</strong> 
-            <span class="badge" style="background-color: rgb(88, 19, 19);">
-              {{selectedExperiencia.tecnologiaUsada}}
-            </span>
+            <span class="badge bg-primary me-1">{{selectedExperiencia.tecnologiaUsada}}</span>
+
           </div>
 
           <!-- Link -->
