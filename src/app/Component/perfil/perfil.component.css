@@ -138,22 +138,32 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
-/* Contenedor de fechas */
+/* Contenedor de fechas - Estilo compacto en una línea */
 .fechas-container {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.75rem;
   font-size: 0.8rem;
 }
 
 .fecha-label {
   color: #a0aec0;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .fecha-valor {
   color: #e2e8f0;
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.fecha-separador {
+  color: #4a5568;
+  font-weight: 300;
+  padding: 0 0.5rem;
 }
 
 /* Descripción */
@@ -192,10 +202,71 @@ h2 {
 }
 
 /* ============================================ */
-/* FIN ESTILOS CARDS DE EXPERIENCIAS */
+/* ESTILOS PARA EL MODAL MEJORADO */
 /* ============================================ */
 
+/* Fechas en el modal - una línea */
+.fechas-modal {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid #4a5568;
+}
 
+.fechas-modal .fecha-separador-modal {
+  color: #4a5568;
+  font-weight: 300;
+  padding: 0 0.5rem;
+}
+
+/* Descripción en el modal con scroll */
+.descripcion-modal {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+/* Scroll personalizado para el modal */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #1a202c;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #63b3ed;
+}
+
+/* Scroll personalizado para la descripción */
+.descripcion-modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.descripcion-modal::-webkit-scrollbar-track {
+  background: #1a202c;
+  border-radius: 2px;
+}
+
+.descripcion-modal::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 2px;
+}
+
+.descripcion-modal::-webkit-scrollbar-thumb:hover {
+  background: #63b3ed;
+}
+
+/* ============================================ */
+/* FIN ESTILOS CARDS DE EXPERIENCIAS */
+/* ============================================ */
 
 
 

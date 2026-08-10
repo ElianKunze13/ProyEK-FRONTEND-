@@ -110,19 +110,18 @@
                 {{experiencia.titulo}}
               </h5>
               
-              <!-- Fechas -->
+              <!-- Fechas en una sola línea -->
               <div class="fechas-container mb-3">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
                   <span class="fecha-label">
-                    <i class="fas fa-calendar-alt me-1"></i>Inicio:
+                    <i class="fas fa-calendar-alt me-1"></i>
+                    <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
                   </span>
-                  <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
+                  <span class="fecha-separador">→</span>
                   <span class="fecha-label">
-                    <i class="fas fa-calendar-check me-1"></i>Fin:
+                    <i class="fas fa-calendar-check me-1"></i>
+                    <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
                   </span>
-                  <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
                 </div>
               </div>
               
@@ -160,26 +159,31 @@
 
 <!-- Modal de Bootstrap para mostrar detalles -->
 <div class="modal fade" id="experienciaModal" tabindex="-1" aria-labelledby="experienciaModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header border-secondary">
         <h5 class="modal-title" id="experienciaModalLabel">Detalles del Proyecto</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
         @if (selectedExperiencia) {
           <!-- Título -->
-          <h4 class="mb-3">{{selectedExperiencia.titulo}}</h4>
+          <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
           
-          <!-- Fechas -->
+          <!-- Fechas en una sola línea -->
           <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
-            <div class="d-flex justify-content-between">
-              <span><i class="fas fa-calendar-alt me-2"></i>Inicio:</span>
-              <span>{{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-              <span><i class="fas fa-calendar-check me-2"></i>Fin:</span>
-              <span>{{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>
+                <i class="fas fa-calendar-alt me-2"></i>
+                <strong>Inicio:</strong> 
+                {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+              </span>
+              <span class="fecha-separador-modal">→</span>
+              <span>
+                <i class="fas fa-calendar-check me-2"></i>
+                <strong>Fin:</strong> 
+                {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
+              </span>
             </div>
           </div>
           
@@ -188,7 +192,8 @@
             <div class="text-center mb-3">
               <img [src]="selectedExperiencia.imagen?.url" 
                    [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
-                   class="img-fluid rounded">
+                   class="img-fluid rounded" 
+                   style="max-height: 200px; object-fit: contain;">
             </div>
           } @else {
             <div class="text-center text-muted mb-3">
@@ -196,20 +201,23 @@
             </div>
           }
 
-          <!-- Descripción completa -->
+          <!-- Descripción completa con scroll interno -->
           <div class="mb-3">
             <h6>Descripción:</h6>
-            <p class="text-gray-300">{{selectedExperiencia.descripcion}}</p>
+            <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded" 
+                 style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+              {{selectedExperiencia.descripcion}}
+            </div>
           </div>
 
           <div class="mb-2">
-            Tipo de proyecto:
+            <strong>Tipo de proyecto:</strong>
             <span class="badge" style="background-color: rgb(19, 19, 88);">
               {{selectedExperiencia.tipoExperiencia}}
             </span>
           </div>
           <div class="mb-3">
-            Tecnologias usadas: 
+            <strong>Tecnologias usadas:</strong> 
             <span class="badge" style="background-color: rgb(88, 19, 19);">
               {{selectedExperiencia.tecnologiaUsada}}
             </span>
