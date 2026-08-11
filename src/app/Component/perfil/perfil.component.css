@@ -116,18 +116,20 @@ h2 {
 
 .experiencia-card {
   background: linear-gradient(145deg, #1e293b, #2d3748);
-  border: 1px solid #4a5568;
+  border: 1px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: #63b3ed;
   border-radius: 0.75rem;
   transition: all 0.3s ease;
   height: 100%;
   color: #e2e8f0;
 }
 
-.experiencia-card:hover {
+/*.experiencia-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   border-color: #63b3ed;
-}
+}*/
 
 /* Título de la card */
 .experiencia-card .card-title {
