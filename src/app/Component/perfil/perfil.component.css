@@ -116,7 +116,7 @@ h2 {
 
 .experiencia-card {
   background: linear-gradient(145deg, #1e293b, #2d3748);
-  border: 1px;
+  border: 1px solid #4a5568;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   border-color: #63b3ed;
   border-radius: 0.75rem;
