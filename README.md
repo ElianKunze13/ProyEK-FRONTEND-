@@ -1,9 +1,10 @@
 # ✨FrontEnd Para Portofolio 
 
-Este repositorio guarda el formato utilizado para la creacion de un portafolio digital (curriculum), diseñado y creado aplicando modalidades de trabajo agil (Sprint y Scrum) que permiten mejorar el rendimiento a la hora de desarrollar.
+Este repositorio guarda el formato utilizado para la creacion de un portafolio digital, diseñado con modalidades de trabajo agil (Sprint y Scrum) que permiten mejorar el rendimiento a la hora de desarrollar.
 
 Este se desarrollo aplicando control de versionado e integracion de cambios mediante Git, utilizando estandares de buena convencion para la definicion de commits y ramas de trabajo.
 
+**-Actuamente desplegado con Render y  UptimeRobot-**
 
 ---
 ## 🔗 Repositorios Relacionados
@@ -22,6 +23,7 @@ Este se desarrollo aplicando control de versionado e integracion de cambios medi
 *   [![Angular](https://img.shields.io/badge/Angular-19.1.2-DD0031?style=flat&logo=angular&logoColor=white)](https://angular.io/)
 *   [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 *   [![Font Awesome](https://img.shields.io/badge/Font_Awesome-6.5.0-528DD7?style=flat&logo=fontawesome&logoColor=white)](https://fontawesome.com/)
+*   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.0-06B6D4?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
 
 ### Herramientas varias
