@@ -4,7 +4,7 @@ Este repositorio guarda el formato utilizado para la creacion de un portafolio d
 
 Este se desarrollo aplicando control de versionado e integracion de cambios mediante Git, utilizando estandares de buena convencion para la definicion de commits y ramas de trabajo.
 
-**-Actuamente desplegado con Render y  UptimeRobot-**
+Desplegada como *Static Site* en hosting [![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white)](https://render.com/)
 
 ---
 ## 🔗 Repositorios Relacionados
@@ -49,7 +49,7 @@ Herramientas de inteligencia artificial implementadas:
 
 ---
 
-## 📂 Estructura del Repositorio
+## 📂 Estructura general del Repositorio
 ```
 ProyEK-FRONTEND-/
 |
