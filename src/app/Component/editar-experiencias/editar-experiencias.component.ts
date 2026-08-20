@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 import { TecnologiaUsada } from '../../Modelo/Enums/tecnologiaUsada';
 import { TipoExperiencia } from '../../Modelo/Enums/tipoExperiencia';
 import { Imagen } from '../../Modelo/imagen';
-import { ImagenUploadService } from '../../Servicio/imagenUpload.service';
+import { ImagenUploadService } from '../../Servicio/imagen-upload.service';
 
 @Component({
   selector: 'app-editar-experiencias',

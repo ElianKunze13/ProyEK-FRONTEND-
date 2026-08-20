@@ -1,14 +1,14 @@
-// Servicio: imagen-upload.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Imagen } from '../Modelo/imagen';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Imagen } from '../Modelo/imagen';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagenUploadService {
+
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
@@ -19,7 +19,12 @@ export class ImagenUploadService {
     
     return this.http.post<Imagen>(
       `${this.apiUrl}/auth/upload/imagen`,
-      formData
+      formData,
+       {
+        headers: {
+          // NO establecer Content-Type - Angular lo hará automáticamente
+        }
+      }
     );
   }
 }
