@@ -104,30 +104,33 @@
               }
             </div>
 
-            <!-- ✅ NUEVO: SUBIDA DE IMAGEN -->
+            <!-- ✅ NUEVO: SUBIDA DE IMAGEN DESDE DISPOSITIVO -->
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Imagen del proyecto</label>
               
               <div class="file-input-wrapper">
                 <div 
-                  class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors"
+                  class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                  [class.border-gray-300]="!imagenPreview"
                   [class.border-blue-500]="imagenPreview"
-                  [class.bg-gray-50]="imagenSubiendo">
+                  [class.bg-gray-50]="imagenSubiendo"
+                  style="background-color: #f9fafb;">
                   
                   <!-- Preview de imagen -->
                   @if (imagenPreview) {
                     <div class="relative inline-block">
-                      <img [src]="imagenPreview" alt="Preview" class="max-h-48 rounded-lg shadow-md">
+                      <img [src]="imagenPreview" alt="Preview de la imagen" class="max-h-48 rounded-lg shadow-md">
                       <button 
                         type="button" 
                         (click)="eliminarImagenSeleccionada()"
-                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600">
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                        title="Eliminar imagen">
                         ×
                       </button>
                     </div>
                   }
                   
-                  <!-- Input file -->
+                  <!-- Input file (visible cuando no hay preview) -->
                   @if (!imagenPreview) {
                     <div>
                       <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
@@ -144,7 +147,8 @@
                       <button 
                         type="button"
                         (click)="fileInput.click()"
-                        class="mt-3 btn btn-primary">
+                        class="mt-3 btn btn-primary"
+                        style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                         Seleccionar imagen
                       </button>
                     </div>
@@ -168,7 +172,7 @@
               </div>
             </div>
 
-            <!-- Campos ocultos para imagen -->
+            <!-- Campos ocultos para imagen (se llenan automáticamente) -->
             <input type="hidden" formControlName="imagenUrl">
             <input type="hidden" formControlName="imagenAlt">
 
@@ -250,7 +254,7 @@
                       <div class="mb-4">
                         <img 
                           [src]="experiencia.imagen?.url" 
-                          [alt]="experiencia.imagen?.alt" 
+                          [alt]="experiencia.imagen?.alt || 'Imagen de la experiencia'" 
                           class="max-h-32 rounded-lg object-cover">
                       </div>
                     }
@@ -370,26 +374,32 @@
                       
                       <div class="file-input-wrapper">
                         <div 
-                          class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition-colors"
+                          class="border-2 border-dashed rounded-lg p-4 text-center transition-colors"
+                          [class.border-gray-300]="!imagenPreviewEditar"
                           [class.border-blue-500]="imagenPreviewEditar"
-                          [class.bg-gray-50]="imagenSubiendoEditar">
+                          [class.bg-gray-50]="imagenSubiendoEditar"
+                          style="background-color: #f9fafb;">
                           
+                          <!-- Preview de imagen -->
                           @if (imagenPreviewEditar) {
                             <div class="relative inline-block">
-                              <img [src]="imagenPreviewEditar" alt="Preview" class="max-h-48 rounded-lg shadow-md">
+                              <img [src]="imagenPreviewEditar" alt="Preview de la imagen" class="max-h-48 rounded-lg shadow-md">
                               <button 
                                 type="button" 
                                 (click)="eliminarImagenEditar()"
-                                class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600">
+                                class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                                title="Eliminar imagen">
                                 ×
                               </button>
                             </div>
                           }
                           
+                          <!-- Input file (visible cuando no hay preview) -->
                           @if (!imagenPreviewEditar) {
                             <div>
                               <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
                               <p class="text-gray-600 text-sm">Subir nueva imagen</p>
+                              <p class="text-gray-400 text-xs">PNG, JPG o WEBP (máx 5MB)</p>
                               <input 
                                 type="file" 
                                 accept="image/*"
@@ -401,12 +411,14 @@
                               <button 
                                 type="button"
                                 (click)="fileInputEditar.click()"
-                                class="mt-2 btn btn-primary btn-sm">
+                                class="mt-2 btn btn-primary btn-sm"
+                                style="background-color: #3b82f6; color: white; padding: 0.4rem 1.2rem; border-radius: 0.5rem; border: none; cursor: pointer; font-size: 0.875rem;">
                                 Seleccionar imagen
                               </button>
                             </div>
                           }
                           
+                          <!-- Barra de progreso -->
                           @if (imagenSubiendoEditar) {
                             <div class="mt-3">
                               <div class="w-full bg-gray-200 rounded-full h-2">
@@ -425,7 +437,8 @@
 
                     <div class="form-actions flex justify-between mt-6">
                       <button type="submit" class="btn btn-primary px-6 py-2"
-                        [disabled]="actualizando || editarExperienciaForm.invalid || imagenSubiendoEditar">
+                        [disabled]="actualizando || editarExperienciaForm.invalid || imagenSubiendoEditar"
+                        style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                         @if (!actualizando) {
                           <span>
                             <i class="fas fa-paper-plane me-2"></i>Actualizar experiencia
@@ -438,7 +451,8 @@
                       </button>
 
                       <button type="button" class="btn btn-secondary px-6 py-2" (click)="cerrarModalEditar()"
-                        [disabled]="actualizando">
+                        [disabled]="actualizando"
+                        style="background-color: #e5e7eb; color: #374151; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                         Cancelar
                       </button>
                     </div>
@@ -480,7 +494,8 @@
 
                   <div class="flex justify-center space-x-4 mt-6">
                     <button type="button" class="btn btn-danger px-6 py-2" (click)="eliminarExperiencia()"
-                      [disabled]="eliminando">
+                      [disabled]="eliminando"
+                      style="background-color: #ef4444; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                       @if (!eliminando) {
                         <span>
                           <i class="fas fa-trash me-2"></i>Sí, eliminar
@@ -493,7 +508,8 @@
                     </button>
 
                     <button type="button" class="btn btn-secondary px-6 py-2" (click)="cancelarEliminacion()"
-                      [disabled]="eliminando">
+                      [disabled]="eliminando"
+                      style="background-color: #e5e7eb; color: #374151; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                       <i class="fas fa-times me-2"></i>Cancelar
                     </button>
                   </div>
