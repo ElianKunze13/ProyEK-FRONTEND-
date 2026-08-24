@@ -67,13 +67,16 @@ export class EditarExperienciasComponent implements OnInit {
   experienciaEditada: Experiencia | null = null;
   experienciaAEliminar: Experiencia | null = null;
 
-  // ✅ NUEVAS VARIABLES PARA UPLOAD DE IMÁGENES
+  // ✅ VARIABLES PARA UPLOAD DE IMÁGENES
   imagenSubiendo = false;
   imagenSubiendoEditar = false;
   imagenProgreso = 0;
   imagenSeleccionada: File | null = null;
   imagenPreview: string | null = null;
   imagenPreviewEditar: string | null = null;
+
+  // ✅ NUEVA VARIABLE PARA CONTROLAR EL TIMEOUT DE PREVIEW
+  private previewTimeout: any = null;
 
   constructor(
     private experienciaService: ExperienciaService,
@@ -151,12 +154,18 @@ export class EditarExperienciasComponent implements OnInit {
       };
       reader.readAsDataURL(file);
       
+      // ✅ CANCELAR TIMEOUT ANTERIOR SI EXISTE
+      if (this.previewTimeout) {
+        clearTimeout(this.previewTimeout);
+        this.previewTimeout = null;
+      }
+      
       // Subir automáticamente
       this.subirImagen(file);
     }
   }
 
-  // ✅ MÉTODO: Subir imagen a ImgBB (para crear)
+  // ✅ MÉTODO: Subir imagen (para crear) - ELIMINADO EL TIMEOUT QUE BORRABA LA PREVIEW
   subirImagen(file: File): void {
     this.imagenSubiendo = true;
     this.imagenProgreso = 0;
@@ -182,12 +191,8 @@ export class EditarExperienciasComponent implements OnInit {
         
         this.mostrarMensaje('✅ Imagen subida exitosamente', 'success');
         
-        // Limpiar después de 3 segundos
-        setTimeout(() => {
-          this.imagenPreview = null;
-          this.imagenSeleccionada = null;
-          this.imagenProgreso = 0;
-        }, 3000);
+        // ✅ ELIMINADO: setTimeout que borraba la preview
+        // Ahora la preview se mantiene hasta que el usuario guarde o la elimine manualmente
       },
       error: (err) => {
         clearInterval(interval);
@@ -208,6 +213,12 @@ export class EditarExperienciasComponent implements OnInit {
       imagenUrl: '',
       imagenAlt: ''
     });
+    
+    // ✅ CANCELAR TIMEOUT SI EXISTE
+    if (this.previewTimeout) {
+      clearTimeout(this.previewTimeout);
+      this.previewTimeout = null;
+    }
   }
 
   // ✅ MÉTODO: Manejar selección de archivo (para editar)
@@ -302,12 +313,23 @@ export class EditarExperienciasComponent implements OnInit {
     this.experienciaService.save(nuevaExperiencia).subscribe({
       next: (experienciaGuardada) => {
         console.log('✅ Experiencia guardada exitosamente:', experienciaGuardada);
-        this.experiencias.push(experienciaGuardada);
+        
+        // ✅ ACTUALIZAR LA LISTA CORRECTAMENTE
+        this.experiencias = [...this.experiencias, experienciaGuardada];
+        
         this.successMessage = 'Experiencia creada exitosamente';
         this.experienciaForm.reset();
         this.guardando = false;
+        
+        // ✅ LIMPIAR PREVIEW PERO MANTENER LA IMAGEN EN EL FORMULARIO
         this.imagenPreview = null;
-        this.cargarExperiencias();
+        this.imagenSeleccionada = null;
+        this.imagenProgreso = 0;
+        
+        // ✅ RECARGAR LA LISTA COMPLETA PARA ACTUALIZAR TODO
+        setTimeout(() => {
+          this.cargarExperiencias();
+        }, 500);
       },
       error: (err) => {
         console.error('❌ Error creando experiencia:', err);
@@ -398,9 +420,13 @@ export class EditarExperienciasComponent implements OnInit {
     this.experienciaService.updateExperiencia(this.experienciaEditada.id, experienciaActualizada).subscribe({
       next: (experienciaActualizada) => {
         console.log('✅ Experiencia actualizada exitosamente:', experienciaActualizada);
+        
+        // ✅ ACTUALIZAR LA LISTA CORRECTAMENTE
         const index = this.experiencias.findIndex(e => e.id === experienciaActualizada.id);
         if (index !== -1) {
           this.experiencias[index] = experienciaActualizada;
+          // ✅ FORZAR ACTUALIZACIÓN DE LA VISTA
+          this.experiencias = [...this.experiencias];
         }
         
         this.mensajeTipo = 'success';
@@ -409,6 +435,7 @@ export class EditarExperienciasComponent implements OnInit {
         
         setTimeout(() => {
           this.cerrarModalEditar();
+          // ✅ RECARGAR LA LISTA COMPLETA PARA ACTUALIZAR TODO
           this.cargarExperiencias();
         }, 1500);
       },
@@ -500,5 +527,13 @@ export class EditarExperienciasComponent implements OnInit {
     this.mostrarModalConfirmacion = false;
     this.experienciaAEliminar = null;
     this.eliminando = false;
+  }
+
+  // ✅ DESTRUIR TIMEOUTS AL SALIR DEL COMPONENTE
+  ngOnDestroy(): void {
+    if (this.previewTimeout) {
+      clearTimeout(this.previewTimeout);
+      this.previewTimeout = null;
+    }
   }
 }
