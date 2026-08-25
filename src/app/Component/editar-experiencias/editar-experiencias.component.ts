@@ -67,6 +67,10 @@ export class EditarExperienciasComponent implements OnInit {
   experienciaEditada: Experiencia | null = null;
   experienciaAEliminar: Experiencia | null = null;
 
+  // Variable para almacenar la experiencia seleccionada
+selectedExperiencia: Experiencia | null = null;
+
+
   // ✅ VARIABLES PARA UPLOAD DE IMÁGENES
   imagenSubiendo = false;
   imagenSubiendoEditar = false;
@@ -127,6 +131,23 @@ export class EditarExperienciasComponent implements OnInit {
       }
     });
   }
+  // ✅ NUEVO MÉTODO PARA ABRIR MODAL DE DETALLES
+abrirModalDetalles(experiencia: Experiencia): void {
+  // Usamos el modal de Bootstrap que ya existe en perfil.component
+  // Pero como estamos en otro componente, creamos uno local
+  // Para simplificar, reutilizamos la lógica de selección
+  this.selectedExperiencia = experiencia;
+  // Mostrar modal usando Bootstrap (si está disponible)
+  const modalElement = document.getElementById('experienciaModal');
+  if (modalElement) {
+    const modal = new (window as any).bootstrap.Modal(modalElement);
+    modal.show();
+  } else {
+    // Si no hay modal de Bootstrap, usar alert o crear uno
+    console.log('Detalles de la experiencia:', experiencia);
+    // Opcional: implementar un modal propio
+  }
+}
 
   // ✅ MÉTODO: Manejar selección de archivo (para crear)
   onFileSelected(event: Event): void {
