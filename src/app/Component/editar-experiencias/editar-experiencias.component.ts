@@ -432,6 +432,9 @@ export class EditarExperienciasComponent implements OnInit {
         this.mensajeTipo = 'success';
         this.mensaje = 'Experiencia actualizada exitosamente';
         this.actualizando = false;
+
+        console.log('Experincia con ID ' + experienciaActualizada.id + ' actualizada correctamente.');
+        localStorage.setItem('experiencias', JSON.stringify(this.experiencias));
         
         setTimeout(() => {
           this.cerrarModalEditar();
