@@ -460,3 +460,139 @@ input[type="date"]:focus {
   margin-top: 0.5rem;
   text-align: center;
 }
+/* ============================================ */
+/* ESTILOS MEJORADOS PARA CARDS DE EXPERIENCIAS */
+/* ============================================ */
+
+.experiencia-card {
+  background: linear-gradient(145deg, #1e293b, #2d3748);
+  border: 1px solid #63b3ed;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  height: 100%;
+  color: #e2e8f0;
+}
+
+.experiencia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: #93c5fd;
+}
+
+/* Título de la card */
+.experiencia-card .card-title {
+  color: #f7fafc !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #4a5568;
+  padding-bottom: 0.5rem;
+}
+
+/* Contenedor de fechas */
+.fechas-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.fecha-label {
+  color: #a0aec0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.fecha-valor {
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.fecha-separador {
+  color: #4a5568;
+  font-weight: 400;
+  padding: 0 0.5rem;
+}
+
+/* Badges mejorados */
+.experiencia-card .badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+}
+
+.experiencia-card .badge.bg-primary {
+  background-color: #2b6cb0 !important;
+}
+
+.experiencia-card .badge.bg-secondary {
+  background-color: #4a5568 !important;
+}
+
+/* Botón mejorado */
+.experiencia-card .btn-primary {
+  background-color: #2b6cb0;
+  border: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.experiencia-card .btn-primary:hover {
+  background-color: #3182ce;
+  transform: scale(1.02);
+}
+
+/* Botones de acción en cards */
+.experiencia-card .action-buttons {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.btn-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-action:hover {
+  transform: scale(1.1);
+}
+
+.btn-editar {
+  background-color: rgba(59, 130, 246, 0.9);
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: rgba(37, 99, 235, 1);
+}
+
+.btn-eliminar {
+  background-color: rgba(239, 68, 68, 0.9);
+  color: white;
+}
+
+.btn-eliminar:hover {
+  background-color: rgba(220, 38, 38, 1);
+}
+
+/* Descripción */
+.experiencia-card .card-text {
+  color: #cbd5e0 !important;
+  line-height: 1.5;
+}
