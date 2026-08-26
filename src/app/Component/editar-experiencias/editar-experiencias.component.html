@@ -262,8 +262,8 @@
                       @if (experiencia.imagen?.url) {
                         <div class="mb-3 text-center">
                           <img 
-                            [src]="experiencia.imagen.url" 
-                            [alt]="experiencia.imagen.alt || 'Imagen de la experiencia'" 
+                            [src]="experiencia.imagen?.url" 
+                            [alt]="experiencia.imagen?.alt || 'Imagen de la experiencia'" 
                             class="rounded" 
                             style="max-height: 120px; width: auto; object-fit: contain;">
                         </div>
