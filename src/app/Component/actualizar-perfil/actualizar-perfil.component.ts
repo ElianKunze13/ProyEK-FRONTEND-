@@ -5,6 +5,7 @@ import { Usuario } from '../../Modelo/usuario';
 import { UsuarioService } from '../../Servicio/usuario.service';
 import { Router } from '@angular/router';
 import { Imagen } from '../../Modelo/imagen';
+import { ImagenUploadService } from '../../Servicio/imagen-upload.service'; // ✅ IMPORTAR SERVICIO
 
 @Component({
   selector: 'app-actualizar-perfil',
@@ -31,21 +32,21 @@ export class ActualizarPerfilComponent implements OnInit {
   fotoPortadaUrl: string = '';
   fotoPortadaAlt: string = '';
   
-  // Propiedades para el video
-  /*videoPath: string = '';
-  videoNombreOriginal: string = '';
-  videoTipo: TipoVideo | string = '';
-  videoId: any = null;*/
-  
-  // Lista de tipos de video
-  //tipoVideoKeys = Object.keys(TipoVideo).filter(key => isNaN(Number(key)));
+  // ✅ NUEVAS VARIABLES PARA UPLOAD DE IMÁGENES
+  imagenPerfilSubiendo = false;
+  imagenPortadaSubiendo = false;
+  imagenPerfilPreview: string | null = null;
+  imagenPortadaPreview: string | null = null;
+  imagenPerfilFile: File | null = null;
+  imagenPortadaFile: File | null = null;
   
   usuarioOriginal: Usuario | null = null;
 
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private imagenUploadService: ImagenUploadService // ✅ INYECTAR SERVICIO
   ) { }
 
   ngOnInit(): void {
@@ -59,10 +60,7 @@ export class ActualizarPerfilComponent implements OnInit {
       fotoPerfilUrl: [''],
       fotoPerfilAlt: [''],
       fotoPortadaUrl: [''],
-      fotoPortadaAlt: [''],
-      // Campos de video
-      /*videoPath: [''],
-      videoNombreOriginal: [''],*/
+      fotoPortadaAlt: ['']
     });
 
     this.cargarUsuario();
@@ -102,13 +100,9 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaUrl = usuario.fotoPortada?.url || '';
           this.fotoPortadaAlt = usuario.fotoPortada?.alt || '';
           
-          // Cargar datos del video si existe
-         /* if (usuario.videoPresentacion) {
-            this.videoId = usuario.videoPresentacion.id;
-            this.videoPath = usuario.videoPresentacion.path;
-            this.videoNombreOriginal = usuario.videoPresentacion.nombreOriginal;
-           //this.videoTipo = usuario.videoPresentacion.tipo;
-          }*/
+          // ✅ CARGAR PREVIEW DE IMÁGENES EXISTENTES
+          this.imagenPerfilPreview = usuario.fotoPerfil?.url || null;
+          this.imagenPortadaPreview = usuario.fotoPortada?.url || null;
           
           this.EditarUsuarioForm.patchValue({
             nombre: usuario.nombre,
@@ -120,9 +114,7 @@ export class ActualizarPerfilComponent implements OnInit {
             fotoPerfilUrl: usuario.fotoPerfil?.url || '',
             fotoPerfilAlt: usuario.fotoPerfil?.alt || '',
             fotoPortadaUrl: usuario.fotoPortada?.url || '',
-            fotoPortadaAlt: usuario.fotoPortada?.alt || '',
-           // videoPath: usuario.videoPresentacion?.path || '',
-            //videoNombreOriginal: usuario.videoPresentacion?.nombreOriginal || '',
+            fotoPortadaAlt: usuario.fotoPortada?.alt || ''
           });
         }
       });
@@ -147,55 +139,145 @@ export class ActualizarPerfilComponent implements OnInit {
     this.loginError = "";
   }
 
-  // Manejar selección de archivo de video
-  /*onVideoSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      // Validar tamaño máximo (1000MB = 1GB)
-      if (file.size > 1000 * 1024 * 1024) {
-        this.mostrarNotificacion("El video es demasiado grande. Máximo 1000MB (1GB)", "error");
-        return;
-      }*/
+  // ✅ MÉTODO: Manejar selección de archivo para foto de perfil
+  onFileSelectedPerfil(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
       
-      // Validar tipo de video por extensión
-      /*const fileExtension = file.name.split('.').pop()?.toUpperCase();
-      if (!this.tipoVideoKeys.includes(fileExtension || '')) {
-        this.mostrarNotificacion(`Formato de video no soportado. Formatos permitidos: ${this.tipoVideoKeys.join(', ')}`, "error");
+      if (!file.type.startsWith('image/')) {
+        this.mostrarNotificacion('Por favor selecciona una imagen válida', 'error');
         return;
-      }*/
+      }
       
-      // Crear URL temporal para previsualización
-      /*const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.videoPath = e.target.result;
-        this.videoNombreOriginal = file.name;
-        //this.videoTipo = fileExtension || '';
-        
-        this.EditarUsuarioForm.patchValue({
-          videoPath: e.target.result,
-          videoNombreOriginal: file.name,
-          //videoTipo: fileExtension || ''
-        });
-        
-        this.mostrarNotificacion("Video cargado correctamente", "success");
+      if (file.size > 5 * 1024 * 1024) {
+        this.mostrarNotificacion('La imagen no puede superar los 5MB', 'error');
+        return;
+      }
+      
+      this.imagenPerfilFile = file;
+      
+      // Mostrar preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagenPerfilPreview = e.target?.result as string;
       };
       reader.readAsDataURL(file);
+      
+      // Subir automáticamente
+      this.subirImagenPerfil(file);
     }
   }
 
-  // Eliminar video
-  eliminarVideo(): void {
-    this.EditarUsuarioForm.patchValue({
-      videoPath: '',
-      videoNombreOriginal: '',
-      //videoTipo: ''
+  // ✅ MÉTODO: Subir imagen de perfil a ImageKit
+  subirImagenPerfil(file: File): void {
+    this.imagenPerfilSubiendo = true;
+    
+    this.imagenUploadService.uploadImage(file).subscribe({
+      next: (imagen: Imagen) => {
+        this.imagenPerfilSubiendo = false;
+        
+        // Actualizar el formulario con la URL de la imagen
+        this.EditarUsuarioForm.patchValue({
+          fotoPerfilUrl: imagen.url,
+          fotoPerfilAlt: imagen.alt || file.name
+        });
+        
+        this.fotoPerfilUrl = imagen.url;
+        this.fotoPerfilAlt = imagen.alt || file.name;
+        
+        this.mostrarNotificacion('✅ Foto de perfil subida exitosamente', 'success');
+      },
+      error: (err) => {
+        this.imagenPerfilSubiendo = false;
+        console.error('Error al subir imagen de perfil:', err);
+        this.mostrarNotificacion('❌ Error al subir la foto de perfil', 'error');
+      }
     });
-    this.videoPath = '';
-    this.videoNombreOriginal = '';
-    //this.videoTipo = '';
-    this.videoId = null;
-    this.mostrarNotificacion("Video eliminado", "success");
-  }*/
+  }
+
+  // ✅ MÉTODO: Eliminar foto de perfil seleccionada
+  eliminarFotoPerfil(): void {
+    this.imagenPerfilPreview = null;
+    this.imagenPerfilFile = null;
+    this.fotoPerfilUrl = '';
+    this.fotoPerfilAlt = '';
+    this.EditarUsuarioForm.patchValue({
+      fotoPerfilUrl: '',
+      fotoPerfilAlt: ''
+    });
+    this.mostrarNotificacion('Foto de perfil eliminada', 'success');
+  }
+
+  // ✅ MÉTODO: Manejar selección de archivo para foto de portada
+  onFileSelectedPortada(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      
+      if (!file.type.startsWith('image/')) {
+        this.mostrarNotificacion('Por favor selecciona una imagen válida', 'error');
+        return;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        this.mostrarNotificacion('La imagen no puede superar los 5MB', 'error');
+        return;
+      }
+      
+      this.imagenPortadaFile = file;
+      
+      // Mostrar preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagenPortadaPreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+      
+      // Subir automáticamente
+      this.subirImagenPortada(file);
+    }
+  }
+
+  // ✅ MÉTODO: Subir imagen de portada a ImageKit
+  subirImagenPortada(file: File): void {
+    this.imagenPortadaSubiendo = true;
+    
+    this.imagenUploadService.uploadImage(file).subscribe({
+      next: (imagen: Imagen) => {
+        this.imagenPortadaSubiendo = false;
+        
+        // Actualizar el formulario con la URL de la imagen
+        this.EditarUsuarioForm.patchValue({
+          fotoPortadaUrl: imagen.url,
+          fotoPortadaAlt: imagen.alt || file.name
+        });
+        
+        this.fotoPortadaUrl = imagen.url;
+        this.fotoPortadaAlt = imagen.alt || file.name;
+        
+        this.mostrarNotificacion('✅ Foto de portada subida exitosamente', 'success');
+      },
+      error: (err) => {
+        this.imagenPortadaSubiendo = false;
+        console.error('Error al subir imagen de portada:', err);
+        this.mostrarNotificacion('❌ Error al subir la foto de portada', 'error');
+      }
+    });
+  }
+
+  // ✅ MÉTODO: Eliminar foto de portada seleccionada
+  eliminarFotoPortada(): void {
+    this.imagenPortadaPreview = null;
+    this.imagenPortadaFile = null;
+    this.fotoPortadaUrl = '';
+    this.fotoPortadaAlt = '';
+    this.EditarUsuarioForm.patchValue({
+      fotoPortadaUrl: '',
+      fotoPortadaAlt: ''
+    });
+    this.mostrarNotificacion('Foto de portada eliminada', 'success');
+  }
 
   guardarCambios(): void {
     if (this.EditarUsuarioForm.valid) {
@@ -241,24 +323,6 @@ export class ActualizarPerfilComponent implements OnInit {
         };
       }
 
-      // Preparar video
-     /* let video: Video | undefined = undefined;
-      const videoPath = this.EditarUsuarioForm.value.videoPath;
-      const videoNombreOriginal = this.EditarUsuarioForm.value.videoNombreOriginal;
-      //const videoTipo = this.EditarUsuarioForm.value.videoTipo;
-
-      if (videoPath && videoPath.trim() !== '' && videoNombreOriginal && videoNombreOriginal.trim() !== '') {
-        video = {
-          path: videoPath.trim(),
-          nombreOriginal: videoNombreOriginal.trim(),
-         // tipo: videoTipo
-        };
-        
-        if (this.videoId) {
-          video.id = this.videoId;
-        }
-      }*/
-
       // Construir objeto usuario actualizado
       const usuarioActualizado: Usuario = {
         id: this.usuarioId,
@@ -270,8 +334,7 @@ export class ActualizarPerfilComponent implements OnInit {
         introduccion: this.EditarUsuarioForm.value.introduccion || '',
         descripcion: this.EditarUsuarioForm.value.descripcion || '',
         fotoPerfil: fotoPerfil,
-        fotoPortada: fotoPortada,
-       // videoPresentacion: video
+        fotoPortada: fotoPortada
       };
 
       this.usuarioService.updateUsuario(this.usuarioId, usuarioActualizado).subscribe({
@@ -284,12 +347,8 @@ export class ActualizarPerfilComponent implements OnInit {
           this.fotoPortadaUrl = res.fotoPortada?.url || '';
           this.fotoPortadaAlt = res.fotoPortada?.alt || '';
           
-          /*if (res.videoPresentacion) {
-            this.videoId = res.videoPresentacion.id;
-            this.videoPath = res.videoPresentacion.path;
-            this.videoNombreOriginal = res.videoPresentacion.nombreOriginal;
-            //this.videoTipo = res.videoPresentacion.tipo;
-          }*/
+          this.imagenPerfilPreview = res.fotoPerfil?.url || null;
+          this.imagenPortadaPreview = res.fotoPortada?.url || null;
           
           this.usuarioOriginal = { ...res };
           localStorage.setItem('username', res.username);
@@ -300,8 +359,6 @@ export class ActualizarPerfilComponent implements OnInit {
           });
           
           this.mostrarNotificacion("✅ ¡Perfil actualizado correctamente!", "success");
-          //mostar en consola el objeto usuario actualizado para verificar los cambios
-          console.log('Usuario actualizado:', res);
           
           setTimeout(() => {
             this.cargarUsuario();
@@ -342,52 +399,6 @@ export class ActualizarPerfilComponent implements OnInit {
           control.markAsTouched();
         }
       });
-    }
-  }
-
-  eliminarFotoPerfil(): void {
-    this.EditarUsuarioForm.patchValue({
-      fotoPerfilUrl: '',
-      fotoPerfilAlt: ''
-    });
-    this.fotoPerfilUrl = '';
-    this.fotoPerfilAlt = '';
-    this.mostrarNotificacion("Foto de perfil eliminada", "success");
-  }
-
-  eliminarFotoPortada(): void {
-    this.EditarUsuarioForm.patchValue({
-      fotoPortadaUrl: '',
-      fotoPortadaAlt: ''
-    });
-    this.fotoPortadaUrl = '';
-    this.fotoPortadaAlt = '';
-    this.mostrarNotificacion("Foto de portada eliminada", "success");
-  }
-
-  onFileSelected(event: any, tipo: 'perfil' | 'portada'): void {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        this.mostrarNotificacion("La imagen es demasiado grande. Máximo 5MB", "error");
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        if (tipo === 'perfil') {
-          this.EditarUsuarioForm.patchValue({
-            fotoPerfilUrl: e.target.result
-          });
-          this.mostrarNotificacion("Foto de perfil cargada correctamente", "success");
-        } else {
-          this.EditarUsuarioForm.patchValue({
-            fotoPortadaUrl: e.target.result
-          });
-          this.mostrarNotificacion("Foto de portada cargada correctamente", "success");
-        }
-      };
-      reader.readAsDataURL(file);
     }
   }
 }
