@@ -1,3 +1,4 @@
+
 <div id="fondo" class="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative">
 
   <!-- Notificación Toast -->
@@ -85,97 +86,61 @@
         </div>
       </div>
 
-      <!-- Sección  Foto de Perfil -->
+      <!-- ✅ Sección Foto de Perfil MEJORADA CON UPLOAD -->
       <div class="border-t pt-4 mt-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Perfil</h3>
         
-        <div *ngIf="fotoPerfilUrl" class="mb-3 flex justify-center">
-          <img [src]="fotoPerfilUrl" [alt]="fotoPerfilAlt" class="rounded-full w-24 h-24 object-cover border-2 border-blue-500">
+        <!-- Preview de imagen -->
+        <div *ngIf="imagenPerfilPreview" class="mb-3 flex justify-center">
+          <img [src]="imagenPerfilPreview" [alt]="fotoPerfilAlt" class="rounded-full w-24 h-24 object-cover border-2 border-blue-500">
         </div>
 
-        <div>
-          <label for="fotoPerfilUrl" class="block text-gray-700 mb-1">URL de la foto de perfil</label>
-          <input formControlName="fotoPerfilUrl" type="text" id="fotoPerfilUrl"
-            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable"
-            placeholder="https://ejemplo.com/mi-foto.jpg">
-        </div>
-
-        <div>
-          <label for="fotoPerfilAlt" class="block text-gray-700 mb-1">Texto alternativo</label>
-          <input formControlName="fotoPerfilAlt" type="text" id="fotoPerfilAlt"
-            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable"
-            placeholder="Foto de perfil de usuario">
-        </div>
-
-        <!-- SECCIÓN PARA EDITAR/CARGAR VIDEOS -->
-        <!--<div class="border-t pt-4 mt-2">
-          <h3 class="text-lg font-semibold text-gray-800 mb-3">Video de Presentación</h3>
-          
-          <div *ngIf="videoPath" class="mb-4">
-            <label class="block text-gray-700 mb-2">Vista previa del video actual</label>
-            <video controls class="w-full rounded-lg shadow-md" style="max-height: 300px;">
-              <source [src]="videoPath" [type]="'video/' + videoTipo">
-              Tu navegador no soporta el elemento de video.
-            </video>
-          </div>
-
-          <div *ngIf="editable">
-            <div class="mb-3">
-              <label class="block text-gray-700 mb-1">Subir video desde dispositivo</label>
-              <input type="file" (change)="onVideoSelected($event)" accept="video/*"
-                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <div class="text-xs text-gray-500 mt-1">
-                Formatos soportados: MP4, WEBM, OGG, AVI, MKV, MOV, WMV, FLV<br>
-                Tamaño máximo: 1000MB (1GB)
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="videoNombreOriginal" class="block text-gray-700 mb-1">Nombre del video</label>
-              <input formControlName="videoNombreOriginal" type="text" id="videoNombreOriginal"
-                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                placeholder="Se autocompletará al seleccionar el archivo"
-                readonly>
-              <div class="text-xs text-gray-500 mt-1">El nombre se tomará automáticamente del archivo seleccionado</div>
-            </div>
-
-            <div class="mb-3">
-              <label for="videoTipo" class="block text-gray-700 mb-1">Formato del video</label>
-              <select formControlName="videoTipo" id="videoTipo"
-                class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                aria-disabled="true">
-                <option value="">Se detectará automáticamente</option>
-                <option *ngFor="let tipo of tipoVideoKeys" [value]="tipo">
-                  {{ tipo }}
-                </option>
-              </select>
-              <div class="text-xs text-gray-500 mt-1">El formato se detectará automáticamente según la extensión del archivo</div>
-            </div>
-
-            <div *ngIf="videoPath" class="mt-2">
-              <button type="button" (click)="eliminarVideo()" 
-                class="text-red-600 hover:text-red-800 text-sm font-medium">
-                🗑️ Eliminar video actual
+        <!-- Uploader de imagen -->
+        <div *ngIf="editable" class="mb-3">
+          <div class="border-2 border-dashed rounded-lg p-4 text-center transition-colors"
+            [class.border-gray-300]="!imagenPerfilPreview"
+            [class.border-blue-500]="imagenPerfilPreview"
+            [class.bg-gray-50]="imagenPerfilSubiendo">
+            
+            <!-- Input file -->
+            <div>
+              <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+              <p class="text-gray-600 text-sm">Selecciona una foto de perfil</p>
+              <p class="text-gray-400 text-xs">PNG, JPG o WEBP (máx 5MB)</p>
+              <input 
+                type="file" 
+                accept="image/*"
+                (change)="onFileSelectedPerfil($event)"
+                class="hidden"
+                #fileInputPerfil>
+              <button 
+                type="button"
+                (click)="fileInputPerfil.click()"
+                class="mt-2 btn btn-primary btn-sm"
+                [disabled]="imagenPerfilSubiendo"
+                style="background-color: #3b82f6; color: white; padding: 0.4rem 1.2rem; border-radius: 0.5rem; border: none; cursor: pointer; font-size: 0.875rem;">
+                {{ imagenPerfilSubiendo ? 'Subiendo...' : 'Seleccionar imagen' }}
               </button>
             </div>
           </div>
+        </div>
 
-          <div *ngIf="!editable && videoPath" class="mt-2 p-3 bg-gray-50 rounded-lg">
-            <p class="text-sm text-gray-600">
-              <strong>Video actual:</strong> {{ videoNombreOriginal || 'Sin título' }}<br>
-              <strong>Formato:</strong> {{ videoTipo }}
-            </p>
-          </div>
+        <!-- URL de la imagen (visible pero no editable directamente) -->
+        <div *ngIf="!editable">
+          <label class="block text-gray-700 mb-1">URL de la foto de perfil</label>
+          <input [value]="fotoPerfilUrl" type="text" class="w-full border rounded-lg p-2 bg-gray-100" readonly>
+        </div>
 
-          <div *ngIf="!editable && !videoPath" class="mt-2 p-3 bg-gray-50 rounded-lg text-center">
-            <p class="text-gray-500">No hay video de presentación configurado</p>
-          </div>
-        </div>-->
+        <!-- Texto alternativo (solo en modo edición) -->
+        <div *ngIf="editable">
+          <label for="fotoPerfilAlt" class="block text-gray-700 mb-1">Texto alternativo</label>
+          <input formControlName="fotoPerfilAlt" type="text" id="fotoPerfilAlt"
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Descripción de la foto de perfil">
+        </div>
 
-        <!-- Botón para eliminar foto de perfil (solo en modo edición y si existe imagen) -->
-        <div *ngIf="editable && fotoPerfilUrl" class="mt-2">
+        <!-- Botón para eliminar foto de perfil -->
+        <div *ngIf="editable && imagenPerfilPreview" class="mt-2">
           <button type="button" (click)="eliminarFotoPerfil()" 
             class="text-red-600 hover:text-red-800 text-sm font-medium">
             🗑️ Eliminar foto de perfil
@@ -183,32 +148,61 @@
         </div>
       </div>
 
-      <!-- Sección Foto de Portada -->
+      <!-- ✅ Sección Foto de Portada MEJORADA CON UPLOAD -->
       <div class="border-t pt-4 mt-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">Foto de Portada</h3>
         
-        <div *ngIf="fotoPortadaUrl" class="mb-3 flex justify-center">
-          <img [src]="fotoPortadaUrl" [alt]="fotoPortadaAlt" class="w-40 h-40 object-cover rounded-lg border border-gray-300">
+        <!-- Preview de imagen -->
+        <div *ngIf="imagenPortadaPreview" class="mb-3 flex justify-center">
+          <img [src]="imagenPortadaPreview" [alt]="fotoPortadaAlt" class="w-40 h-40 object-cover rounded-lg border border-gray-300">
         </div>
 
-        <div>
-          <label for="fotoPortadaUrl" class="block text-gray-700 mb-1">URL de la foto de portada</label>
-          <input formControlName="fotoPortadaUrl" type="text" id="fotoPortadaUrl"
-            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable"
-            placeholder="https://ejemplo.com/mi-portada.jpg">
+        <!-- Uploader de imagen -->
+        <div *ngIf="editable" class="mb-3">
+          <div class="border-2 border-dashed rounded-lg p-4 text-center transition-colors"
+            [class.border-gray-300]="!imagenPortadaPreview"
+            [class.border-blue-500]="imagenPortadaPreview"
+            [class.bg-gray-50]="imagenPortadaSubiendo">
+            
+            <!-- Input file -->
+            <div>
+              <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+              <p class="text-gray-600 text-sm">Selecciona una foto de portada</p>
+              <p class="text-gray-400 text-xs">PNG, JPG o WEBP (máx 5MB)</p>
+              <input 
+                type="file" 
+                accept="image/*"
+                (change)="onFileSelectedPortada($event)"
+                class="hidden"
+                #fileInputPortada>
+              <button 
+                type="button"
+                (click)="fileInputPortada.click()"
+                class="mt-2 btn btn-primary btn-sm"
+                [disabled]="imagenPortadaSubiendo"
+                style="background-color: #3b82f6; color: white; padding: 0.4rem 1.2rem; border-radius: 0.5rem; border: none; cursor: pointer; font-size: 0.875rem;">
+                {{ imagenPortadaSubiendo ? 'Subiendo...' : 'Seleccionar imagen' }}
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div>
+        <!-- URL de la imagen (visible pero no editable directamente) -->
+        <div *ngIf="!editable">
+          <label class="block text-gray-700 mb-1">URL de la foto de portada</label>
+          <input [value]="fotoPortadaUrl" type="text" class="w-full border rounded-lg p-2 bg-gray-100" readonly>
+        </div>
+
+        <!-- Texto alternativo (solo en modo edición) -->
+        <div *ngIf="editable">
           <label for="fotoPortadaAlt" class="block text-gray-700 mb-1">Texto alternativo</label>
           <input formControlName="fotoPortadaAlt" type="text" id="fotoPortadaAlt"
             class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            [readonly]="!editable"
-            placeholder="Foto de portada del perfil">
+            placeholder="Descripción de la foto de portada">
         </div>
 
-        <!-- Botón para eliminar foto de portada (solo en modo edición y si existe imagen) -->
-        <div *ngIf="editable && fotoPortadaUrl" class="mt-2">
+        <!-- Botón para eliminar foto de portada -->
+        <div *ngIf="editable && imagenPortadaPreview" class="mt-2">
           <button type="button" (click)="eliminarFotoPortada()" 
             class="text-red-600 hover:text-red-800 text-sm font-medium">
             🗑️ Eliminar foto de portada
@@ -244,7 +238,7 @@
 
       <!-- Botones de acción -->
       <div class="flex justify-between pt-4 gap-3" *ngIf="editable">
-        <button type="button" (click)="guardarCambios()" class="btn btn-primary flex-1">
+        <button type="button" (click)="guardarCambios()" class="btn btn-primary flex-1" [disabled]="imagenPerfilSubiendo || imagenPortadaSubiendo">
           💾 Guardar cambios
         </button>
         <button type="button" (click)="cancelarEdicion()" class="btn btn-secondary flex-1">
