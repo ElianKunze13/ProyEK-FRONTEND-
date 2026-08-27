@@ -60,19 +60,77 @@
                 }
               </div>
 
-              <!-- URL de la imagen -->
+              <!-- ✅ SUBIDA DE IMAGEN DESDE DISPOSITIVO -->
               <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">URL del logo/imagen (opcional)</label>
-                <input type="text" formControlName="imagenUrl" class="form-control" 
-                       placeholder="https://ejemplo.com/logo.png">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Logo/Imagen de la tecnología</label>
+                
+                <div class="file-input-wrapper">
+                  <div 
+                    class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                    [class.border-gray-300]="!imagenPreview"
+                    [class.border-blue-500]="imagenPreview"
+                    [class.bg-gray-50]="imagenSubiendo"
+                    style="background-color: #f9fafb;">
+                    
+                    <!-- Preview de imagen -->
+                    @if (imagenPreview) {
+                      <div class="relative inline-block">
+                        <img [src]="imagenPreview" alt="Preview de la imagen" class="max-h-48 rounded-lg shadow-md">
+                        <button 
+                          type="button" 
+                          (click)="eliminarImagenSeleccionada()"
+                          class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                          title="Eliminar imagen">
+                          ×
+                        </button>
+                      </div>
+                    }
+                    
+                    <!-- Input file (visible cuando no hay preview) -->
+                    @if (!imagenPreview) {
+                      <div>
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-gray-600">Arrastra o haz clic para subir un logo</p>
+                        <p class="text-gray-400 text-sm">PNG, JPG o WEBP (máx 5MB)</p>
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          (change)="onFileSelected($event)"
+                          class="hidden"
+                          aria-label="Subir logo de la tecnología"
+                          title="Subir logo de la tecnología"
+                          #fileInput>
+                        <button 
+                          type="button"
+                          (click)="fileInput.click()"
+                          class="mt-3 btn btn-primary"
+                          style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
+                          Seleccionar logo
+                        </button>
+                      </div>
+                    }
+                    
+                    <!-- Barra de progreso -->
+                    @if (imagenSubiendo) {
+                      <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                          <div 
+                            class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                            [style.width.%]="imagenProgreso">
+                          </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">
+                          Subiendo imagen... {{imagenProgreso}}%
+                        </p>
+                      </div>
+                    }
+                  </div>
+                </div>
               </div>
-              
-              <!-- Texto alternativo de la imagen -->
-              <div class="form-group">
-                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen (opcional)</label>
-                <input type="text" formControlName="imagenAlt" class="form-control" 
-                       placeholder="Logo de la tecnología">
-              </div>
+
+              <!-- Campos ocultos para imagen -->
+              <input type="hidden" formControlName="imagenUrl">
+              <input type="hidden" formControlName="imagenAlt">
 
               <!-- Mensajes de error -->
               @if (errorMessage) {
@@ -87,7 +145,7 @@
                 </div>
               }
 
-              <button type="submit" [disabled]="conocimientoForm.invalid || guardando" 
+              <button type="submit" [disabled]="conocimientoForm.invalid || guardando || imagenSubiendo" 
                       class="btn-primary w-full py-3 flex items-center justify-center">
                 <i class="fas fa-plus-circle mr-2"></i>
                 @if (!guardando) {
@@ -111,9 +169,15 @@
                 <div class="flex flex-col items-center w-full p-4 bg-white/10 rounded-lg">
                   <!-- Imagen del conocimiento -->
                   <div class="mb-3 p-3 bg-white/10 rounded-lg">
-                    <img [src]="conocimiento.imagen?.url || 'assets/default-tech.png'" 
-                         [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
-                         class="w-14 h-14 object-cover">
+                    @if (conocimiento.imagen?.url) {
+                      <img [src]="conocimiento.imagen?.url" 
+                           [alt]="conocimiento.imagen?.alt || conocimiento.nombre"
+                           class="w-14 h-14 object-cover">
+                    } @else {
+                      <div class="w-14 h-14 flex items-center justify-center bg-gray-600 rounded-lg text-white text-2xl font-bold">
+                        {{ conocimiento.nombre.charAt(0).toUpperCase() }}
+                      </div>
+                    }
                   </div>
                   
                   <!-- Información del conocimiento -->
@@ -159,7 +223,7 @@
       <!-- MODAL PARA EDITAR CONOCIMIENTO -->
       @if (mostrarModalEditar) {
         <div class="modal-overlay">
-          <div class="modal-content">
+          <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
               <h5 class="modal-title">
                 Editando: {{conocimientoEditado?.nombre}}
@@ -172,7 +236,8 @@
             <div class="modal-body">
               <div class="bg-white rounded-lg shadow-md p-6">
                 @if (mensaje) {
-                  <div class="mensaje" [class]="mensajeTipo === 'error' ? 'text-red-600' : 'text-green-600'">
+                  <div class="mensaje mb-4 p-3 rounded" 
+                       [class]="mensajeTipo === 'error' ? 'bg-red-100 text-red-700' : mensajeTipo === 'success' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'">
                     {{ mensaje }}
                   </div>
                 }
@@ -227,22 +292,77 @@
                     }
                   </div>
 
-                  <!-- URL de la imagen -->
+                  <!-- ✅ SUBIDA DE IMAGEN EN EDICIÓN -->
                   <div class="form-group mb-4">
-                    <label class="block mb-2 text-sm font-medium text-gray-700">URL del logo/imagen</label>
-                    <input type="text" formControlName="imagenUrl" class="form-control" 
-                           placeholder="https://ejemplo.com/logo.png">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Logo/Imagen de la tecnología</label>
+                    
+                    <div class="file-input-wrapper">
+                      <div 
+                        class="border-2 border-dashed rounded-lg p-4 text-center transition-colors"
+                        [class.border-gray-300]="!imagenPreviewEditar"
+                        [class.border-blue-500]="imagenPreviewEditar"
+                        [class.bg-gray-50]="imagenSubiendoEditar"
+                        style="background-color: #f9fafb;">
+                        
+                        <!-- Preview de imagen -->
+                        @if (imagenPreviewEditar) {
+                          <div class="relative inline-block">
+                            <img [src]="imagenPreviewEditar" alt="Preview de la imagen" class="max-h-48 rounded-lg shadow-md">
+                            <button 
+                              type="button" 
+                              (click)="eliminarImagenEditar()"
+                              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                              title="Eliminar imagen">
+                              ×
+                            </button>
+                          </div>
+                        }
+                        
+                        <!-- Input file (visible cuando no hay preview) -->
+                        @if (!imagenPreviewEditar) {
+                          <div>
+                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                            <p class="text-gray-600 text-sm">Subir nuevo logo</p>
+                            <p class="text-gray-400 text-xs">PNG, JPG o WEBP (máx 5MB)</p>
+                            <input 
+                              type="file" 
+                              accept="image/*"
+                              (change)="onFileSelectedEditar($event)"
+                              class="hidden"
+                              aria-label="Subir nuevo logo de la tecnología"
+                              title="Subir nuevo logo de la tecnología"
+                              #fileInputEditar>
+                            <button 
+                              type="button"
+                              (click)="fileInputEditar.click()"
+                              class="mt-2 btn btn-primary btn-sm"
+                              style="background-color: #3b82f6; color: white; padding: 0.4rem 1.2rem; border-radius: 0.5rem; border: none; cursor: pointer; font-size: 0.875rem;">
+                              Seleccionar logo
+                            </button>
+                          </div>
+                        }
+                        
+                        <!-- Barra de progreso -->
+                        @if (imagenSubiendoEditar) {
+                          <div class="mt-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                              <div class="bg-blue-600 h-2 rounded-full animate-pulse" style="width: 100%"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">Subiendo imagen...</p>
+                          </div>
+                        }
+                      </div>
+                    </div>
                   </div>
 
-                  <!-- Texto alternativo de la imagen -->
-                  <div class="form-group mb-6">
-                    <label class="block mb-2 text-sm font-medium text-gray-700">Descripción de la imagen</label>
-                    <input type="text" formControlName="imagenAlt" class="form-control" 
-                           placeholder="Logo de la tecnología">
-                  </div>
+                  <!-- Campos ocultos -->
+                  <input type="hidden" formControlName="imagenUrl">
+                  <input type="hidden" formControlName="imagenAlt">
 
                   <div class="form-actions flex justify-between">
-                    <button type="submit" class="btn btn-primary px-6 py-2" [disabled]="actualizando || editarConocimientoForm.invalid">
+                    <button type="submit" class="btn btn-primary px-6 py-2" 
+                            [disabled]="actualizando || editarConocimientoForm.invalid || imagenSubiendoEditar"
+                            style="background-color: #3b82f6; color: white; font-weight: 500; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
                       @if (!actualizando) {
                         <span>
                           <i class="fas fa-paper-plane me-2"></i>Actualizar conocimiento
@@ -254,7 +374,8 @@
                       }
                     </button>
                     
-                    <button type="button" class="btn btn-secondary px-6 py-2" (click)="cerrarModalEditar()">
+                    <button type="button" class="btn btn-secondary px-6 py-2" (click)="cerrarModalEditar()"
+                            style="background-color: #6b7280; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 500; border: none; cursor: pointer;">
                       Cancelar
                     </button>
                   </div>
@@ -297,7 +418,8 @@
                 <div class="flex justify-center space-x-4 mt-6">
                   <button type="button" class="btn btn-danger px-6 py-2" 
                           (click)="eliminarConocimiento()" 
-                          [disabled]="eliminando">
+                          [disabled]="eliminando"
+                          style="background-color: #ef4444; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 500; border: none; cursor: pointer;">
                     @if (!eliminando) {
                       <span>
                         <i class="fas fa-trash me-2"></i>Sí, eliminar
@@ -311,7 +433,8 @@
                   
                   <button type="button" class="btn btn-secondary px-6 py-2" 
                           (click)="cancelarEliminacion()"
-                          [disabled]="eliminando">
+                          [disabled]="eliminando"
+                          style="background-color: #6b7280; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 500; border: none; cursor: pointer;">
                     <i class="fas fa-times me-2"></i>Cancelar
                   </button>
                 </div>
