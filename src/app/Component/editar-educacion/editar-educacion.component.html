@@ -24,6 +24,29 @@
                   </div>
                 }
               </div>
+
+<!-- Fecha de Inicio -->
+<div class="form-group">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Inicio *</label>
+  <input type="date" formControlName="fechaInicio" class="form-control">
+  @if (educacionForm.get('fechaInicio')?.invalid && educacionForm.get('fechaInicio')?.touched) {
+    <div class="text-red-500 text-sm mt-1">
+      La fecha de inicio es requerida
+    </div>
+  }
+</div>
+
+<!-- Fecha de Obtención -->
+<div class="form-group">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Obtención *</label>
+  <input type="date" formControlName="fechaObtencion" class="form-control">
+  @if (educacionForm.get('fechaObtencion')?.invalid && educacionForm.get('fechaObtencion')?.touched) {
+    <div class="text-red-500 text-sm mt-1">
+      La fecha de obtención es requerida
+    </div>
+  }
+</div>
+
               
               <div class="form-group">
                 <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
@@ -237,6 +260,29 @@
                       </div>
                     }
                   </div>
+
+<!-- Dentro del modal de edición, después del campo Título -->
+<!-- Fecha de Inicio -->
+<div class="form-group mb-4">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Inicio *</label>
+  <input type="date" formControlName="fechaInicio" class="form-control">
+  @if (editarEducacionForm.get('fechaInicio')?.invalid && editarEducacionForm.get('fechaInicio')?.touched) {
+    <div class="text-red-500 text-sm mt-1">
+      La fecha de inicio es requerida
+    </div>
+  }
+</div>
+
+<!-- Fecha de Obtención -->
+<div class="form-group mb-4">
+  <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Obtención *</label>
+  <input type="date" formControlName="fechaObtencion" class="form-control">
+  @if (editarEducacionForm.get('fechaObtencion')?.invalid && editarEducacionForm.get('fechaObtencion')?.touched) {
+    <div class="text-red-500 text-sm mt-1">
+      La fecha de obtención es requerida
+    </div>
+  }
+</div>
 
                   <!-- Descripción -->
                   <div class="form-group mb-4">
