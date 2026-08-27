@@ -333,3 +333,86 @@ textarea.form-control {
   display: grid;
   gap: 1.5rem;
 }
+
+/* Estilos para el uploader de imágenes */
+.file-drop-zone {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-drop-zone:hover {
+  border-color: #3b82f6;
+  background-color: #f8fafc;
+}
+
+.file-drop-zone.dragover {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.preview-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.preview-image {
+  max-height: 192px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.preview-image:hover {
+  transform: scale(1.02);
+}
+
+.btn-remove-image {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn-remove-image:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  background-color: #3b82f6;
+  height: 10px;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  text-align: center;
+}
