@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TipoConocimiento } from '../../Modelo/Enums/tipoConocimiento';
 import { Nivel } from '../../Modelo/Enums/nivel';
 import { Imagen } from '../../Modelo/imagen';
+import { ImagenUploadService } from '../../Servicio/imagen-upload.service'; // ✅ IMPORTAR SERVICIO
 
 @Component({
   selector: 'app-editar-herramientas',
@@ -42,8 +43,20 @@ export class EditarHerramientasComponent implements OnInit {
   mostrarModalEditar: boolean = false;
   mostrarModalConfirmacion: boolean = false;
 
+  // ✅ VARIABLES PARA UPLOAD DE IMÁGENES
+  imagenSubiendo = false;
+  imagenSubiendoEditar = false;
+  imagenProgreso = 0;
+  imagenSeleccionada: File | null = null;
+  imagenPreview: string | null = null;
+  imagenPreviewEditar: string | null = null;
+  
+  // ✅ TIMEOUT PARA PREVIEW
+  private previewTimeout: any = null;
+
   constructor(
     private conocimientoService: ConocimientoService,
+    private imagenUploadService: ImagenUploadService, // ✅ INYECTAR SERVICIO
     private fb: FormBuilder
   ) {}
 
@@ -86,6 +99,133 @@ export class EditarHerramientasComponent implements OnInit {
     });
   }
 
+  // ✅ MÉTODO: Manejar selección de archivo (para crear)
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      
+      if (!file.type.startsWith('image/')) {
+        this.mostrarMensaje('Por favor selecciona una imagen válida', 'error');
+        return;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        this.mostrarMensaje('La imagen no puede superar los 5MB', 'error');
+        return;
+      }
+      
+      this.imagenSeleccionada = file;
+      
+      // Mostrar preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagenPreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+      
+      // Subir automáticamente
+      this.subirImagen(file);
+    }
+  }
+
+  // ✅ MÉTODO: Subir imagen a ImageKit (para crear)
+  subirImagen(file: File): void {
+    this.imagenSubiendo = true;
+    this.imagenProgreso = 0;
+    
+    const interval = setInterval(() => {
+      if (this.imagenProgreso < 90) {
+        this.imagenProgreso += 10;
+      }
+    }, 200);
+    
+    this.imagenUploadService.uploadImage(file).subscribe({
+      next: (imagen: Imagen) => {
+        clearInterval(interval);
+        this.imagenProgreso = 100;
+        this.imagenSubiendo = false;
+        
+        this.conocimientoForm.patchValue({
+          imagenUrl: imagen.url,
+          imagenAlt: imagen.alt || file.name
+        });
+        
+        this.mostrarMensaje('✅ Imagen subida exitosamente', 'success');
+      },
+      error: (err) => {
+        clearInterval(interval);
+        this.imagenSubiendo = false;
+        this.imagenProgreso = 0;
+        console.error('Error al subir imagen:', err);
+        this.mostrarMensaje('❌ Error al subir la imagen: ' + (err.error?.message || err.message), 'error');
+      }
+    });
+  }
+
+  // ✅ MÉTODO: Eliminar imagen seleccionada (para crear)
+  eliminarImagenSeleccionada(): void {
+    this.imagenPreview = null;
+    this.imagenSeleccionada = null;
+    this.imagenProgreso = 0;
+    this.conocimientoForm.patchValue({
+      imagenUrl: '',
+      imagenAlt: ''
+    });
+  }
+
+  // ✅ MÉTODO: Manejar selección de archivo (para editar)
+  onFileSelectedEditar(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      
+      if (!file.type.startsWith('image/')) {
+        this.mostrarMensaje('Por favor selecciona una imagen válida', 'error');
+        return;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        this.mostrarMensaje('La imagen no puede superar los 5MB', 'error');
+        return;
+      }
+      
+      this.imagenSubiendoEditar = true;
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagenPreviewEditar = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+      
+      this.imagenUploadService.uploadImage(file).subscribe({
+        next: (imagen: Imagen) => {
+          this.imagenSubiendoEditar = false;
+          this.editarConocimientoForm.patchValue({
+            imagenUrl: imagen.url,
+            imagenAlt: imagen.alt || file.name
+          });
+          
+          this.mostrarMensaje('✅ Imagen actualizada exitosamente', 'success');
+        },
+        error: (err) => {
+          this.imagenSubiendoEditar = false;
+          console.error('Error al subir imagen:', err);
+          this.mostrarMensaje('❌ Error al subir la imagen: ' + (err.error?.message || err.message), 'error');
+        }
+      });
+    }
+  }
+
+  // ✅ MÉTODO: Eliminar imagen en edición
+  eliminarImagenEditar(): void {
+    this.imagenPreviewEditar = null;
+    this.editarConocimientoForm.patchValue({
+      imagenUrl: '',
+      imagenAlt: ''
+    });
+  }
+
   guardarConocimiento(): void {
     if (this.conocimientoForm.invalid) {
       Object.keys(this.conocimientoForm.controls).forEach(key => {
@@ -101,16 +241,16 @@ export class EditarHerramientasComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    // Preparar array de imágenes
-    const imagenes: Imagen[] = [];
+    // Preparar imagen
+    let imagen: Imagen | undefined = undefined;
     const imagenUrl = this.conocimientoForm.value.imagenUrl;
     const imagenAlt = this.conocimientoForm.value.imagenAlt;
 
     if (imagenUrl) {
-      imagenes.push({
+      imagen = {
         url: imagenUrl,
         alt: imagenAlt || `Logo de ${this.conocimientoForm.value.nombre}`
-      });
+      };
     }
 
     // Convertir valores de string a enum
@@ -123,7 +263,7 @@ export class EditarHerramientasComponent implements OnInit {
       nombre: this.conocimientoForm.value.nombre,
       nivel: nivelEnum,
       tipoConocimiento: tipoEnum,
-      imagen: imagenes[0]
+      imagen: imagen
     };
 
     console.log('Enviando conocimiento a guardar:', nuevoConocimiento);
@@ -137,10 +277,14 @@ export class EditarHerramientasComponent implements OnInit {
         
         this.conocimientos.unshift(conocimientoCreado);
         this.conocimientoForm.reset();
+        this.imagenPreview = null;
+        this.imagenSeleccionada = null;
+        this.imagenProgreso = 0;
         
         setTimeout(() => {
           this.successMessage = '';
-        }, 5000);
+          this.cargarConocimientos();
+        }, 500);
       },
       error: (error) => {
         console.error('❌ Error al crear conocimiento:', error);
@@ -172,10 +316,8 @@ export class EditarHerramientasComponent implements OnInit {
     
     this.conocimientoEditado = { ...conocimiento };
 
-    // Obtener la primera imagen si existe
-    const primeraImagen = conocimiento.imagen && conocimiento.imagen 
-      ? conocimiento.imagen 
-      : { url: '', alt: '' };
+    // Obtener la imagen si existe
+    const imagen = conocimiento.imagen;
 
     // Convertir enum a string para el formulario
     const nivelString = this.convertirNivelAString(conocimiento.nivel);
@@ -186,9 +328,16 @@ export class EditarHerramientasComponent implements OnInit {
       nombre: conocimiento.nombre,
       nivel: nivelString,
       tipoConocimiento: tipoString,
-      imagenUrl: primeraImagen.url,
-      imagenAlt: primeraImagen.alt
+      imagenUrl: imagen?.url || '',
+      imagenAlt: imagen?.alt || ''
     });
+
+    // Mostrar preview de la imagen existente
+    if (imagen?.url) {
+      this.imagenPreviewEditar = imagen.url;
+    } else {
+      this.imagenPreviewEditar = null;
+    }
 
     this.mensaje = `Editando: "${conocimiento.nombre}"`;
     this.mensajeTipo = 'info';
@@ -217,16 +366,16 @@ export class EditarHerramientasComponent implements OnInit {
     this.actualizando = true;
     this.mensaje = '';
 
-    // Preparar array de imágenes
-    const imagenes: Imagen[] = [];
+    // Preparar imagen
+    let imagen: Imagen | undefined = undefined;
     const imagenUrl = this.editarConocimientoForm.value.imagenUrl;
     const imagenAlt = this.editarConocimientoForm.value.imagenAlt;
 
     if (imagenUrl) {
-      imagenes.push({
+      imagen = {
         url: imagenUrl,
         alt: imagenAlt || `Logo de ${this.editarConocimientoForm.value.nombre}`
-      });
+      };
     }
 
     // Convertir valores de string a enum
@@ -239,7 +388,7 @@ export class EditarHerramientasComponent implements OnInit {
       nombre: this.editarConocimientoForm.value.nombre,
       nivel: nivelEnum,
       tipoConocimiento: tipoEnum,
-      imagen: imagenes[0]
+      imagen: imagen
     };
 
     console.log('Actualizando conocimiento:', conocimientoActualizado);
@@ -251,15 +400,15 @@ export class EditarHerramientasComponent implements OnInit {
         this.mostrarMensaje('¡Conocimiento actualizado con éxito!', 'success');
         this.actualizando = false;
         
-        // Actualizar el conocimiento en la lista
         const index = this.conocimientos.findIndex(c => c.id === this.conocimientoEditado?.id);
         if (index !== -1) {
           this.conocimientos[index] = { ...conocimientoActualizadoResp };
+          this.conocimientos = [...this.conocimientos];
         }
         
-        // Cerrar el modal después de 2 segundos
         setTimeout(() => {
           this.cerrarModalEditar();
+          this.cargarConocimientos();
         }, 2000);
       },
       error: (error) => {
@@ -305,20 +454,18 @@ export class EditarHerramientasComponent implements OnInit {
       next: () => {
         console.log('✅ Conocimiento eliminado exitosamente:', nombreConocimiento);
         
-        // Remover el conocimiento de la lista
         this.conocimientos = this.conocimientos.filter(c => c.id !== conocimientoId);
         
-        // Mostrar mensaje de éxito
         this.successMessage = `Conocimiento "${nombreConocimiento}" eliminado exitosamente`;
         
         this.eliminando = false;
         this.mostrarModalConfirmacion = false;
         this.conocimientoAEliminar = null;
         
-        // Ocultar mensaje después de 5 segundos
         setTimeout(() => {
           this.successMessage = '';
-        }, 5000);
+          this.cargarConocimientos();
+        }, 500);
       },
       error: (error) => {
         console.error('❌ Error al eliminar conocimiento:', error);
@@ -336,7 +483,6 @@ export class EditarHerramientasComponent implements OnInit {
         
         this.errorMessage = errorMsg;
         
-        // Ocultar mensaje después de 10 segundos
         setTimeout(() => {
           this.errorMessage = '';
         }, 10000);
@@ -395,6 +541,12 @@ export class EditarHerramientasComponent implements OnInit {
   private mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'info'): void {
     this.mensaje = mensaje;
     this.mensajeTipo = tipo;
+    
+    setTimeout(() => {
+      if (this.mensaje === mensaje) {
+        this.mensaje = '';
+      }
+    }, 5000);
   }
 
   // Método para cerrar el modal de edición
@@ -404,6 +556,16 @@ export class EditarHerramientasComponent implements OnInit {
     this.editarConocimientoForm.reset();
     this.actualizando = false;
     this.conocimientoEditado = null;
+    this.imagenPreviewEditar = null;
+    this.imagenSubiendoEditar = false;
+  }
+
+  // ✅ DESTRUIR TIMEOUTS AL SALIR DEL COMPONENTE
+  ngOnDestroy(): void {
+    if (this.previewTimeout) {
+      clearTimeout(this.previewTimeout);
+      this.previewTimeout = null;
+    }
   }
 
   // Métodos auxiliares para acceso a controles
@@ -411,28 +573,3 @@ export class EditarHerramientasComponent implements OnInit {
   get nivel() { return this.conocimientoForm.get('nivel'); }
   get tipoConocimiento() { return this.conocimientoForm.get('tipoConocimiento'); }
 }
-/*export class EditarHerramientasComponent implements OnInit {
-  expandedIndex: number | null = null;
-conocimientos: Conocimiento[] = [];
-
-constructor(
-    private conocimientoService: ConocimientoService,
-  ) {}
-  ngOnInit() {
-    this.cargarConocimientos();
-  }
-
-  cargarConocimientos(): void {
-    this.conocimientoService.findAll().subscribe({
-      next: (data: Conocimiento[]) => {
-        console.log('✅ Datos recibidos:', data);
-        this.conocimientos = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar lista:', error);
-        this.conocimientos = [];
-      }
-    });
-  }
-
-}*/

@@ -8,6 +8,5 @@ export interface Conocimiento {
     nivel: Nivel;
     tipoConocimiento: TipoConocimiento;
     imagen?: Imagen;  // Cambiado de lista a imagen unica
-    // imagenes: Imagen[] ;
 
 }
