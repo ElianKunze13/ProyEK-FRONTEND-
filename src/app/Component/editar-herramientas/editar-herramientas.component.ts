@@ -518,6 +518,7 @@ export class EditarHerramientasComponent implements OnInit {
       case 'BASE_DATOS': return TipoConocimiento.BASE_DATOS;
       case 'TESTING': return TipoConocimiento.TESTING;
       case 'IA': return TipoConocimiento.IA;
+      case 'DISENIO': return TipoConocimiento.DISENIO;
       case 'PROTOTIPO': return TipoConocimiento.PROTOTIPO;
       case 'OTROS': return TipoConocimiento.OTROS;
       default: return TipoConocimiento.OTROS;
@@ -531,6 +532,7 @@ export class EditarHerramientasComponent implements OnInit {
       case TipoConocimiento.BASE_DATOS: return 'BASE_DATOS';
       case TipoConocimiento.TESTING: return 'TESTING';
       case TipoConocimiento.IA: return 'IA';
+      case TipoConocimiento.DISENIO: return 'DISENIO';
       case TipoConocimiento.PROTOTIPO: return 'PROTOTIPO';
       case TipoConocimiento.OTROS: return 'OTROS';
       default: return 'OTROS';

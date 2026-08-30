@@ -4,6 +4,7 @@ export enum TipoConocimiento{
     BASE_DATOS,
     TESTING,
     IA,
+    DISENIO,
     PROTOTIPO,
     OTROS
 }
