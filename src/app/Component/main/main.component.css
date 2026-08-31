@@ -169,18 +169,25 @@
   margin-top: 4rem;
 }
 
-/* Efecto hover para iconos */
-.flex-col:hover {
+/* Efecto hover para iconos - SOLO en el contenedor del skill */
+.skill-item {
   position: relative;
+  transform: translateY(0);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.skill-item:hover {
   transform: translateY(-2px);
   transition: transform 0.2s ease;
 }
 
-.flex-col:hover .bg-white\/10 {
+.skill-item:hover .bg-white\/10 {
   background-color: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(165, 165, 165, 0.5);
 }
 
+/* Estilo para el nivel de conocimiento - SOLO visible en el skill hovereado */
 .nivel-conocimiento {
   position: absolute;
   margin-top: 20%;
@@ -197,12 +204,13 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 10;
+  transition: all 0.2s ease;
 }
 
-.flex-col:hover .nivel-conocimiento {
+/* Mostrar SOLO el nivel del skill que está siendo hovereado */
+.skill-item:hover .nivel-conocimiento {
   opacity: 1;
   transform: translateX(-50%) scale(1);
-  transition: all 0.2s ease;
 }
 
 /* Añadir estilos para los skill cards */
