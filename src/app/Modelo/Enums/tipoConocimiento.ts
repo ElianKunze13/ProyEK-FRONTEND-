@@ -1,5 +1,6 @@
 export enum TipoConocimiento{
- FRONTEND = 'FRONTEND',
+ 
+    FRONTEND = 'FRONTEND',
     BACKEND = 'BACKEND',
     BASE_DATOS = 'BASE_DATOS',
     TESTING = 'TESTING',
