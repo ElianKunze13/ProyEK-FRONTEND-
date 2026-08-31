@@ -68,13 +68,6 @@
   filter: brightness(1.1) saturate(1.2); /* Aumenta brillo y saturación */
 }
 
-/* Hover efecto para intensificar el borde 
-.animated-border-card:hover::before {
-  opacity: 1;
-  filter: brightness(1.3) saturate(1.5);
-  animation-duration: 2s;
-}*/
-
 /* Keyframes para la animación */
 @keyframes border-glow {
   0% {
@@ -88,7 +81,7 @@
   }
 }
 
-/* Si quieres un efecto de neón más brillante, puedes añadir un box-shadow */
+/* Efecto de neón más brillante al hacer hover */
 .animated-border-card:hover {
   box-shadow: 
     0 0 20px rgba(96, 165, 250, 0.3),
@@ -96,7 +89,7 @@
   transition: box-shadow 0.3s ease;
 }
 
-/* El resto de tus estilos se mantienen igual */
+/* Estilos de utilidad */
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -104,6 +97,10 @@
 
 .w-20 {
   width: 5rem;
+}
+
+.w-14 {
+  width: 3.5rem;
 }
 
 .w-12 {
@@ -116,6 +113,10 @@
 
 .object-contain {
   object-fit: contain;
+}
+
+.object-cover {
+  object-fit: cover;
 }
 
 .text-sm {
@@ -152,8 +153,20 @@
   margin-bottom: 0.5rem;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
 }
 
 /* Efecto hover para iconos */
@@ -190,4 +203,38 @@
   opacity: 1;
   transform: translateX(-50%) scale(1);
   transition: all 0.2s ease;
+}
+
+/* Añadir estilos para los skill cards */
+.skill-card {
+  position: relative;
+}
+
+/* Estilos para los títulos de sección */
+.section-title {
+  color: #e2e8f0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Mejorar la visualización en móviles */
+@media (max-width: 768px) {
+  .animated-border-card {
+    padding: 1rem;
+  }
+  
+  .w-20 {
+    width: 4.5rem;
+  }
+  
+  .w-14 {
+    width: 3rem;
+  }
+  
+  .w-12 {
+    width: 2.5rem;
+  }
+  
+  .h-12 {
+    height: 2.5rem;
+  }
 }

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Conocimiento } from '../../Modelo/conocimiento';
-import { ConocimientoService, TipoConocimiento } from '../../Servicio/conocimiento.service';
+import { ConocimientoService} from '../../Servicio/conocimiento.service';
+import { TipoConocimiento } from '../../Modelo/Enums/tipoConocimiento';
 
 @Component({
   selector: 'app-main',
@@ -21,8 +22,17 @@ export class MainComponent implements OnInit {
   // Estado de error por tipo
   errorStates: { [key in TipoConocimiento]?: boolean } = {};
   
-  // Para facilitar el acceso en el template
-  tipos: TipoConocimiento[] = ['FRONTEND', 'BACKEND', 'BASE_DATOS', 'TESTING', 'OTROS', 'IA', 'PROTOTIPO'];
+  // Todos los tipos disponibles (ordenados para mejor visualización)
+  tipos: TipoConocimiento[] = [
+    TipoConocimiento.FRONTEND,
+    TipoConocimiento.BACKEND,
+    TipoConocimiento.BASE_DATOS,
+    TipoConocimiento.TESTING,
+    TipoConocimiento.IA,
+    TipoConocimiento.PROTOTIPO,
+    TipoConocimiento.DISENIO,  
+    TipoConocimiento.OTROS
+  ];
 
   constructor(private conocimientoService: ConocimientoService) {}
 
@@ -81,7 +91,6 @@ export class MainComponent implements OnInit {
   tieneDatos(tipo: TipoConocimiento): boolean {
     return !!(this.conocimientos[tipo] && this.conocimientos[tipo]!.length > 0);
   }
-
 
   // Método para verificar si hay algún error
   hayError(): boolean {
