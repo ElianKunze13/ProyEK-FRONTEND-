@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Conocimiento } from '../Modelo/conocimiento';
 import { catchError, Observable, of, throwError } from 'rxjs';
-export type TipoConocimiento = 'FRONTEND' | 'BACKEND' | 'BASE_DATOS' | 'TESTING' | 'OTROS' | 'IA' | 'PROTOTIPO';
+export type TipoConocimiento = 'FRONTEND' | 'BACKEND' | 'BASE_DATOS' | 'TESTING' | 'IA' | 'PROTOTIPO' |  'DISENIO' |'OTROS' ;
 @Injectable({
   providedIn: 'root'
 })
