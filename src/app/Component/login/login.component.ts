@@ -13,9 +13,10 @@ import { LoginRequest } from '../../Servicio/auth2/loginRequest';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-loginError:string="";
+  loginError: string = "";
+  isLoading: boolean = false;  // ✅ Nuevo estado para controlar la carga
 
-  loginForm:any;
+  loginForm: any;
   constructor(private formBuilder:FormBuilder, private router:Router, private loginService: LoginService) {
 
     this.loginForm=this.formBuilder.group({
@@ -38,17 +39,22 @@ loginError:string="";
 
   login(){
     if(this.loginForm.valid){
-      this.loginError="";
+      this.loginError = "";
+      this.isLoading = true;  // ✅ Activar estado de carga
+      
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData: any) => {
           console.log(userData);
+          this.isLoading = false;  // ✅ Desactivar carga en éxito
         },
         error: (errorData: string) => {
           console.error(errorData);
-          this.loginError=errorData;
+          this.loginError = errorData;
+          this.isLoading = false;  // ✅ Desactivar carga en error
         },
         complete: () => {
           console.info("Login completo");
+          this.isLoading = false;  // ✅ Desactivar carga al completar
           this.router.navigateByUrl('/main');
           this.loginForm.reset();
         }
