@@ -50,3 +50,61 @@ input {
 background-color: #47df3f;
 color: black;
 }
+
+/* ============================================ */
+/* ESTILOS PARA ESTADO DE CARGA */
+/* ============================================ */
+
+.loading-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeInState 0.3s ease-in-out;
+}
+
+/* Spinner de carga */
+.spinner-carga {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animación de entrada para el estado de carga */
+@keyframes fadeInState {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botón deshabilitado durante la carga */
+#enviar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Campos deshabilitados durante la carga */
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================ */
+/* FIN ESTILOS PARA ESTADO DE CARGA */
+/* ============================================ */
