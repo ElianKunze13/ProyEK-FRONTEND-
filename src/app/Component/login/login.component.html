@@ -8,13 +8,36 @@
       <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
 
       <form [formGroup]="loginForm">
-        <p class="text-danger">{{loginError}}</p>
+        <!-- ✅ Mensaje de carga mejorado -->
+        @if (isLoading) {
+          <div class="loading-container">
+            <div class="flex flex-col justify-center items-center gap-3 py-4">
+              <div class="spinner-carga"></div>
+              <p class="text-gray-300 font-medium">Buscando usuario. Por favor espere...</p>
+              <p class="text-gray-500 text-sm">Verificando credenciales en la base de datos</p>
+            </div>
+          </div>
+        }
+
+        <!-- Mensaje de error -->
+        @if (loginError && !isLoading) {
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{loginError}}
+          </div>
+        }
         
         <div class="mb-3">
           <label for="txtEmail" class="form-label">Email</label>
-          <input formControlName="username" type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp">
+          <input 
+            formControlName="username" 
+            type="email" 
+            class="form-control" 
+            id="txtEmail" 
+            aria-describedby="emailHelp"
+            [disabled]="isLoading">
           
-          @if (email.invalid && (email.dirty || email.touched)) {
+          @if (email.invalid && (email.dirty || email.touched) && !isLoading) {
             <div class="text-danger">
               @if (email.errors?.['required']) {
                 <div>El Email es requerido.</div>
@@ -25,13 +48,18 @@
             </div>
           }
         </div>
-        <!--AGREGAR AVISO MIENTRAS SISTEMA ESTA BUSCANDO USUARIO PARA MEJOR UX/IU-->
         
         <div class="mb-3">
           <label for="txtPassword" class="form-label">Password</label>
-          <input formControlName="password" type="password" class="form-control" id="txtPassword" aria-describedby="passwordHelp">
+          <input 
+            formControlName="password" 
+            type="password" 
+            class="form-control" 
+            id="txtPassword" 
+            aria-describedby="passwordHelp"
+            [disabled]="isLoading">
           
-          @if (password.invalid && (password.dirty || password.touched)) {
+          @if (password.invalid && (password.dirty || password.touched) && !isLoading) {
             <div class="text-danger">
               @if (password.errors?.['required']) {
                 <div>El Password es requerido.</div>
@@ -43,14 +71,29 @@
           }
         </div>
         
-        <button type="submit" id="enviar" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+        <!-- ✅ Botón con estado de carga -->
+        <button 
+          type="submit" 
+          id="enviar" 
+          (click)="login()" 
+          class="btn btn-primary"
+          [disabled]="isLoading || loginForm.invalid">
+          
+          @if (!isLoading) {
+            <span>
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Iniciar Sesión
+            </span>
+          } @else {
+            <span>
+              <i class="fas fa-spinner fa-spin mr-2"></i>
+              Verificando...
+            </span>
+          }
+        </button>
       </form>
 
     </div>
 
   </div>
 </div>
- 
-<!-- ------------------------------------------------------
-  
- -->
