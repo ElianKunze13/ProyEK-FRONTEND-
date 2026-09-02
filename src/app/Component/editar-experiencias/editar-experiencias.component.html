@@ -85,20 +85,40 @@
               }
             </div>
 
-            <!-- Tecnología usada -->
+            <!-- ============================================ -->
+            <!-- 🔥 TECNOLOGÍAS USADAS - SELECCIÓN MÚLTIPLE  -->
+            <!-- ============================================ -->
             <div class="form-group">
-              <label class="block mb-2 text-sm font-medium text-gray-700">Tecnología usada *</label>
-              <select formControlName="tecnologiaUsada" title="tecnologiaUsada" class="form-control">
-                <option value="">Seleccionar tecnología</option>
-                @for (tecnologia of tecnologiasUsadas; track tecnologia.value) {
-                  <option [value]="tecnologia.value">
-                    {{ tecnologia.label }}
-                  </option>
+              <label class="block mb-2 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
+              <div class="tecnologias-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: white; min-height: 80px;">
+                @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
+                  <div class="tecnologia-checkbox" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.25rem; transition: background-color 0.2s;" 
+                       (click)="toggleTecnologia(tecnologia.value)"
+                       [style.background-color]="isTecnologiaSeleccionada(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
+                    <input type="checkbox" 
+                           [checked]="isTecnologiaSeleccionada(tecnologia.value)"
+                           (change)="toggleTecnologia(tecnologia.value)"
+                           style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
+                    <span class="tecnologia-label" style="font-size: 0.85rem; color: #374151; cursor: pointer;">
+                      {{ tecnologia.label }}
+                    </span>
+                  </div>
                 }
-              </select>
-              @if (experienciaForm.get('tecnologiaUsada')?.invalid && experienciaForm.get('tecnologiaUsada')?.touched) {
+              </div>
+              @if (experienciaForm.get('tecnologiasUsadas')?.invalid && experienciaForm.get('tecnologiasUsadas')?.touched) {
                 <div class="text-red-500 text-sm mt-1">
-                  Debe seleccionar una tecnología
+                  Debe seleccionar al menos una tecnología
+                </div>
+              }
+              <!-- Mostrar tecnologías seleccionadas como badges -->
+              @if (experienciaForm.get('tecnologiasUsadas')?.value?.length > 0) {
+                <div class="mt-2 d-flex flex-wrap gap-1">
+                  @for (tecnologia of experienciaForm.get('tecnologiasUsadas')?.value; track $index) {
+                    <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                      {{getTecnologiaDisplay(tecnologia)}}
+                      <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;" (click)="toggleTecnologia(tecnologia)">×</span>
+                    </span>
+                  }
                 </div>
               }
             </div>
@@ -197,7 +217,7 @@
           </form>
         </div>
 
-        <!-- LISTA DE EXPERIENCIAS EXISTENTES - CON ESTILO MEJORADO -->
+        <!-- LISTA DE EXPERIENCIAS EXISTENTES -->
         @if (experiencias.length > 0) {
           <div class="animated-border-card mb-8">
             <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">
@@ -210,7 +230,7 @@
                   <div class="card experiencia-card h-100" style="background: linear-gradient(145deg, #1e293b, #2d3748); border: 1px solid #63b3ed; border-radius: 0.75rem; transition: all 0.3s ease; height: 100%; color: #e2e8f0;">
                     <div class="card-body d-flex flex-column" style="position: relative;">
 
-                      <!-- ✅ BOTONES DE ACCIÓN (EDITAR Y ELIMINAR) -->
+                      <!-- BOTONES DE ACCIÓN -->
                       <div class="action-buttons" style="position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 8px; z-index: 10;">
                         <button type="button" class="btn btn-action btn-editar" 
                           (click)="cargarExperienciaParaEditar(experiencia)" 
@@ -232,7 +252,7 @@
                         {{experiencia.titulo}}
                       </h5>
 
-                      <!-- Fechas en una sola línea -->
+                      <!-- Fechas -->
                       <div class="fechas-container mb-3" style="background: rgba(0, 0, 0, 0.3); border-radius: 0.5rem; padding: 0.4rem 0.75rem; font-size: 0.8rem;">
                         <div class="d-flex justify-content-between align-items-center">
                           <span class="fecha-label" style="color: #a0aec0;">
@@ -247,15 +267,26 @@
                         </div>
                       </div>
 
-                      <!-- Tipo de proyecto y tecnología -->
-                      <div class="mb-2 d-flex flex-wrap gap-2">
+                      <!-- Tipo de proyecto -->
+                      <div class="mb-2">
                         <span class="badge bg-secondary" style="font-size: 0.7rem; padding: 0.35rem 0.65rem; font-weight: 500; background-color: #4a5568 !important;">
                           {{ getTipoExperienciaLabel(experiencia.tipoExperiencia) }}
                         </span>
-                        <span class="badge bg-primary" style="font-size: 0.7rem; padding: 0.35rem 0.65rem; font-weight: 500; background-color: #2b6cb0 !important;">
-                          <i class="fas fa-code me-1"></i>
-                          {{ getTecnologiaUsadaLabel(experiencia.tecnologiaUsada) }}
-                        </span>
+                      </div>
+
+                      <!-- 🔥 TECNOLOGÍAS USADAS - BADGES EN LA LISTA -->
+                      <div class="mb-2">
+                        <div class="d-flex flex-wrap gap-1">
+                          @if (experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0) {
+                            @for (tecnologia of experiencia.tecnologiasUsadas; track $index) {
+                              <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem;">
+                                {{getTecnologiaDisplay(tecnologia)}}
+                              </span>
+                            }
+                          } @else {
+                            <span class="text-muted" style="font-size: 0.75rem;">Sin tecnologías</span>
+                          }
+                        </div>
                       </div>
 
                       <!-- Imagen del proyecto -->
@@ -292,7 +323,7 @@
           </div>
         }
 
-        <!-- ✅ MODAL PARA EDITAR EXPERIENCIA - COMPLETO -->
+        <!-- ✅ MODAL PARA EDITAR EXPERIENCIA - ACTUALIZADO -->
         @if (mostrarModalEditar) {
           <div class="modal-overlay">
             <div class="modal-content" style="max-width: 700px;">
@@ -372,17 +403,41 @@
                       }
                     </div>
 
-                    <!-- Tecnología usada -->
+                    <!-- ============================================ -->
+                    <!-- 🔥 TECNOLOGÍAS EN EDICIÓN - SELECCIÓN MÚLTIPLE -->
+                    <!-- ============================================ -->
                     <div class="form-group mb-3">
-                      <label class="block mb-1 text-sm font-medium text-gray-700">Tecnología usada *</label>
-                      <select formControlName="tecnologiaUsada" title="Tecnología usada" class="form-control">
-                        <option value="">Seleccionar tecnología</option>
-                        @for (tecnologia of tecnologiasUsadas; track tecnologia.value) {
-                          <option [value]="tecnologia.value">{{ tecnologia.label }}</option>
+                      <label class="block mb-1 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
+                      <div class="tecnologias-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: white; min-height: 80px;">
+                        @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
+                          <div class="tecnologia-checkbox" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.25rem; transition: background-color 0.2s;" 
+                               (click)="toggleTecnologiaEditar(tecnologia.value)"
+                               [style.background-color]="isTecnologiaSeleccionadaEditar(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
+                            <input type="checkbox" 
+                                   [checked]="isTecnologiaSeleccionadaEditar(tecnologia.value)"
+                                   (change)="toggleTecnologiaEditar(tecnologia.value)"
+                                   style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
+                            <span class="tecnologia-label" style="font-size: 0.85rem; color: #374151; cursor: pointer;">
+                              {{ tecnologia.label }}
+                            </span>
+                          </div>
                         }
-                      </select>
-                      @if (editarExperienciaForm.get('tecnologiaUsada')?.invalid && editarExperienciaForm.get('tecnologiaUsada')?.touched) {
-                        <div class="text-red-500 text-sm mt-1">Debe seleccionar una tecnología</div>
+                      </div>
+                      @if (editarExperienciaForm.get('tecnologiasUsadas')?.invalid && editarExperienciaForm.get('tecnologiasUsadas')?.touched) {
+                        <div class="text-red-500 text-sm mt-1">
+                          Debe seleccionar al menos una tecnología
+                        </div>
+                      }
+                      <!-- Mostrar tecnologías seleccionadas como badges -->
+                      @if (editarExperienciaForm.get('tecnologiasUsadas')?.value?.length > 0) {
+                        <div class="mt-2 d-flex flex-wrap gap-1">
+                          @for (tecnologia of editarExperienciaForm.get('tecnologiasUsadas')?.value; track $index) {
+                            <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                              {{getTecnologiaDisplay(tecnologia)}}
+                              <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;" (click)="toggleTecnologiaEditar(tecnologia)">×</span>
+                            </span>
+                          }
+                        </div>
                       }
                     </div>
 

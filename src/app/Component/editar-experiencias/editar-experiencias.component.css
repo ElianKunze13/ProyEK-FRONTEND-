@@ -596,3 +596,112 @@ input[type="date"]:focus {
   color: #cbd5e0 !important;
   line-height: 1.5;
 }
+
+/* ============================================ */
+/* ESTILOS PARA SELECCIÓN DE TECNOLOGÍAS        */
+/* ============================================ */
+
+.tecnologias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: white;
+  min-height: 80px;
+}
+
+.tecnologia-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.tecnologia-checkbox:hover {
+  background-color: #f3f4f6;
+}
+
+.tecnologia-checkbox input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.tecnologia-label {
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Colores personalizados para badges de tecnologías */
+.bg-purple {
+  background-color: #6f42c1 !important;
+  color: white !important;
+}
+
+.bg-cyan {
+  background-color: #0dcaf0 !important;
+  color: #000 !important;
+}
+
+/* Mejora para los badges en la lista */
+.experiencia-card .badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* Contenedor de tecnologías con flex wrap */
+.d-flex.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.gap-1 {
+  gap: 0.25rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+/* Badge con botón de eliminar */
+.badge .btn-remove-tecnologia {
+  cursor: pointer;
+  margin-left: 0.4rem;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.badge .btn-remove-tecnologia:hover {
+  opacity: 1;
+}
+
+/* Responsive para la cuadrícula de tecnologías */
+@media (max-width: 768px) {
+  .tecnologias-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.35rem;
+    padding: 0.5rem;
+  }
+  
+  .tecnologia-label {
+    font-size: 0.75rem;
+  }
+  
+  .tecnologia-checkbox {
+    padding: 0.2rem 0.35rem;
+  }
+}
