@@ -567,104 +567,107 @@
   </main>
   
   <!-- ============================================ -->
-  <!-- MODAL DE DETALLES PARA EXPERIENCIAS          -->
+  <!-- MODAL DE DETALLES MANUAL (sin Bootstrap)      -->
   <!-- ============================================ -->
-  <div class="modal fade" id="experienciaModal" tabindex="-1" aria-labelledby="experienciaModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content bg-dark text-white">
-        <div class="modal-header border-secondary">
-          <h5 class="modal-title" id="experienciaModalLabel">Detalles del Proyecto</h5>
-          <button type="button" class="btn-close btn-close-white" 
-                  (click)="cerrarModalDetalles()" 
-                  aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+  @if (selectedExperiencia) {
+    <div class="modal-overlay" (click)="cerrarModalDetalles()">
+      <div class="modal-content" style="max-width: 600px; background: #1e293b; color: white;" (click)="$event.stopPropagation()">
+        <!-- Header -->
+        <div class="modal-header" style="border-bottom: 1px solid #4a5568; background: #1e293b; border-radius: 0.75rem 0.75rem 0 0; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <h5 class="modal-title" style="color: white; margin: 0; font-size: 1.125rem; font-weight: 600;">Detalles del Proyecto</h5>
+          <button type="button" title="Cerrar" class="btn-close" (click)="cerrarModalDetalles()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #9ca3af; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s;">
+            <span aria-hidden="true" style="line-height: 1;">&times;</span>
           </button>
         </div>
-        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-          @if (selectedExperiencia) {
-            <!-- Título -->
-            <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
 
-            <!-- Fechas -->
-            <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
-              <div class="d-flex justify-content-between align-items-center">
-                <span>
-                  <i class="fas fa-calendar-alt me-2"></i>
-                  <strong>Inicio:</strong>
-                  {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
-                </span>
-                <span class="fecha-separador-modal">→</span>
-                <span>
-                  <i class="fas fa-calendar-check me-2"></i>
-                  <strong>Fin:</strong>
-                  {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
-                </span>
-              </div>
+        <!-- Body -->
+        <div class="modal-body" style="padding: 1.5rem; max-height: 70vh; overflow-y: auto; color: #e2e8f0;">
+          <!-- Título -->
+          <h4 class="mb-3 text-center" style="color: white; font-weight: 600;">{{selectedExperiencia.titulo}}</h4>
+
+          <!-- Fechas -->
+          <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded" style="background: rgba(0, 0, 0, 0.3); border: 1px solid #4a5568; border-radius: 0.5rem; padding: 0.5rem 0.75rem;">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>
+                <i class="fas fa-calendar-alt me-2"></i>
+                <strong>Inicio:</strong>
+                {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+              </span>
+              <span class="fecha-separador-modal" style="color: #4a5568; padding: 0 0.5rem;">→</span>
+              <span>
+                <i class="fas fa-calendar-check me-2"></i>
+                <strong>Fin:</strong>
+                {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
+              </span>
             </div>
+          </div>
 
-            <!-- Imagen -->
-            @if (selectedExperiencia.imagen?.url) {
-              <div class="text-center mb-3">
-                <img [src]="selectedExperiencia.imagen?.url"
-                  [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
-                  class="img-fluid rounded"
-                  style="max-height: 200px; object-fit: contain;">
-              </div>
-            } @else {
-              <div class="text-center text-muted mb-3">
-                <p>📷 No hay imagen disponible</p>
-              </div>
-            }
-
-            <!-- Descripción -->
-            <div class="mb-3">
-              <h6>Descripción:</h6>
-              <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
-                style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
-                {{selectedExperiencia.descripcion}}
-              </div>
+          <!-- Imagen -->
+          @if (selectedExperiencia.imagen?.url) {
+            <div class="text-center mb-3">
+              <img [src]="selectedExperiencia.imagen?.url"
+                [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
+                class="img-fluid rounded"
+                style="max-height: 200px; object-fit: contain;">
             </div>
-
-            <!-- Tipo de experiencia -->
-            <div class="mb-2">
-              <strong>Tipo de proyecto:</strong>
-              <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
+          } @else {
+            <div class="text-center text-muted mb-3">
+              <p style="color: #9ca3af;">📷 No hay imagen disponible</p>
             </div>
+          }
 
-            <!-- Tecnologías -->
-            <div class="mb-3">
-              <strong>Tecnologías usadas:</strong>
-              <div class="d-flex flex-wrap gap-1 mt-1">
-                @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
-                  @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
-                    <span class="badge {{getTecnologiaColor(tecnologia)}}">
-                      {{getTecnologiaDisplay(tecnologia)}}
-                    </span>
-                  }
-                } @else {
-                  <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
+          <!-- Descripción -->
+          <div class="mb-3">
+            <h6 style="color: #e2e8f0; font-weight: 600;">Descripción:</h6>
+            <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
+              style="background: rgba(0, 0, 0, 0.3) !important; border: 1px solid #4a5568; border-radius: 0.375rem; font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; padding: 0.75rem;">
+              {{selectedExperiencia.descripcion}}
+            </div>
+          </div>
+
+          <!-- Tipo de experiencia -->
+          <div class="mb-2">
+            <strong style="color: #e2e8f0;">Tipo de proyecto:</strong>
+            <span class="badge bg-secondary" style="background-color: #4a5568 !important; color: white; padding: 0.35rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; display: inline-block;">{{selectedExperiencia.tipoExperiencia}}</span>
+          </div>
+
+          <!-- Tecnologías -->
+          <div class="mb-3">
+            <strong style="color: #e2e8f0;">Tecnologías usadas:</strong>
+            <div class="d-flex flex-wrap gap-1 mt-1">
+              @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
+                @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
+                  <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.7rem; padding: 0.35rem 0.65rem; font-weight: 500; display: inline-block; border-radius: 9999px;">
+                    {{getTecnologiaDisplay(tecnologia)}}
+                  </span>
                 }
-              </div>
+              } @else {
+                <span class="text-muted" style="font-size: 0.8rem; color: #9ca3af;">Sin tecnologías especificadas</span>
+              }
             </div>
+          </div>
 
-            <!-- Link -->
-            @if (selectedExperiencia.link) {
-              <div class="text-center">
-                <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                  🔗 Visitar proyecto
-                </a>
-              </div>
-            } @else {
-              <div class="text-center text-muted">
-                <p>🔗 No hay enlace disponible</p>
-              </div>
-            }
+          <!-- Link -->
+          @if (selectedExperiencia.link) {
+            <div class="text-center">
+              <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background-color: #2b6cb0; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 0.5rem; cursor: pointer; text-decoration: none; display: inline-block; font-weight: 500; transition: background-color 0.2s;">
+                🔗 Visitar proyecto
+              </a>
+            </div>
+          } @else {
+            <div class="text-center text-muted">
+              <p style="color: #9ca3af;">🔗 No hay enlace disponible</p>
+            </div>
           }
         </div>
-        <div class="modal-footer border-secondary">
-          <button type="button" class="btn btn-secondary" (click)="cerrarModalDetalles()">Cerrar</button>
+
+        <!-- Footer -->
+        <div class="modal-footer" style="border-top: 1px solid #4a5568; padding: 1rem 1.5rem; display: flex; justify-content: flex-end; border-radius: 0 0 0.75rem 0.75rem;">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModalDetalles()" style="background-color: #4a5568; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 0.5rem; cursor: pointer; font-weight: 500; transition: background-color 0.2s;">
+            Cerrar
+          </button>
         </div>
       </div>
     </div>
-  </div>
+  }
 </div>

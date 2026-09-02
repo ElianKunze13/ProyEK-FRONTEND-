@@ -134,7 +134,7 @@ export class EditarExperienciasComponent implements OnInit {
   experienciaEditada: Experiencia | null = null;
   experienciaAEliminar: Experiencia | null = null;
 
-  // Variable para almacenar la experiencia seleccionada
+  // Variable para almacenar la experiencia seleccionada para el modal de detalles
   selectedExperiencia: Experiencia | null = null;
 
   // VARIABLES PARA UPLOAD DE IMÁGENES
@@ -198,70 +198,11 @@ export class EditarExperienciasComponent implements OnInit {
   }
 
   // ============================================
-  // MÉTODO PARA ABRIR MODAL DE DETALLES - MEJORADO
+  // MÉTODO PARA ABRIR MODAL DE DETALLES
   // ============================================
   abrirModalDetalles(experiencia: Experiencia): void {
     console.log('🟢 Abriendo modal para:', experiencia.titulo);
     this.selectedExperiencia = experiencia;
-    
-    // Pequeño retraso para asegurar que Angular actualice el DOM
-    setTimeout(() => {
-      const modalElement = document.getElementById('experienciaModal');
-      console.log('🔍 Elemento modal encontrado:', modalElement);
-      
-      if (modalElement) {
-        try {
-          // Verificar si bootstrap está disponible
-          if (typeof (window as any).bootstrap !== 'undefined') {
-            const modal = new (window as any).bootstrap.Modal(modalElement);
-            modal.show();
-            console.log('✅ Modal abierto con Bootstrap');
-          } else {
-            // Fallback si Bootstrap no está disponible
-            console.warn('⚠️ Bootstrap no disponible, usando fallback');
-            this.abrirModalManual(modalElement);
-          }
-        } catch (error) {
-          console.error('❌ Error al abrir modal:', error);
-          // Fallback: mostrar alert con los detalles
-          this.mostrarDetallesComoAlert(experiencia);
-        }
-      } else {
-        console.error('❌ Elemento modal no encontrado');
-        // Fallback: mostrar alert con los detalles
-        this.mostrarDetallesComoAlert(experiencia);
-      }
-    }, 100);
-  }
-
-  // Método para abrir modal manualmente
-  private abrirModalManual(modalElement: HTMLElement): void {
-    modalElement.style.display = 'block';
-    modalElement.classList.add('show');
-    document.body.classList.add('modal-open');
-    
-    // Crear backdrop manual
-    const backdrop = document.createElement('div');
-    backdrop.className = 'modal-backdrop fade show';
-    document.body.appendChild(backdrop);
-  }
-
-  // Método de fallback para mostrar detalles sin modal
-  private mostrarDetallesComoAlert(experiencia: Experiencia): void {
-    const tecnologiasStr = experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0
-      ? experiencia.tecnologiasUsadas.map(t => this.getTecnologiaDisplay(t)).join(', ')
-      : 'Sin tecnologías';
-    
-    const fechaInicio = new Date(experiencia.fechaInicioProyecto).toLocaleDateString('es-ES');
-    const fechaFin = new Date(experiencia.fechaFinProyecto).toLocaleDateString('es-ES');
-    
-    const mensaje = `📋 ${experiencia.titulo}\n\n` +
-                    `📅 ${fechaInicio} → ${fechaFin}\n\n` +
-                    `📝 ${experiencia.descripcion}\n\n` +
-                    `🔧 Tecnologías: ${tecnologiasStr}\n\n` +
-                    `🔗 ${experiencia.link || 'Sin enlace'}`;
-    
-    alert(mensaje);
   }
 
   // ============================================
@@ -269,43 +210,7 @@ export class EditarExperienciasComponent implements OnInit {
   // ============================================
   cerrarModalDetalles(): void {
     console.log('🔴 Cerrando modal');
-    
-    const modalElement = document.getElementById('experienciaModal');
-    if (modalElement) {
-      try {
-        // Intentar cerrar con Bootstrap
-        if (typeof (window as any).bootstrap !== 'undefined') {
-          const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-          if (modal) {
-            modal.hide();
-          } else {
-            this.cerrarModalManual();
-          }
-        } else {
-          this.cerrarModalManual();
-        }
-      } catch (error) {
-        console.error('Error al cerrar modal:', error);
-        this.cerrarModalManual();
-      }
-    }
     this.selectedExperiencia = null;
-  }
-
-  // Método para cerrar modal manualmente
-  private cerrarModalManual(): void {
-    const modalElement = document.getElementById('experienciaModal');
-    if (modalElement) {
-      modalElement.classList.remove('show');
-      modalElement.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      
-      // Remover backdrop
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        backdrop.remove();
-      }
-    }
   }
 
   // ============================================
