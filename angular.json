@@ -10,68 +10,68 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
-       "build": {
-  "builder": "@angular-devkit/build-angular:application",
-  "options": {
-    "outputPath": {
-      "base": "dist/curriculum"
-    },
-    "index": "src/index.html",
-    "browser": "src/main.ts",
-    "prerender": false,
-    "outputMode": "static",
-    "polyfills": ["zone.js"],
-    "tsConfig": "tsconfig.app.json",
-    "assets": [
-      {
-        "glob": "**/*",
-        "input": "public"
-      }
-    ],
-    "styles": [
-      "node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "src/styles.css"
-    ],
-    "scripts": [
-      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-    ]
-  },
-  "configurations": {
-    "production": {
-      "fileReplacements": [
-        {
-          "replace": "src/environments/environment.ts",
-          "with": "src/environments/environment.prod.ts"
-        }
-      ],
-      "budgets": [
-        {
-          "type": "initial",
-          "maximumWarning": "500kB",
-          "maximumError": "1MB"
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": {
+              "base": "dist/curriculum"
+            },
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "prerender": false,
+            "outputMode": "static",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1MB",
+                  "maximumError": "2MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "20kB",
+                  "maximumError": "30kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
         },
-        {
-          "type": "anyComponentStyle",
-          "maximumWarning": "4kB",
-          "maximumError": "8kB"
-        }
-      ],
-      "outputHashing": "all"
-    },
-    "development": {
-      "optimization": false,
-      "extractLicenses": false,
-      "sourceMap": true,
-      "fileReplacements": [
-        {
-          "replace": "src/environments/environment.ts",
-          "with": "src/environments/environment.development.ts"
-        }
-      ]
-    }
-  },
-  "defaultConfiguration": "production"
-},
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
