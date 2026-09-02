@@ -187,6 +187,7 @@ input[type="date"]:focus {
   border: 2px solid transparent;
   background-clip: padding-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 /* ============================================ */
@@ -631,6 +632,7 @@ input[type="date"]:focus {
     padding: 0.2rem 0.35rem;
   }
 }
+
 /* ============================================ */
 /* MEJORA DE ANCHO PARA CARDS EN PANTALLAS GRANDES */
 /* ============================================ */
@@ -773,109 +775,11 @@ input[type="date"]:focus {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   border-color: #93c5fd;
 }
+
 /* ============================================ */
-/* FIX - CARDS MÁS ANCHAS EN PANTALLAS GRANDES */
+/* ELIMINAR SOBRESCRITURA DE max-w-2xl */
 /* ============================================ */
-
-/* Forzar que el contenedor principal ocupe todo el ancho */
-.max-w-2xl {
-  max-width: 100% !important;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* Asegurar que el animated-border-card ocupe todo el ancho */
-.animated-border-card {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding: 1.5rem !important;
-}
-
-/* Forzar que el row ocupe todo el ancho sin márgenes */
-.animated-border-card .row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -0.75rem !important;
-  margin-right: -0.75rem !important;
-  width: calc(100% + 1.5rem) !important;
-  max-width: calc(100% + 1.5rem) !important;
-}
-
-/* Asegurar que las columnas ocupen el espacio correcto */
-.animated-border-card .col-12,
-.animated-border-card .col-sm-6,
-.animated-border-card .col-lg-4 {
-  padding-left: 0.75rem !important;
-  padding-right: 0.75rem !important;
-  flex: 0 0 auto;
-  width: 100%;
-}
-
-/* Pantallas pequeñas (móviles) - 1 columna */
-@media (max-width: 575.98px) {
-  .animated-border-card .col-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
-
-/* Pantallas medianas (tablets) - 2 columnas */
-@media (min-width: 576px) and (max-width: 991.98px) {
-  .animated-border-card .col-sm-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-}
-
-/* Pantallas grandes (desktop) - 3 columnas */
-@media (min-width: 992px) {
-  .animated-border-card .col-lg-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
-}
-
-/* Pantallas extra grandes - 3 columnas con más espacio */
-@media (min-width: 1400px) {
-  .animated-border-card .col-lg-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
-  
-  .animated-border-card .row {
-    gap: 1.5rem;
-  }
-}
-
-/* Forzar que la card ocupe el 100% de su contenedor */
-.experiencia-card {
-  width: 100% !important;
-  min-height: 350px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* El body de la card ocupa todo el ancho */
-.experiencia-card .card-body {
-  width: 100% !important;
-  flex: 1 1 auto;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Eliminar el contenedor que limita el ancho */
-.container {
-  max-width: 100% !important;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* Ajuste para el título de la sección */
-.animated-border-card h3 {
-  width: 100%;
-  text-align: center;
-}
+/* NOTA: Se eliminó la regla que sobrescribía .max-w-2xl para que el formulario mantenga el centrado */
 
 /* ============================================ */
 /* ESTILOS PARA MODAL DE DETALLES               */
