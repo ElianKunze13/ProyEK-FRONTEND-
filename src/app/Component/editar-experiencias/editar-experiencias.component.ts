@@ -199,16 +199,31 @@ export class EditarExperienciasComponent implements OnInit {
   }
 
   // ✅ MÉTODO PARA ABRIR MODAL DE DETALLES
-  abrirModalDetalles(experiencia: Experiencia): void {
-    this.selectedExperiencia = experiencia;
-    const modalElement = document.getElementById('experienciaModal');
-    if (modalElement) {
+abrirModalDetalles(experiencia: Experiencia): void {
+  // Usar el mismo modal de Bootstrap que existe en perfil.component
+  // Pero como este componente no tiene el modal, usamos un modal simple
+  this.selectedExperiencia = experiencia;
+  
+  // Crear un modal simple con alert o usar el modal de Bootstrap si está disponible
+  const modalElement = document.getElementById('experienciaModal');
+  if (modalElement) {
+    try {
       const modal = new (window as any).bootstrap.Modal(modalElement);
       modal.show();
-    } else {
+    } catch (e) {
+      // Si Bootstrap no está disponible, mostrar en consola
       console.log('Detalles de la experiencia:', experiencia);
+      alert(`📋 ${experiencia.titulo}\n\n${experiencia.descripcion}\n\nTecnologías: ${this.getTecnologiasLabels(experiencia.tecnologiasUsadas)}`);
     }
+  } else {
+    // Si no hay modal, mostrar un alert con los detalles
+    const tecnologiasStr = experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0
+      ? experiencia.tecnologiasUsadas.map(t => this.getTecnologiaDisplay(t)).join(', ')
+      : 'Sin tecnologías';
+    
+    alert(`📋 ${experiencia.titulo}\n\n📅 ${new Date(experiencia.fechaInicioProyecto).toLocaleDateString()} → ${new Date(experiencia.fechaFinProyecto).toLocaleDateString()}\n\n📝 ${experiencia.descripcion}\n\n🔧 Tecnologías: ${tecnologiasStr}\n\n🔗 ${experiencia.link || 'Sin enlace'}`);
   }
+}
 
   // ✅ MÉTODO: Manejar selección de archivo (para crear)
   onFileSelected(event: Event): void {
