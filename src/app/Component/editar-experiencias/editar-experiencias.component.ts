@@ -26,7 +26,7 @@ export class EditarExperienciasComponent implements OnInit {
     { value: TipoExperiencia.TRABAJO_LABORAL_FREELANCE, label: 'TRABAJO LABORAL FREELANCE' }
   ];
   
-  // 🔥 TECNOLOGÍAS DISPONIBLES - MANTENEMOS LA LISTA
+  // TECNOLOGÍAS DISPONIBLES
   tecnologiasDisponibles = [
     { value: TecnologiaUsada.ANGULAR, label: 'Angular' },
     { value: TecnologiaUsada.REACT, label: 'React' },
@@ -45,7 +45,7 @@ export class EditarExperienciasComponent implements OnInit {
     { value: TecnologiaUsada.POSTGRESQL, label: 'PostgreSQL' }
   ];
   
-  // 🔥 Mapeo de colores para badges
+  // Mapeo de colores para badges
   tecnologiaColors: { [key: string]: string } = {
     'ANGULAR': 'bg-danger',
     'REACT': 'bg-info',
@@ -64,30 +64,30 @@ export class EditarExperienciasComponent implements OnInit {
     'POSTGRESQL': 'bg-primary'
   };
 
-  // 🔥 Obtener nombre display de la tecnología
+  // Obtener nombre display de la tecnología
   getTecnologiaDisplay(tecnologia: string): string {
     const found = this.tecnologiasDisponibles.find(t => t.value === tecnologia);
     return found ? found.label : tecnologia;
   }
 
-  // 🔥 Obtener color de la tecnología
+  // Obtener color de la tecnología
   getTecnologiaColor(tecnologia: string): string {
     return this.tecnologiaColors[tecnologia] || 'bg-secondary';
   }
 
-  // 🔥 Método para verificar si una tecnología está seleccionada
+  // Método para verificar si una tecnología está seleccionada
   isTecnologiaSeleccionada(tecnologia: string): boolean {
     const tecnologiasSeleccionadas = this.experienciaForm.get('tecnologiasUsadas')?.value as string[] || [];
     return tecnologiasSeleccionadas.includes(tecnologia);
   }
 
-  // 🔥 Método para verificar en el formulario de edición
+  // Método para verificar en el formulario de edición
   isTecnologiaSeleccionadaEditar(tecnologia: string): boolean {
     const tecnologiasSeleccionadas = this.editarExperienciaForm.get('tecnologiasUsadas')?.value as string[] || [];
     return tecnologiasSeleccionadas.includes(tecnologia);
   }
 
-  // 🔥 Toggle selección de tecnología (crear)
+  // Toggle selección de tecnología (crear)
   toggleTecnologia(tecnologia: string): void {
     const control = this.experienciaForm.get('tecnologiasUsadas');
     const currentValue = control?.value as string[] || [];
@@ -99,7 +99,7 @@ export class EditarExperienciasComponent implements OnInit {
     }
   }
 
-  // 🔥 Toggle selección de tecnología (editar)
+  // Toggle selección de tecnología (editar)
   toggleTecnologiaEditar(tecnologia: string): void {
     const control = this.editarExperienciaForm.get('tecnologiasUsadas');
     const currentValue = control?.value as string[] || [];
@@ -137,7 +137,7 @@ export class EditarExperienciasComponent implements OnInit {
   // Variable para almacenar la experiencia seleccionada
   selectedExperiencia: Experiencia | null = null;
 
-  // ✅ VARIABLES PARA UPLOAD DE IMÁGENES
+  // VARIABLES PARA UPLOAD DE IMÁGENES
   imagenSubiendo = false;
   imagenSubiendoEditar = false;
   imagenProgreso = 0;
@@ -145,7 +145,6 @@ export class EditarExperienciasComponent implements OnInit {
   imagenPreview: string | null = null;
   imagenPreviewEditar: string | null = null;
 
-  // ✅ NUEVA VARIABLE PARA CONTROLAR EL TIMEOUT DE PREVIEW
   private previewTimeout: any = null;
 
   constructor(
@@ -153,27 +152,27 @@ export class EditarExperienciasComponent implements OnInit {
     private imagenUploadService: ImagenUploadService,
     private fb: FormBuilder
   ) {
-    // 🔥 Formulario para crear nueva experiencia - Actualizado con tecnologiasUsadas (array)
+    // Formulario para crear nueva experiencia
     this.experienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
       fechaInicioProyecto: ['', [Validators.required]],
       fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
-      tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]], // 🔥 CAMBIO: ahora es array
+      tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]],
       link: [''],
       imagenUrl: [''],
       imagenAlt: ['']
     });
     
-    // 🔥 Formulario para editar experiencia - Actualizado con tecnologiasUsadas (array)
+    // Formulario para editar experiencia
     this.editarExperienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
       fechaInicioProyecto: ['', [Validators.required]],
       fechaFinProyecto: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
-      tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]], // 🔥 CAMBIO: ahora es array
+      tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]],
       link: [''],
       imagenUrl: [''],
       imagenAlt: ['']
@@ -198,20 +197,120 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  
- // ✅ MÉTODO PARA ABRIR MODAL DE DETALLES
+  // ============================================
+  // MÉTODO PARA ABRIR MODAL DE DETALLES - MEJORADO
+  // ============================================
   abrirModalDetalles(experiencia: Experiencia): void {
+    console.log('🟢 Abriendo modal para:', experiencia.titulo);
     this.selectedExperiencia = experiencia;
+    
+    // Pequeño retraso para asegurar que Angular actualice el DOM
+    setTimeout(() => {
+      const modalElement = document.getElementById('experienciaModal');
+      console.log('🔍 Elemento modal encontrado:', modalElement);
+      
+      if (modalElement) {
+        try {
+          // Verificar si bootstrap está disponible
+          if (typeof (window as any).bootstrap !== 'undefined') {
+            const modal = new (window as any).bootstrap.Modal(modalElement);
+            modal.show();
+            console.log('✅ Modal abierto con Bootstrap');
+          } else {
+            // Fallback si Bootstrap no está disponible
+            console.warn('⚠️ Bootstrap no disponible, usando fallback');
+            this.abrirModalManual(modalElement);
+          }
+        } catch (error) {
+          console.error('❌ Error al abrir modal:', error);
+          // Fallback: mostrar alert con los detalles
+          this.mostrarDetallesComoAlert(experiencia);
+        }
+      } else {
+        console.error('❌ Elemento modal no encontrado');
+        // Fallback: mostrar alert con los detalles
+        this.mostrarDetallesComoAlert(experiencia);
+      }
+    }, 100);
+  }
+
+  // Método para abrir modal manualmente
+  private abrirModalManual(modalElement: HTMLElement): void {
+    modalElement.style.display = 'block';
+    modalElement.classList.add('show');
+    document.body.classList.add('modal-open');
+    
+    // Crear backdrop manual
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop fade show';
+    document.body.appendChild(backdrop);
+  }
+
+  // Método de fallback para mostrar detalles sin modal
+  private mostrarDetallesComoAlert(experiencia: Experiencia): void {
+    const tecnologiasStr = experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0
+      ? experiencia.tecnologiasUsadas.map(t => this.getTecnologiaDisplay(t)).join(', ')
+      : 'Sin tecnologías';
+    
+    const fechaInicio = new Date(experiencia.fechaInicioProyecto).toLocaleDateString('es-ES');
+    const fechaFin = new Date(experiencia.fechaFinProyecto).toLocaleDateString('es-ES');
+    
+    const mensaje = `📋 ${experiencia.titulo}\n\n` +
+                    `📅 ${fechaInicio} → ${fechaFin}\n\n` +
+                    `📝 ${experiencia.descripcion}\n\n` +
+                    `🔧 Tecnologías: ${tecnologiasStr}\n\n` +
+                    `🔗 ${experiencia.link || 'Sin enlace'}`;
+    
+    alert(mensaje);
+  }
+
+  // ============================================
+  // MÉTODO PARA CERRAR MODAL DE DETALLES
+  // ============================================
+  cerrarModalDetalles(): void {
+    console.log('🔴 Cerrando modal');
+    
     const modalElement = document.getElementById('experienciaModal');
     if (modalElement) {
-      const modal = new (window as any).bootstrap.Modal(modalElement);
-      modal.show();
-    } else {
-      console.log('Detalles de la experiencia:', experiencia);
+      try {
+        // Intentar cerrar con Bootstrap
+        if (typeof (window as any).bootstrap !== 'undefined') {
+          const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+          if (modal) {
+            modal.hide();
+          } else {
+            this.cerrarModalManual();
+          }
+        } else {
+          this.cerrarModalManual();
+        }
+      } catch (error) {
+        console.error('Error al cerrar modal:', error);
+        this.cerrarModalManual();
+      }
+    }
+    this.selectedExperiencia = null;
+  }
+
+  // Método para cerrar modal manualmente
+  private cerrarModalManual(): void {
+    const modalElement = document.getElementById('experienciaModal');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      
+      // Remover backdrop
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
     }
   }
 
-  // ✅ MÉTODO: Manejar selección de archivo (para crear)
+  // ============================================
+  // MÉTODOS PARA MANEJAR IMÁGENES
+  // ============================================
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -244,7 +343,6 @@ export class EditarExperienciasComponent implements OnInit {
     }
   }
 
-  // ✅ MÉTODO: Subir imagen (para crear)
   subirImagen(file: File): void {
     this.imagenSubiendo = true;
     this.imagenProgreso = 0;
@@ -278,7 +376,6 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  // ✅ MÉTODO: Eliminar imagen seleccionada (para crear)
   eliminarImagenSeleccionada(): void {
     this.imagenPreview = null;
     this.imagenSeleccionada = null;
@@ -294,7 +391,6 @@ export class EditarExperienciasComponent implements OnInit {
     }
   }
 
-  // ✅ MÉTODO: Manejar selección de archivo (para editar)
   onFileSelectedEditar(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -337,7 +433,6 @@ export class EditarExperienciasComponent implements OnInit {
     }
   }
 
-  // ✅ MÉTODO: Eliminar imagen en edición
   eliminarImagenEditar(): void {
     this.imagenPreviewEditar = null;
     this.editarExperienciaForm.patchValue({
@@ -346,7 +441,9 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  // 🔥 GUARDAR EXPERIENCIA - ACTUALIZADO
+  // ============================================
+  // MÉTODOS CRUD
+  // ============================================
   guardarExperiencia(): void {
     if (this.experienciaForm.invalid) {
       this.marcarControlesComoTocados(this.experienciaForm);
@@ -358,7 +455,6 @@ export class EditarExperienciasComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    // Preparar la imagen
     let imagen: Imagen | undefined = undefined;
     const imagenUrl = this.experienciaForm.value.imagenUrl;
     const imagenAlt = this.experienciaForm.value.imagenAlt;
@@ -370,7 +466,6 @@ export class EditarExperienciasComponent implements OnInit {
       };
     }
 
-    // 🔥 Obtener las tecnologías seleccionadas como array
     const tecnologiasUsadas = this.experienciaForm.value.tecnologiasUsadas || [];
 
     const nuevaExperiencia: Experiencia = {
@@ -381,7 +476,7 @@ export class EditarExperienciasComponent implements OnInit {
       descripcion: this.experienciaForm.value.descripcion,
       link: this.experienciaForm.value.link || '',
       tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasUsadas, // 🔥 CAMBIO: array de tecnologías
+      tecnologiasUsadas: tecnologiasUsadas,
       imagen: imagen
     };
 
@@ -399,8 +494,6 @@ export class EditarExperienciasComponent implements OnInit {
         this.imagenPreview = null;
         this.imagenSeleccionada = null;
         this.imagenProgreso = 0;
-        
-        // Resetear el control de tecnologías
         this.experienciaForm.patchValue({ tecnologiasUsadas: [] });
         
         setTimeout(() => {
@@ -416,14 +509,10 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  // 🔥 EDITAR EXPERIENCIA - ACTUALIZADO
   cargarExperienciaParaEditar(experiencia: Experiencia): void {
     this.experienciaEditada = experiencia;
     
-    // Obtener la imagen si existe
     const imagen = experiencia.imagen;
-    
-    // 🔥 Obtener las tecnologías existentes (asegurarse que es un array)
     const tecnologiasExistentes = experiencia.tecnologiasUsadas || [];
     
     this.editarExperienciaForm.patchValue({
@@ -432,13 +521,12 @@ export class EditarExperienciasComponent implements OnInit {
       fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto),
       descripcion: experiencia.descripcion,
       tipoExperiencia: experiencia.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasExistentes, // 🔥 CAMBIO: array de tecnologías
+      tecnologiasUsadas: tecnologiasExistentes,
       link: experiencia.link || '',
       imagenUrl: imagen?.url || '',
       imagenAlt: imagen?.alt || ''
     });
     
-    // Mostrar preview de la imagen existente
     if (imagen?.url) {
       this.imagenPreviewEditar = imagen.url;
     } else {
@@ -455,7 +543,6 @@ export class EditarExperienciasComponent implements OnInit {
     return dateObj.toISOString().split('T')[0];
   }
 
-  // 🔥 ACTUALIZAR EXPERIENCIA - ACTUALIZADO
   actualizarExperiencia(): void {
     if (this.editarExperienciaForm.invalid) {
       this.marcarControlesComoTocados(this.editarExperienciaForm);
@@ -472,7 +559,6 @@ export class EditarExperienciasComponent implements OnInit {
     this.actualizando = true;
     this.mensaje = '';
 
-    // Preparar la imagen
     let imagen: Imagen | undefined = undefined;
     const imagenUrl = this.editarExperienciaForm.value.imagenUrl;
     const imagenAlt = this.editarExperienciaForm.value.imagenAlt;
@@ -484,7 +570,6 @@ export class EditarExperienciasComponent implements OnInit {
       };
     }
 
-    // 🔥 Obtener las tecnologías seleccionadas como array
     const tecnologiasUsadas = this.editarExperienciaForm.value.tecnologiasUsadas || [];
 
     const experienciaActualizada: Experiencia = {
@@ -495,7 +580,7 @@ export class EditarExperienciasComponent implements OnInit {
       descripcion: this.editarExperienciaForm.value.descripcion,
       link: this.editarExperienciaForm.value.link || '',
       tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasUsadas, // 🔥 CAMBIO: array de tecnologías
+      tecnologiasUsadas: tecnologiasUsadas,
       imagen: imagen
     };
 
@@ -532,7 +617,9 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
-  // ELIMINAR EXPERIENCIA
+  // ============================================
+  // MÉTODOS PARA ELIMINAR
+  // ============================================
   confirmarEliminacion(experiencia: Experiencia): void {
     this.experienciaAEliminar = experiencia;
     this.mostrarModalConfirmacion = true;
@@ -563,7 +650,9 @@ export class EditarExperienciasComponent implements OnInit {
     });
   }
 
+  // ============================================
   // UTILIDADES
+  // ============================================
   private marcarControlesComoTocados(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -585,19 +674,19 @@ export class EditarExperienciasComponent implements OnInit {
     }, 5000);
   }
 
-  // Método para obtener el label de un tipo de experiencia
   getTipoExperienciaLabel(tipo: TipoExperiencia): string {
     const found = this.tiposExperiencia.find(item => item.value === tipo);
     return found ? found.label : tipo.toString();
   }
 
-  // 🔥 Método para obtener los labels de las tecnologías
   getTecnologiasLabels(tecnologias: string[] | undefined): string {
     if (!tecnologias || tecnologias.length === 0) return 'Sin tecnologías';
     return tecnologias.map(t => this.getTecnologiaDisplay(t)).join(', ');
   }
 
-  // MODALES
+  // ============================================
+  // MÉTODOS PARA MODALES
+  // ============================================
   cerrarModalEditar(): void {
     this.mostrarModalEditar = false;
     this.experienciaEditada = null;
@@ -613,7 +702,6 @@ export class EditarExperienciasComponent implements OnInit {
     this.eliminando = false;
   }
 
-  // ✅ DESTRUIR TIMEOUTS AL SALIR DEL COMPONENTE
   ngOnDestroy(): void {
     if (this.previewTimeout) {
       clearTimeout(this.previewTimeout);

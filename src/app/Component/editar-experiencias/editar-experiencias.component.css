@@ -876,3 +876,100 @@ input[type="date"]:focus {
   width: 100%;
   text-align: center;
 }
+
+/* ============================================ */
+/* ESTILOS PARA MODAL DE DETALLES               */
+/* ============================================ */
+
+/* Asegurar que el modal se muestre correctamente */
+#experienciaModal {
+  display: none;
+}
+
+#experienciaModal.show {
+  display: block;
+}
+
+/* Fechas en el modal */
+.fechas-modal {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #4a5568;
+}
+
+.fecha-separador-modal {
+  color: #4a5568;
+  font-weight: 400;
+  padding: 0 0.5rem;
+}
+
+/* Descripción en el modal */
+.descripcion-modal {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+/* Scroll personalizado para el modal */
+#experienciaModal .modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+#experienciaModal .modal-body::-webkit-scrollbar-track {
+  background: #1a202c;
+  border-radius: 3px;
+}
+
+#experienciaModal .modal-body::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 3px;
+}
+
+#experienciaModal .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #63b3ed;
+}
+
+/* Scroll personalizado para la descripción */
+.descripcion-modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.descripcion-modal::-webkit-scrollbar-track {
+  background: #1a202c;
+  border-radius: 2px;
+}
+
+.descripcion-modal::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 2px;
+}
+
+.descripcion-modal::-webkit-scrollbar-thumb:hover {
+  background: #63b3ed;
+}
+
+/* Botón de cerrar en modal oscuro */
+.btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Backdrop manual */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1040;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+}
