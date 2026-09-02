@@ -11,8 +11,8 @@ import { Experiencia } from '../../Modelo/experiencia';
 
 @Component({
   selector: 'app-perfil',
-  standalone: true, // Importante: si es standalone
-  imports: [CommonModule], // Importar CommonModule para usar ngIf, ngFor
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -43,6 +43,24 @@ export class PerfilComponent implements OnInit {
   itemWidth = 150;
   itemsVisibles = 3;
 
+  // 🔥 Mapeo de TecnologiaUsada a colores para badges
+  tecnologiaColors: { [key: string]: string } = {
+    'ANGULAR': 'bg-danger',
+    'REACT': 'bg-info',
+    'VUE': 'bg-success',
+    'SPRINGBOOT': 'bg-success',
+    'DJANGO': 'bg-success',
+    'JAVA': 'bg-warning text-dark',
+    'JAVASCRIPT': 'bg-warning text-dark',
+    'TYPESCRIPT': 'bg-primary',
+    'BOOTSTRAP': 'bg-purple',
+    'TAILWIND': 'bg-cyan',
+    'PYTHON': 'bg-primary',
+    'PHP': 'bg-secondary',
+    'MYSQL': 'bg-primary',
+    'MONGODB': 'bg-success',
+    'POSTGRESQL': 'bg-primary'
+  };
 
   constructor(private http: HttpClient,
     private habilidadService: HabilidadService,
@@ -63,21 +81,20 @@ export class PerfilComponent implements OnInit {
   }
 
   // Método para abrir el modal con Bootstrap
-abrirModal(experiencia: Experiencia): void {
-  console.log('Abriendo modal para:', experiencia.titulo);
-
-  
-  this.selectedExperiencia = experiencia;
-  this.showModal = true;
-  
-  // Usar Bootstrap modal si está disponible
-  const modalElement = document.getElementById('experienciaModal');
-  if (modalElement) {
-    // @ts-ignore
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
+  abrirModal(experiencia: Experiencia): void {
+    console.log('Abriendo modal para:', experiencia.titulo);
+    
+    this.selectedExperiencia = experiencia;
+    this.showModal = true;
+    
+    // Usar Bootstrap modal si está disponible
+    const modalElement = document.getElementById('experienciaModal');
+    if (modalElement) {
+      // @ts-ignore
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
-}
 
   // Método para cerrar el modal
   cerrarModal(): void {
@@ -90,6 +107,33 @@ abrirModal(experiencia: Experiencia): void {
     if (url) {
       window.open(url, '_blank');
     }
+  }
+
+  // 🔥 Método para obtener la clase CSS según la tecnología
+  getTecnologiaColor(tecnologia: string): string {
+    return this.tecnologiaColors[tecnologia] || 'bg-secondary';
+  }
+
+  // 🔥 Método para obtener el nombre display de la tecnología
+  getTecnologiaDisplay(tecnologia: string): string {
+    const displayNames: { [key: string]: string } = {
+      'ANGULAR': 'Angular',
+      'REACT': 'React',
+      'VUE': 'Vue.js',
+      'SPRINGBOOT': 'Spring Boot',
+      'DJANGO': 'Django',
+      'JAVA': 'Java',
+      'JAVASCRIPT': 'JavaScript',
+      'TYPESCRIPT': 'TypeScript',
+      'BOOTSTRAP': 'Bootstrap',
+      'TAILWIND': 'Tailwind',
+      'PYTHON': 'Python',
+      'PHP': 'PHP',
+      'MYSQL': 'MySQL',
+      'MONGODB': 'MongoDB',
+      'POSTGRESQL': 'PostgreSQL'
+    };
+    return displayNames[tecnologia] || tecnologia;
   }
 
   // Configuración del carrusel automático

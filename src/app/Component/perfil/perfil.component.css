@@ -270,7 +270,41 @@ h2 {
 /* FIN ESTILOS CARDS DE EXPERIENCIAS */
 /* ============================================ */
 
+/* Añadir al final del archivo */
 
+/* Colores personalizados para badges de tecnologías */
+.bg-purple {
+  background-color: #6f42c1 !important;
+}
+
+.bg-cyan {
+  background-color: #0dcaf0 !important;
+  color: #000 !important;
+}
+
+/* Mejorar visualización de badges en cards */
+.experiencia-card .badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* Contenedor de tecnologías con flex wrap */
+.d-flex.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Gap para separar badges */
+.gap-1 {
+  gap: 0.25rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
 
 
 

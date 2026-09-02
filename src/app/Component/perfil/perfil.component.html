@@ -91,7 +91,9 @@
           </div>
         </div>
 
-        <!-- Sección de Experiencias -->
+        <!-- ============================================ -->
+        <!-- SECCIÓN DE EXPERIENCIAS - ACTUALIZADA        -->
+        <!-- ============================================ -->
         <div class="max-w-6xl mx-auto mb-12">
           <h3 class="text-2xl md:text-4xl font-bold mb-4 text-[color:var(--accent)]">
             Mis Proyectos . . .
@@ -111,37 +113,41 @@
                   <!-- Fechas en una sola línea -->
                   <div class="fechas-container mb-3">
                     <div class="d-flex justify-content-between align-items-center">
-
-                      
-                        <span class="fecha-label">
-                          <p>Desde...</p><br>
-                          <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
-                        </span>
-                    
-
+                      <span class="fecha-label">
+                        <p>Desde...</p><br>
+                        <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
+                      </span>
                       <span class="fecha-separador">→</span>
-
-                      
-                        <span class="fecha-label">
-                          <p>Hasta...</p><br>
-                          <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
-                        </span>
-                      
-
+                      <span class="fecha-label">
+                        <p>Hasta...</p><br>
+                        <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
+                      </span>
                     </div>
                   </div>
 
-              
-               <div class="mb-2 justify-content-baseline">
-          <strong>Tipo de proyecto:</strong>
-          <span class="badge bg-secondary">{{experiencia.tipoExperiencia}}</span>
+                  <!-- Tipo de experiencia -->
+                  <div class="mb-2">
+                    <strong>Tipo de proyecto:</strong>
+                    <span class="badge bg-secondary">{{experiencia.tipoExperiencia}}</span>
+                  </div>
 
-        </div>
-        <div class="mb-3 justify-content-baseline">
-          <strong>Tecnologias usadas:</strong>
-          <span class="badge bg-primary me-1">{{experiencia.tecnologiaUsada}}</span>
-
-        </div>
+                  <!-- ============================================ -->
+                  <!-- TECNOLOGÍAS USADAS - LISTA DE BADGES        -->
+                  <!-- ============================================ -->
+                  <div class="mb-3">
+                    <strong>Tecnologías usadas:</strong>
+                    <div class="d-flex flex-wrap gap-1 mt-1">
+                      @if (experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0) {
+                        @for (tecnologia of experiencia.tecnologiasUsadas; track $index) {
+                          <span class="badge {{getTecnologiaColor(tecnologia)}}">
+                            {{getTecnologiaDisplay(tecnologia)}}
+                          </span>
+                        }
+                      } @else {
+                        <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
+                      }
+                    </div>
+                  </div>
 
                   <!-- Botón -->
                   <button class="btn btn-primary w-100 mt-auto" (click)="abrirModal(experiencia)">
@@ -158,13 +164,18 @@
             }
           </div>
         </div>
+        <!-- ============================================ -->
+        <!-- FIN SECCIÓN DE EXPERIENCIAS                  -->
+        <!-- ============================================ -->
 
       </div>
     </section>
   </main>
 </div>
 
-<!-- Modal de Bootstrap para mostrar detalles -->
+<!-- ============================================ -->
+<!-- MODAL DE DETALLES - ACTUALIZADO              -->
+<!-- ============================================ -->
 <div class="modal fade" id="experienciaModal" tabindex="-1" aria-labelledby="experienciaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content bg-dark text-white">
@@ -198,7 +209,8 @@
         @if (selectedExperiencia.imagen?.url) {
         <div class="text-center mb-3">
           <img [src]="selectedExperiencia.imagen?.url"
-            [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo" class="img-fluid rounded"
+            [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo" 
+            class="img-fluid rounded"
             style="max-height: 200px; object-fit: contain;">
         </div>
         } @else {
@@ -216,17 +228,28 @@
           </div>
         </div>
 
-        <!-- Tecnología y Tipo -->
-
+        <!-- Tipo de experiencia -->
         <div class="mb-2">
           <strong>Tipo de proyecto:</strong>
           <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
-
         </div>
-        <div class="mb-3">
-          <strong>Tecnologias usadas:</strong>
-          <span class="badge bg-primary me-1">{{selectedExperiencia.tecnologiaUsada}}</span>
 
+        <!-- ============================================ -->
+        <!-- TECNOLOGÍAS EN EL MODAL - LISTA DE BADGES    -->
+        <!-- ============================================ -->
+        <div class="mb-3">
+          <strong>Tecnologías usadas:</strong>
+          <div class="d-flex flex-wrap gap-1 mt-1">
+            @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
+              @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
+                <span class="badge {{getTecnologiaColor(tecnologia)}}">
+                  {{getTecnologiaDisplay(tecnologia)}}
+                </span>
+              }
+            } @else {
+              <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
+            }
+          </div>
         </div>
 
         <!-- Link -->
@@ -249,3 +272,6 @@
     </div>
   </div>
 </div>
+<!-- ============================================ -->
+<!-- FIN MODAL                                    -->
+<!-- ============================================ -->
