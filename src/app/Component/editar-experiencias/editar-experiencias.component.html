@@ -85,21 +85,19 @@
               }
             </div>
 
-            <!-- ============================================ -->
-            <!-- 🔥 TECNOLOGÍAS USADAS - SELECCIÓN MÚLTIPLE  -->
-            <!-- ============================================ -->
+            <!-- TECNOLOGÍAS USADAS - SELECCIÓN MÚLTIPLE -->
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
-              <div class="tecnologias-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: white; min-height: 80px;">
+              <div class="tecnologias-grid">
                 @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
-                  <div class="tecnologia-checkbox" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.25rem; transition: background-color 0.2s;" 
+                  <div class="tecnologia-checkbox" 
                        (click)="toggleTecnologia(tecnologia.value)"
                        [style.background-color]="isTecnologiaSeleccionada(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
                     <input type="checkbox" 
                            [checked]="isTecnologiaSeleccionada(tecnologia.value)"
                            (change)="toggleTecnologia(tecnologia.value)"
                            style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
-                    <span class="tecnologia-label" style="font-size: 0.85rem; color: #374151; cursor: pointer;">
+                    <span class="tecnologia-label">
                       {{ tecnologia.label }}
                     </span>
                   </div>
@@ -123,7 +121,7 @@
               }
             </div>
 
-            <!-- ✅ SUBIDA DE IMAGEN DESDE DISPOSITIVO -->
+            <!-- SUBIDA DE IMAGEN DESDE DISPOSITIVO -->
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Imagen del proyecto</label>
               
@@ -217,32 +215,34 @@
           </form>
         </div>
 
-        <!-- LISTA DE EXPERIENCIAS EXISTENTES -->
+        <!-- ============================================ -->
+        <!-- LISTA DE EXPERIENCIAS EXISTENTES - MEJORADA  -->
+        <!-- ============================================ -->
         @if (experiencias.length > 0) {
           <div class="animated-border-card mb-8">
             <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">
               Todas las experiencias ({{experiencias.length}})
             </h3>
 
-            <div class="row">
+            <!-- 🔥 CAMBIO: Grid con mejor distribución y gap -->
+            <div class="row g-4">
               @for (experiencia of experiencias; track experiencia.id) {
-                <div class="col-md-4 mb-4">
-                  <div class="card experiencia-card h-100" style="background: linear-gradient(145deg, #1e293b, #2d3748); border: 1px solid #63b3ed; border-radius: 0.75rem; transition: all 0.3s ease; height: 100%; color: #e2e8f0;">
-                    <div class="card-body d-flex flex-column" style="position: relative;">
+                <!-- 🔥 CAMBIO: Columnas responsivas con d-flex -->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                  <div class="card experiencia-card w-100 h-100">
+                    <div class="card-body d-flex flex-column w-100" style="position: relative;">
 
                       <!-- BOTONES DE ACCIÓN -->
-                      <div class="action-buttons" style="position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 8px; z-index: 10;">
+                      <div class="action-buttons">
                         <button type="button" class="btn btn-action btn-editar" 
                           (click)="cargarExperienciaParaEditar(experiencia)" 
-                          title="Editar experiencia"
-                          style="width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer; transition: all 0.2s; font-size: 14px; display: flex; align-items: center; justify-content: center; background-color: rgba(59, 130, 246, 0.9); color: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
+                          title="Editar experiencia">
                           ✏️
                         </button>
 
                         <button type="button" class="btn btn-action btn-eliminar" 
                           (click)="confirmarEliminacion(experiencia)" 
-                          title="Eliminar experiencia"
-                          style="width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer; transition: all 0.2s; font-size: 14px; display: flex; align-items: center; justify-content: center; background-color: rgba(239, 68, 68, 0.9); color: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
+                          title="Eliminar experiencia">
                           🗑️
                         </button>
                       </div>
@@ -253,33 +253,33 @@
                       </h5>
 
                       <!-- Fechas -->
-                      <div class="fechas-container mb-3" style="background: rgba(0, 0, 0, 0.3); border-radius: 0.5rem; padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+                      <div class="fechas-container mb-3">
                         <div class="d-flex justify-content-between align-items-center">
-                          <span class="fecha-label" style="color: #a0aec0;">
+                          <span class="fecha-label">
                             <i class="fas fa-calendar-alt me-1"></i>
-                            <span class="fecha-valor" style="color: #e2e8f0; font-weight: 500;">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
+                            <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
                           </span>
-                          <span class="fecha-separador" style="color: #4a5568; padding: 0 0.5rem;">→</span>
-                          <span class="fecha-label" style="color: #a0aec0;">
+                          <span class="fecha-separador">→</span>
+                          <span class="fecha-label">
                             <i class="fas fa-calendar-check me-1"></i>
-                            <span class="fecha-valor" style="color: #e2e8f0; font-weight: 500;">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
+                            <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}</span>
                           </span>
                         </div>
                       </div>
 
                       <!-- Tipo de proyecto -->
                       <div class="mb-2">
-                        <span class="badge bg-secondary" style="font-size: 0.7rem; padding: 0.35rem 0.65rem; font-weight: 500; background-color: #4a5568 !important;">
+                        <span class="badge bg-secondary">
                           {{ getTipoExperienciaLabel(experiencia.tipoExperiencia) }}
                         </span>
                       </div>
 
-                      <!-- 🔥 TECNOLOGÍAS USADAS - BADGES EN LA LISTA -->
-                      <div class="mb-2">
+                      <!-- TECNOLOGÍAS USADAS - BADGES EN LA LISTA -->
+                      <div class="mb-3">
                         <div class="d-flex flex-wrap gap-1">
                           @if (experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0) {
                             @for (tecnologia of experiencia.tecnologiasUsadas; track $index) {
-                              <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem;">
+                              <span class="badge {{getTecnologiaColor(tecnologia)}}">
                                 {{getTecnologiaDisplay(tecnologia)}}
                               </span>
                             }
@@ -295,20 +295,18 @@
                           <img 
                             [src]="experiencia.imagen?.url" 
                             [alt]="experiencia.imagen?.alt || 'Imagen de la experiencia'" 
-                            class="rounded" 
-                            style="max-height: 120px; width: auto; object-fit: contain;">
+                            class="rounded experiencia-imagen">
                         </div>
                       }
 
                       <!-- Descripción truncada -->
-                      <p class="card-text text-gray-300 flex-grow-1 small" style="color: #cbd5e0 !important; line-height: 1.5; margin-bottom: 0.75rem;">
+                      <p class="card-text text-gray-300 flex-grow-1 small">
                         {{ experiencia.descripcion | slice:0:100 }}{{ experiencia.descripcion.length > 100 ? '...' : '' }}
                       </p>
 
                       <!-- Botón Ver detalles -->
                       <button class="btn btn-primary w-100 mt-auto" 
-                        (click)="abrirModalDetalles(experiencia)"
-                        style="background-color: #2b6cb0; border: none; transition: all 0.3s ease; font-weight: 500; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer;">
+                        (click)="abrirModalDetalles(experiencia)">
                         🔍 Ver más detalles
                       </button>
                     </div>
@@ -323,7 +321,7 @@
           </div>
         }
 
-        <!-- ✅ MODAL PARA EDITAR EXPERIENCIA - ACTUALIZADO -->
+        <!-- MODAL PARA EDITAR EXPERIENCIA -->
         @if (mostrarModalEditar) {
           <div class="modal-overlay">
             <div class="modal-content" style="max-width: 700px;">
@@ -403,21 +401,19 @@
                       }
                     </div>
 
-                    <!-- ============================================ -->
-                    <!-- 🔥 TECNOLOGÍAS EN EDICIÓN - SELECCIÓN MÚLTIPLE -->
-                    <!-- ============================================ -->
+                    <!-- TECNOLOGÍAS EN EDICIÓN - SELECCIÓN MÚLTIPLE -->
                     <div class="form-group mb-3">
                       <label class="block mb-1 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
-                      <div class="tecnologias-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: white; min-height: 80px;">
+                      <div class="tecnologias-grid">
                         @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
-                          <div class="tecnologia-checkbox" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.25rem; transition: background-color 0.2s;" 
+                          <div class="tecnologia-checkbox" 
                                (click)="toggleTecnologiaEditar(tecnologia.value)"
                                [style.background-color]="isTecnologiaSeleccionadaEditar(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
                             <input type="checkbox" 
                                    [checked]="isTecnologiaSeleccionadaEditar(tecnologia.value)"
                                    (change)="toggleTecnologiaEditar(tecnologia.value)"
                                    style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
-                            <span class="tecnologia-label" style="font-size: 0.85rem; color: #374151; cursor: pointer;">
+                            <span class="tecnologia-label">
                               {{ tecnologia.label }}
                             </span>
                           </div>
@@ -441,7 +437,7 @@
                       }
                     </div>
 
-                    <!-- ✅ SUBIDA DE IMAGEN EN EDICIÓN -->
+                    <!-- SUBIDA DE IMAGEN EN EDICIÓN -->
                     <div class="form-group mb-3">
                       <label class="block mb-1 text-sm font-medium text-gray-700">Imagen del proyecto</label>
                       

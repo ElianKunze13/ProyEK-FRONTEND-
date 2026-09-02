@@ -631,3 +631,145 @@ input[type="date"]:focus {
     padding: 0.2rem 0.35rem;
   }
 }
+/* ============================================ */
+/* MEJORA DE ANCHO PARA CARDS EN PANTALLAS GRANDES */
+/* ============================================ */
+
+/* Asegurar que el contenedor use todo el ancho disponible */
+.animated-border-card {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+/* Asegurar que el row use todo el ancho */
+.animated-border-card .row {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Asegurar que las columnas ocupen el espacio correcto */
+.animated-border-card .row > * {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* Cards ocupen todo el espacio de su columna */
+.animated-border-card .col-12,
+.animated-border-card .col-sm-6,
+.animated-border-card .col-lg-4 {
+  display: flex;
+}
+
+/* La card ocupa todo el alto y ancho disponible */
+.experiencia-card {
+  width: 100% !important;
+  min-height: 350px;
+  transition: all 0.3s ease;
+}
+
+/* Ajustar el body de la card para mejor distribución */
+.experiencia-card .card-body {
+  width: 100%;
+  padding: 1.25rem;
+}
+
+/* Imagen dentro de la card */
+.experiencia-imagen {
+  max-height: 120px;
+  width: auto;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+/* Mejorar distribución en pantallas grandes (lg y xl) */
+@media (min-width: 992px) {
+  .animated-border-card .col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  
+  .experiencia-card {
+    min-height: 380px;
+  }
+}
+
+/* Para pantallas muy grandes (xl) */
+@media (min-width: 1200px) {
+  .experiencia-card {
+    min-height: 400px;
+  }
+}
+
+/* Asegurar que los badges no se desborden */
+.experiencia-card .d-flex.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Mejorar visibilidad del contenido */
+.experiencia-card .card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ajuste para pantallas medianas */
+@media (max-width: 991px) and (min-width: 576px) {
+  .animated-border-card .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .experiencia-card {
+    min-height: 350px;
+  }
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 575px) {
+  .animated-border-card .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .experiencia-card {
+    min-height: 320px;
+  }
+  
+  .animated-border-card {
+    padding: 0.75rem;
+  }
+}
+
+/* Botones de acción siempre visibles en móvil */
+@media (max-width: 768px) {
+  .action-buttons {
+    opacity: 1 !important;
+  }
+}
+
+/* Gap entre filas del grid */
+.g-4 {
+  --bs-gutter-y: 1.5rem;
+}
+
+/* Mejorar el espaciado de los badges */
+.experiencia-card .badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+
+/* Hover efecto en cards */
+.experiencia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: #93c5fd;
+}
