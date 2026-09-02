@@ -567,4 +567,100 @@
       </div>
     </section>
   </main>
+  
+  <!-- MODAL DE DETALLES PARA EXPERIENCIAS -->
+<div class="modal fade" id="experienciaModal" tabindex="-1" aria-labelledby="experienciaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title" id="experienciaModalLabel">Detalles del Proyecto</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+        @if (selectedExperiencia) {
+          <!-- Título -->
+          <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
+
+          <!-- Fechas -->
+          <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>
+                <i class="fas fa-calendar-alt me-2"></i>
+                <strong>Inicio:</strong>
+                {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+              </span>
+              <span class="fecha-separador-modal">→</span>
+              <span>
+                <i class="fas fa-calendar-check me-2"></i>
+                <strong>Fin:</strong>
+                {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Imagen -->
+          @if (selectedExperiencia.imagen?.url) {
+            <div class="text-center mb-3">
+              <img [src]="selectedExperiencia.imagen?.url"
+                [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo"
+                class="img-fluid rounded"
+                style="max-height: 200px; object-fit: contain;">
+            </div>
+          } @else {
+            <div class="text-center text-muted mb-3">
+              <p>📷 No hay imagen disponible</p>
+            </div>
+          }
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <h6>Descripción:</h6>
+            <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
+              style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+              {{selectedExperiencia.descripcion}}
+            </div>
+          </div>
+
+          <!-- Tipo de experiencia -->
+          <div class="mb-2">
+            <strong>Tipo de proyecto:</strong>
+            <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
+          </div>
+
+          <!-- Tecnologías -->
+          <div class="mb-3">
+            <strong>Tecnologías usadas:</strong>
+            <div class="d-flex flex-wrap gap-1 mt-1">
+              @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
+                @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
+                  <span class="badge {{getTecnologiaColor(tecnologia)}}">
+                    {{getTecnologiaDisplay(tecnologia)}}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
+              }
+            </div>
+          </div>
+
+          <!-- Link -->
+          @if (selectedExperiencia.link) {
+            <div class="text-center">
+              <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                🔗 Visitar proyecto
+              </a>
+            </div>
+          } @else {
+            <div class="text-center text-muted">
+              <p>🔗 No hay enlace disponible</p>
+            </div>
+          }
+        }
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
