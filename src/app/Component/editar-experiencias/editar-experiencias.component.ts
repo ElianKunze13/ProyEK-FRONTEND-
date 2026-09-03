@@ -64,30 +64,46 @@ export class EditarExperienciasComponent implements OnInit {
     'POSTGRESQL': 'bg-primary'
   };
 
-  // Obtener nombre display de la tecnología
+  // =============================================
+  // NUEVAS PROPIEDADES PARA MÚLTIPLES IMÁGENES
+  // =============================================
+  // Crear
+  imagenesSeleccionadas: File[] = [];
+  imagenesPreviews: string[] = [];
+  imagenesSubidas: Imagen[] = [];
+  imagenSubiendo = false;
+  imagenProgreso = 0;
+  maxImagenes = 5;
+
+  // Editar
+  imagenesPreviewsEditar: string[] = [];
+  imagenSubiendoEditar = false;
+
+  // 🔥 Para el carrusel en el modal de detalles
+  imagenActualIndex: number = 0;
+
+  // =============================================
+  // MÉTODOS PARA OBTENER TECNOLOGÍAS
+  // =============================================
   getTecnologiaDisplay(tecnologia: string): string {
     const found = this.tecnologiasDisponibles.find(t => t.value === tecnologia);
     return found ? found.label : tecnologia;
   }
 
-  // Obtener color de la tecnología
   getTecnologiaColor(tecnologia: string): string {
     return this.tecnologiaColors[tecnologia] || 'bg-secondary';
   }
 
-  // Método para verificar si una tecnología está seleccionada
   isTecnologiaSeleccionada(tecnologia: string): boolean {
     const tecnologiasSeleccionadas = this.experienciaForm.get('tecnologiasUsadas')?.value as string[] || [];
     return tecnologiasSeleccionadas.includes(tecnologia);
   }
 
-  // Método para verificar en el formulario de edición
   isTecnologiaSeleccionadaEditar(tecnologia: string): boolean {
     const tecnologiasSeleccionadas = this.editarExperienciaForm.get('tecnologiasUsadas')?.value as string[] || [];
     return tecnologiasSeleccionadas.includes(tecnologia);
   }
 
-  // Toggle selección de tecnología (crear)
   toggleTecnologia(tecnologia: string): void {
     const control = this.experienciaForm.get('tecnologiasUsadas');
     const currentValue = control?.value as string[] || [];
@@ -99,7 +115,6 @@ export class EditarExperienciasComponent implements OnInit {
     }
   }
 
-  // Toggle selección de tecnología (editar)
   toggleTecnologiaEditar(tecnologia: string): void {
     const control = this.editarExperienciaForm.get('tecnologiasUsadas');
     const currentValue = control?.value as string[] || [];
@@ -137,14 +152,6 @@ export class EditarExperienciasComponent implements OnInit {
   // Variable para almacenar la experiencia seleccionada para el modal de detalles
   selectedExperiencia: Experiencia | null = null;
 
-  // VARIABLES PARA UPLOAD DE IMÁGENES
-  imagenSubiendo = false;
-  imagenSubiendoEditar = false;
-  imagenProgreso = 0;
-  imagenSeleccionada: File | null = null;
-  imagenPreview: string | null = null;
-  imagenPreviewEditar: string | null = null;
-
   private previewTimeout: any = null;
 
   constructor(
@@ -160,12 +167,10 @@ export class EditarExperienciasComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
       tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]],
-      link: [''],
-      imagenUrl: [''],
-      imagenAlt: ['']
+      link: ['']
     });
     
-    // Formulario para editar experiencia
+    // Formulario para editar experiencia (sin campos de imágenes, se manejan por separado)
     this.editarExperienciaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
       fechaInicioProyecto: ['', [Validators.required]],
@@ -173,9 +178,7 @@ export class EditarExperienciasComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       tipoExperiencia: ['', [Validators.required]],
       tecnologiasUsadas: [[], [Validators.required, Validators.minLength(1)]],
-      link: [''],
-      imagenUrl: [''],
-      imagenAlt: ['']
+      link: ['']
     });
   }
 
@@ -198,11 +201,12 @@ export class EditarExperienciasComponent implements OnInit {
   }
 
   // ============================================
-  // MÉTODO PARA ABRIR MODAL DE DETALLES
+  // MÉTODO PARA ABRIR MODAL DE DETALLES (con carrusel)
   // ============================================
   abrirModalDetalles(experiencia: Experiencia): void {
     console.log('🟢 Abriendo modal para:', experiencia.titulo);
     this.selectedExperiencia = experiencia;
+    this.imagenActualIndex = 0; // 🔥 Reiniciar índice del carrusel
   }
 
   // ============================================
@@ -214,136 +218,175 @@ export class EditarExperienciasComponent implements OnInit {
   }
 
   // ============================================
-  // MÉTODOS PARA MANEJAR IMÁGENES
+  // MÉTODOS PARA EL CARRUSEL DE IMÁGENES EN MODAL DE DETALLES
+  // ============================================
+  siguienteImagen(): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    this.imagenActualIndex = (this.imagenActualIndex + 1) % this.selectedExperiencia.imagenes.length;
+  }
+
+  anteriorImagen(): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    this.imagenActualIndex = (this.imagenActualIndex - 1 + this.selectedExperiencia.imagenes.length) % this.selectedExperiencia.imagenes.length;
+  }
+
+  irAImagen(index: number): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    if (index >= 0 && index < this.selectedExperiencia.imagenes.length) {
+      this.imagenActualIndex = index;
+    }
+  }
+
+  // ============================================
+  // MÉTODOS PARA MANEJAR MÚLTIPLES IMÁGENES - CREAR
   // ============================================
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      
-      if (!file.type.startsWith('image/')) {
-        this.mostrarMensaje('Por favor selecciona una imagen válida', 'error');
+      // Verificar que no se exceda el máximo de imágenes
+      const totalActual = this.imagenesSeleccionadas.length + this.imagenesSubidas.length;
+      const disponibles = this.maxImagenes - totalActual;
+      if (disponibles <= 0) {
+        this.mostrarMensaje(`Máximo ${this.maxImagenes} imágenes permitidas`, 'error');
         return;
       }
-      
-      if (file.size > 5 * 1024 * 1024) {
-        this.mostrarMensaje('La imagen no puede superar los 5MB', 'error');
-        return;
-      }
-      
-      this.imagenSeleccionada = file;
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imagenPreview = e.target?.result as string;
-      };
-      reader.readAsDataURL(file);
-      
-      if (this.previewTimeout) {
-        clearTimeout(this.previewTimeout);
-        this.previewTimeout = null;
-      }
-      
-      this.subirImagen(file);
+
+      const files = Array.from(input.files);
+      // Tomar solo las que caben
+      const filesAAgregar = files.slice(0, disponibles);
+
+      filesAAgregar.forEach(file => {
+        if (!file.type.startsWith('image/')) {
+          this.mostrarMensaje('Solo se permiten imágenes', 'error');
+          return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          this.mostrarMensaje('Cada imagen no puede superar los 5MB', 'error');
+          return;
+        }
+        this.imagenesSeleccionadas.push(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imagenesPreviews.push(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Limpiar el input para permitir seleccionar nuevamente el mismo archivo
+      input.value = '';
     }
   }
 
-  subirImagen(file: File): void {
-    this.imagenSubiendo = true;
-    this.imagenProgreso = 0;
-    
-    const interval = setInterval(() => {
-      if (this.imagenProgreso < 90) {
-        this.imagenProgreso += 10;
+  eliminarImagenSeleccionada(index: number): void {
+    this.imagenesSeleccionadas.splice(index, 1);
+    this.imagenesPreviews.splice(index, 1);
+  }
+
+  // Subir todas las imágenes seleccionadas al servidor
+  subirTodasImagenes(): Promise<Imagen[]> {
+    return new Promise((resolve, reject) => {
+      if (this.imagenesSeleccionadas.length === 0) {
+        resolve(this.imagenesSubidas);
+        return;
       }
-    }, 200);
-    
-    this.imagenUploadService.uploadImage(file).subscribe({
-      next: (imagen: Imagen) => {
-        clearInterval(interval);
-        this.imagenProgreso = 100;
-        this.imagenSubiendo = false;
-        
-        this.experienciaForm.patchValue({
-          imagenUrl: imagen.url,
-          imagenAlt: imagen.alt || file.name
+
+      this.imagenSubiendo = true;
+      const total = this.imagenesSeleccionadas.length;
+      let completadas = 0;
+      const resultados: Imagen[] = [];
+
+      this.imagenesSeleccionadas.forEach((file, index) => {
+        this.imagenUploadService.uploadImage(file).subscribe({
+          next: (imagen: Imagen) => {
+            resultados.push(imagen);
+            completadas++;
+            this.imagenProgreso = Math.round((completadas / total) * 100);
+            if (completadas === total) {
+              this.imagenSubiendo = false;
+              this.imagenProgreso = 0;
+              this.imagenesSubidas = [...this.imagenesSubidas, ...resultados];
+              this.imagenesSeleccionadas = [];
+              this.imagenesPreviews = [];
+              resolve(this.imagenesSubidas);
+            }
+          },
+          error: (err) => {
+            this.imagenSubiendo = false;
+            this.imagenProgreso = 0;
+            reject(err);
+          }
         });
-        
-        this.mostrarMensaje('✅ Imagen subida exitosamente', 'success');
-      },
-      error: (err) => {
-        clearInterval(interval);
-        this.imagenSubiendo = false;
-        this.imagenProgreso = 0;
-        console.error('Error al subir imagen:', err);
-        this.mostrarMensaje('❌ Error al subir la imagen: ' + (err.error?.message || err.message), 'error');
-      }
+      });
     });
   }
 
-  eliminarImagenSeleccionada(): void {
-    this.imagenPreview = null;
-    this.imagenSeleccionada = null;
-    this.imagenProgreso = 0;
-    this.experienciaForm.patchValue({
-      imagenUrl: '',
-      imagenAlt: ''
-    });
-    
-    if (this.previewTimeout) {
-      clearTimeout(this.previewTimeout);
-      this.previewTimeout = null;
-    }
-  }
-
+  // ============================================
+  // MÉTODOS PARA MANEJAR MÚLTIPLES IMÁGENES - EDITAR
+  // ============================================
   onFileSelectedEditar(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      
-      if (!file.type.startsWith('image/')) {
-        this.mostrarMensaje('Por favor selecciona una imagen válida', 'error');
+      // Calcular cuántas imágenes actuales hay (existentes + nuevas)
+      const totalActual = this.totalImagenesEditar;
+      const disponibles = this.maxImagenes - totalActual;
+      if (disponibles <= 0) {
+        this.mostrarMensaje(`Máximo ${this.maxImagenes} imágenes permitidas`, 'error');
         return;
       }
-      
-      if (file.size > 5 * 1024 * 1024) {
-        this.mostrarMensaje('La imagen no puede superar los 5MB', 'error');
-        return;
-      }
-      
-      this.imagenSubiendoEditar = true;
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imagenPreviewEditar = e.target?.result as string;
-      };
-      reader.readAsDataURL(file);
-      
-      this.imagenUploadService.uploadImage(file).subscribe({
-        next: (imagen: Imagen) => {
-          this.imagenSubiendoEditar = false;
-          this.editarExperienciaForm.patchValue({
-            imagenUrl: imagen.url,
-            imagenAlt: imagen.alt || file.name
-          });
-          
-          this.mostrarMensaje('✅ Imagen actualizada exitosamente', 'success');
-        },
-        error: (err) => {
-          this.imagenSubiendoEditar = false;
-          console.error('Error al subir imagen:', err);
-          this.mostrarMensaje('❌ Error al subir la imagen: ' + (err.error?.message || err.message), 'error');
+
+      const files = Array.from(input.files);
+      const filesAAgregar = files.slice(0, disponibles);
+
+      filesAAgregar.forEach(file => {
+        if (!file.type.startsWith('image/')) {
+          this.mostrarMensaje('Solo se permiten imágenes', 'error');
+          return;
         }
+        if (file.size > 5 * 1024 * 1024) {
+          this.mostrarMensaje('Cada imagen no puede superar los 5MB', 'error');
+          return;
+        }
+        // Subir inmediatamente la imagen para editar
+        this.imagenSubiendoEditar = true;
+        this.imagenUploadService.uploadImage(file).subscribe({
+          next: (imagen: Imagen) => {
+            // Agregar la imagen subida al array de imágenes de la experiencia editada
+            if (this.experienciaEditada) {
+              if (!this.experienciaEditada.imagenes) {
+                this.experienciaEditada.imagenes = [];
+              }
+              this.experienciaEditada.imagenes.push(imagen);
+              // Actualizar preview
+              this.imagenesPreviewsEditar.push(imagen.url);
+            }
+            this.imagenSubiendoEditar = false;
+            this.mostrarMensaje('✅ Imagen agregada exitosamente', 'success');
+          },
+          error: (err) => {
+            this.imagenSubiendoEditar = false;
+            console.error('Error al subir imagen:', err);
+            this.mostrarMensaje('❌ Error al subir la imagen: ' + (err.error?.message || err.message), 'error');
+          }
+        });
       });
+
+      input.value = '';
     }
   }
 
-  eliminarImagenEditar(): void {
-    this.imagenPreviewEditar = null;
-    this.editarExperienciaForm.patchValue({
-      imagenUrl: '',
-      imagenAlt: ''
-    });
+  eliminarImagenEditar(index: number): void {
+    if (!this.experienciaEditada?.imagenes) return;
+    // Eliminar la imagen del array
+    this.experienciaEditada.imagenes.splice(index, 1);
+    // También eliminar el preview si corresponde (para imágenes nuevas)
+    // Pero como solo manejamos previews para imágenes nuevas, y esas ya están en el array,
+    // podemos simplemente actualizar los previews basados en el array actual.
+    this.imagenesPreviewsEditar = this.experienciaEditada.imagenes.map(img => img.url);
+  }
+
+  // 🔥 Getter para contar el total de imágenes en edición
+  get totalImagenesEditar(): number {
+    return (this.experienciaEditada?.imagenes?.length || 0) + this.imagenesPreviewsEditar.length;
   }
 
   // ============================================
@@ -356,69 +399,73 @@ export class EditarExperienciasComponent implements OnInit {
       return;
     }
 
+    if (this.imagenesSeleccionadas.length === 0 && this.imagenesSubidas.length === 0) {
+      this.mostrarMensaje('Debe agregar al menos una imagen', 'error');
+      return;
+    }
+
     this.guardando = true;
     this.errorMessage = '';
     this.successMessage = '';
 
-    let imagen: Imagen | undefined = undefined;
-    const imagenUrl = this.experienciaForm.value.imagenUrl;
-    const imagenAlt = this.experienciaForm.value.imagenAlt;
+    // Primero subir las imágenes pendientes
+    this.subirTodasImagenes().then((imagenes: Imagen[]) => {
+      // Combinar imágenes subidas anteriormente + nuevas
+      const todasLasImagenes = [...this.imagenesSubidas, ...imagenes];
 
-    if (imagenUrl) {
-      imagen = {
-        url: imagenUrl,
-        alt: imagenAlt || `Logo de ${this.experienciaForm.value.titulo}`
+      const nuevaExperiencia: Experiencia = {
+        id: null,
+        titulo: this.experienciaForm.value.titulo,
+        fechaInicioProyecto: this.experienciaForm.value.fechaInicioProyecto,
+        fechaFinProyecto: this.experienciaForm.value.fechaFinProyecto,
+        descripcion: this.experienciaForm.value.descripcion,
+        link: this.experienciaForm.value.link || '',
+        tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
+        tecnologiasUsadas: this.experienciaForm.value.tecnologiasUsadas || [],
+        imagenes: todasLasImagenes
       };
-    }
 
-    const tecnologiasUsadas = this.experienciaForm.value.tecnologiasUsadas || [];
+      console.log('📤 Enviando experiencia a guardar:', JSON.stringify(nuevaExperiencia, null, 2));
 
-    const nuevaExperiencia: Experiencia = {
-      id: null,
-      titulo: this.experienciaForm.value.titulo,
-      fechaInicioProyecto: this.experienciaForm.value.fechaInicioProyecto,
-      fechaFinProyecto: this.experienciaForm.value.fechaFinProyecto,
-      descripcion: this.experienciaForm.value.descripcion,
-      link: this.experienciaForm.value.link || '',
-      tipoExperiencia: this.experienciaForm.value.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasUsadas,
-      imagen: imagen
-    };
-
-    console.log('📤 Enviando experiencia a guardar:', JSON.stringify(nuevaExperiencia, null, 2));
-
-    this.experienciaService.save(nuevaExperiencia).subscribe({
-      next: (experienciaGuardada) => {
-        console.log('✅ Experiencia guardada exitosamente:', experienciaGuardada);
-        
-        this.experiencias = [...this.experiencias, experienciaGuardada];
-        this.successMessage = '✅ Experiencia creada exitosamente';
-        this.experienciaForm.reset();
-        this.guardando = false;
-        
-        this.imagenPreview = null;
-        this.imagenSeleccionada = null;
-        this.imagenProgreso = 0;
-        this.experienciaForm.patchValue({ tecnologiasUsadas: [] });
-        
-        setTimeout(() => {
-          this.successMessage = '';
-          this.cargarExperiencias();
-        }, 2000);
-      },
-      error: (err) => {
-        console.error('❌ Error creando experiencia:', err);
-        this.errorMessage = '❌ Error al crear la experiencia: ' + (err.error?.message || err.message || 'Error desconocido');
-        this.guardando = false;
-      }
+      this.experienciaService.save(nuevaExperiencia).subscribe({
+        next: (experienciaGuardada) => {
+          console.log('✅ Experiencia guardada exitosamente:', experienciaGuardada);
+          
+          this.experiencias = [...this.experiencias, experienciaGuardada];
+          this.successMessage = '✅ Experiencia creada exitosamente';
+          this.experienciaForm.reset();
+          this.guardando = false;
+          
+          // Limpiar imágenes
+          this.imagenesSeleccionadas = [];
+          this.imagenesPreviews = [];
+          this.imagenesSubidas = [];
+          this.imagenProgreso = 0;
+          this.experienciaForm.patchValue({ tecnologiasUsadas: [] });
+          
+          setTimeout(() => {
+            this.successMessage = '';
+            this.cargarExperiencias();
+          }, 2000);
+        },
+        error: (err) => {
+          console.error('❌ Error creando experiencia:', err);
+          this.errorMessage = '❌ Error al crear la experiencia: ' + (err.error?.message || err.message || 'Error desconocido');
+          this.guardando = false;
+        }
+      });
+    }).catch((err) => {
+      console.error('❌ Error al subir imágenes:', err);
+      this.errorMessage = '❌ Error al subir las imágenes: ' + (err.error?.message || err.message || 'Error desconocido');
+      this.guardando = false;
     });
   }
 
   cargarExperienciaParaEditar(experiencia: Experiencia): void {
-    this.experienciaEditada = experiencia;
-    
-    const imagen = experiencia.imagen;
-    const tecnologiasExistentes = experiencia.tecnologiasUsadas || [];
+    this.experienciaEditada = { ...experiencia }; // Copia para no modificar original
+
+    // Cargar imágenes existentes en el array de preview
+    this.imagenesPreviewsEditar = experiencia.imagenes?.map(img => img.url) || [];
     
     this.editarExperienciaForm.patchValue({
       titulo: experiencia.titulo,
@@ -426,17 +473,9 @@ export class EditarExperienciasComponent implements OnInit {
       fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto),
       descripcion: experiencia.descripcion,
       tipoExperiencia: experiencia.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasExistentes,
-      link: experiencia.link || '',
-      imagenUrl: imagen?.url || '',
-      imagenAlt: imagen?.alt || ''
+      tecnologiasUsadas: experiencia.tecnologiasUsadas || [],
+      link: experiencia.link || ''
     });
-    
-    if (imagen?.url) {
-      this.imagenPreviewEditar = imagen.url;
-    } else {
-      this.imagenPreviewEditar = null;
-    }
     
     this.mostrarModalEditar = true;
     this.mensaje = '';
@@ -461,21 +500,13 @@ export class EditarExperienciasComponent implements OnInit {
       return;
     }
 
-    this.actualizando = true;
-    this.mensaje = '';
-
-    let imagen: Imagen | undefined = undefined;
-    const imagenUrl = this.editarExperienciaForm.value.imagenUrl;
-    const imagenAlt = this.editarExperienciaForm.value.imagenAlt;
-
-    if (imagenUrl) {
-      imagen = {
-        url: imagenUrl,
-        alt: imagenAlt || `Logo de ${this.editarExperienciaForm.value.titulo}`
-      };
+    if (this.totalImagenesEditar === 0) {
+      this.mostrarMensaje('Debe tener al menos una imagen', 'error');
+      return;
     }
 
-    const tecnologiasUsadas = this.editarExperienciaForm.value.tecnologiasUsadas || [];
+    this.actualizando = true;
+    this.mensaje = '';
 
     const experienciaActualizada: Experiencia = {
       id: this.experienciaEditada.id,
@@ -485,8 +516,8 @@ export class EditarExperienciasComponent implements OnInit {
       descripcion: this.editarExperienciaForm.value.descripcion,
       link: this.editarExperienciaForm.value.link || '',
       tipoExperiencia: this.editarExperienciaForm.value.tipoExperiencia,
-      tecnologiasUsadas: tecnologiasUsadas,
-      imagen: imagen
+      tecnologiasUsadas: this.editarExperienciaForm.value.tecnologiasUsadas || [],
+      imagenes: this.experienciaEditada.imagenes
     };
 
     console.log('📤 Enviando experiencia a actualizar:', JSON.stringify(experienciaActualizada, null, 2));
@@ -505,7 +536,6 @@ export class EditarExperienciasComponent implements OnInit {
         this.mensaje = '✅ Experiencia actualizada exitosamente';
         this.actualizando = false;
 
-        console.log('Experiencia con ID ' + experienciaActualizada.id + ' actualizada correctamente.');
         localStorage.setItem('experiencias', JSON.stringify(this.experiencias));
         
         setTimeout(() => {
@@ -597,7 +627,7 @@ export class EditarExperienciasComponent implements OnInit {
     this.experienciaEditada = null;
     this.editarExperienciaForm.reset();
     this.mensaje = '';
-    this.imagenPreviewEditar = null;
+    this.imagenesPreviewsEditar = [];
     this.imagenSubiendoEditar = false;
   }
 
