@@ -9,7 +9,7 @@ export interface Experiencia {
     fechaFinProyecto: string | Date;
     descripcion: string;
     link: string;
-    imagen?: Imagen; 
+    imagenes?: Imagen[]; // 🔥 CAMBIO: ahora es un array de imágenes
     tipoExperiencia: TipoExperiencia;
-    tecnologiasUsadas: TecnologiaUsada[]; // 🔥 CAMBIO: ahora es un array
+    tecnologiasUsadas: TecnologiaUsada[];
 }

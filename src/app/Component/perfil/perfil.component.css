@@ -306,5 +306,109 @@ h2 {
   margin-top: 0.25rem !important;
 }
 
+/* ============================================ */
+/* ESTILOS PARA EL CARRUSEL DE IMÁGENES EN MODAL */
+/* ============================================ */
 
+.carrusel-imagenes-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.imagen-carrusel {
+  display: block;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+/* Botones de navegación */
+.btn-carrusel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+}
+
+.btn-carrusel:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.btn-carrusel-prev {
+  left: 0.5rem;
+}
+
+.btn-carrusel-next {
+  right: 0.5rem;
+}
+
+/* Indicadores (puntos) */
+.indicadores-container {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 10;
+}
+
+.indicador-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.indicador-dot.active {
+  background-color: #63b3ed;
+  transform: scale(1.2);
+}
+
+.indicador-dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Contador de imágenes */
+.contador-imagenes {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  z-index: 10;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 576px) {
+  .btn-carrusel {
+    font-size: 1rem;
+    padding: 0.2rem 0.5rem;
+  }
+  .indicador-dot {
+    width: 8px;
+    height: 8px;
+  }
+  .imagen-carrusel {
+    max-height: 180px !important;
+  }
+}
 

@@ -174,7 +174,7 @@
 </div>
 
 <!-- ============================================ -->
-<!-- MODAL DE DETALLES - ACTUALIZADO              -->
+<!-- MODAL DE DETALLES - CON CARRUSEL DE IMÁGENES -->
 <!-- ============================================ -->
 <div class="modal fade" id="experienciaModal" tabindex="-1" aria-labelledby="experienciaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -205,19 +205,53 @@
           </div>
         </div>
 
-        <!-- Imagen -->
-        @if (selectedExperiencia.imagen?.url) {
+        <!-- ============================================ -->
+        <!-- CARRUSEL DE IMÁGENES                         -->
+        <!-- ============================================ -->
         <div class="text-center mb-3">
-          <img [src]="selectedExperiencia.imagen?.url"
-            [alt]="selectedExperiencia.imagen?.alt || selectedExperiencia.titulo" 
-            class="img-fluid rounded"
-            style="max-height: 200px; object-fit: contain;">
+          @if (selectedExperiencia.imagenes && selectedExperiencia.imagenes.length > 0) {
+            <!-- Contenedor del carrusel -->
+            <div class="carrusel-imagenes-container position-relative">
+              <!-- Imagen actual -->
+              <img [src]="selectedExperiencia.imagenes[imagenActualIndex]?.url"
+                   [alt]="selectedExperiencia.imagenes[imagenActualIndex]?.alt || selectedExperiencia.titulo"
+                   class="img-fluid rounded imagen-carrusel"
+                   style="max-height: 250px; object-fit: contain; width: 100%;">
+
+              <!-- Botones de navegación -->
+              @if (selectedExperiencia.imagenes.length > 1) {
+                <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-prev"
+                        (click)="anteriorImagen()" type="button">
+                  &#10094;
+                </button>
+                <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-next"
+                        (click)="siguienteImagen()" type="button">
+                  &#10095;
+                </button>
+
+                <!-- Indicadores (puntos) -->
+                <div class="indicadores-container">
+                  @for (imagen of selectedExperiencia.imagenes; track $index) {
+                    <span class="indicador-dot"
+                          [class.active]="$index === imagenActualIndex"
+                          (click)="irAImagen($index)">
+                    </span>
+                  }
+                </div>
+
+                <!-- Contador de imágenes -->
+                <div class="contador-imagenes text-muted small">
+                  {{ imagenActualIndex + 1 }} / {{ selectedExperiencia.imagenes.length }}
+                </div>
+              }
+            </div>
+          } @else {
+            <!-- Sin imágenes -->
+            <div class="text-center text-muted mb-3">
+              <p>📷 No hay imágenes disponibles</p>
+            </div>
+          }
         </div>
-        } @else {
-        <div class="text-center text-muted mb-3">
-          <p>📷 No hay imagen disponible</p>
-        </div>
-        }
 
         <!-- Descripción completa con scroll interno -->
         <div class="mb-3">

@@ -22,6 +22,8 @@ export class PerfilComponent implements OnInit {
   // Propiedades para el popup/modal
   showModal: boolean = false;
   selectedExperiencia: Experiencia | null = null;
+  // 🔥 Índice de la imagen actual en el carrusel
+  imagenActualIndex: number = 0;
 
   usuario: Usuario = {
     id: 0,
@@ -80,14 +82,13 @@ export class PerfilComponent implements OnInit {
     this.cargarExperiencias();
   }
 
-  // Método para abrir el modal con Bootstrap
+  // 🔥 Método para abrir el modal con Bootstrap y resetear índice de imagen
   abrirModal(experiencia: Experiencia): void {
     console.log('Abriendo modal para:', experiencia.titulo);
-    
     this.selectedExperiencia = experiencia;
+    this.imagenActualIndex = 0; // Reiniciar índice al abrir
     this.showModal = true;
     
-    // Usar Bootstrap modal si está disponible
     const modalElement = document.getElementById('experienciaModal');
     if (modalElement) {
       // @ts-ignore
@@ -100,6 +101,25 @@ export class PerfilComponent implements OnInit {
   cerrarModal(): void {
     this.showModal = false;
     this.selectedExperiencia = null;
+  }
+
+  // 🔥 Métodos para navegación del carrusel de imágenes
+  siguienteImagen(): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    this.imagenActualIndex = (this.imagenActualIndex + 1) % this.selectedExperiencia.imagenes.length;
+  }
+
+  anteriorImagen(): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    this.imagenActualIndex = (this.imagenActualIndex - 1 + this.selectedExperiencia.imagenes.length) % this.selectedExperiencia.imagenes.length;
+  }
+
+  // Método para ir a una imagen específica (por puntos)
+  irAImagen(index: number): void {
+    if (!this.selectedExperiencia?.imagenes?.length) return;
+    if (index >= 0 && index < this.selectedExperiencia.imagenes.length) {
+      this.imagenActualIndex = index;
+    }
   }
 
   // Método para abrir el link
