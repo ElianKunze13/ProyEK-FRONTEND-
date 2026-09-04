@@ -470,7 +470,7 @@ export class EditarExperienciasComponent implements OnInit {
     this.editarExperienciaForm.patchValue({
       titulo: experiencia.titulo,
       fechaInicioProyecto: this.formatDateForInput(experiencia.fechaInicioProyecto),
-      fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto),
+      fechaFinProyecto: this.formatDateForInput(experiencia.fechaFinProyecto) || null,
       descripcion: experiencia.descripcion,
       tipoExperiencia: experiencia.tipoExperiencia,
       tecnologiasUsadas: experiencia.tecnologiasUsadas || [],
