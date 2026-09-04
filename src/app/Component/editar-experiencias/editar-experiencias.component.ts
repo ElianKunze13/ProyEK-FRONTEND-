@@ -357,7 +357,7 @@ export class EditarExperienciasComponent implements OnInit {
               }
               this.experienciaEditada.imagenes.push(imagen);
               // Actualizar preview
-              this.imagenesPreviewsEditar.push(imagen.url);
+              //this.imagenesPreviewsEditar.push(imagen.url);
             }
             this.imagenSubiendoEditar = false;
             this.mostrarMensaje('✅ Imagen agregada exitosamente', 'success');
@@ -386,7 +386,7 @@ export class EditarExperienciasComponent implements OnInit {
 
   // 🔥 Getter para contar el total de imágenes en edición
   get totalImagenesEditar(): number {
-    return (this.experienciaEditada?.imagenes?.length || 0) + this.imagenesPreviewsEditar.length;
+    return (this.experienciaEditada?.imagenes?.length || 0) //+ this.imagenesPreviewsEditar.length;
   }
 
   // ============================================
