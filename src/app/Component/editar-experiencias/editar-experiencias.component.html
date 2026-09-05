@@ -682,7 +682,9 @@
               <button type="button" class="btn-close" (click)="cancelarEliminacion()">×</button>
             </div>
             <div class="modal-body text-center">
-              <p class="mb-4">¿Estás seguro de que deseas eliminar la experiencia <strong>"{{experienciaAEliminar?.titulo}}"</strong>?</p>
+              <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
+              <p class="mb-4">¿Estás seguro de que deseas eliminar la experiencia
+                 <strong>"{{experienciaAEliminar?.titulo}}"</strong>?</p>
               <p class="text-sm text-gray-500">Esta acción no se puede deshacer.</p>
               <div class="d-flex justify-content-center gap-3 mt-4">
                 <button type="button" class="btn btn-secondary" (click)="cancelarEliminacion()">Cancelar</button>
