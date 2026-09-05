@@ -123,7 +123,7 @@ findIA(): Observable<Conocimiento[]> {
   }
       
   delete(id: number): Observable<any> {
-    return this.http.delete<void>(this.apiUrl + '/borrrar/conocimiento/' + id)
+    return this.http.delete<void>(this.apiUrl + '/borrar/conocimiento/' + id)
       .pipe(
         catchError(error => {
           console.error('Error fetching conocimientos:', error);
