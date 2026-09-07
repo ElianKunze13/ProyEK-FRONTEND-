@@ -22,9 +22,9 @@
               <input type="text" formControlName="titulo" class="form-control"
                 placeholder="Nombre del proyecto o experiencia">
               @if (experienciaForm.get('titulo')?.invalid && experienciaForm.get('titulo')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  El título es requerido (mínimo 2 caracteres)
-                </div>
+              <div class="text-red-500 text-sm mt-1">
+                El título es requerido (mínimo 2 caracteres)
+              </div>
               }
             </div>
 
@@ -32,10 +32,11 @@
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Inicio *</label>
               <input type="date" formControlName="fechaInicioProyecto" title="fechaInicioProyecto" class="form-control">
-              @if (experienciaForm.get('fechaInicioProyecto')?.invalid && experienciaForm.get('fechaInicioProyecto')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  La fecha de inicio es requerida
-                </div>
+              @if (experienciaForm.get('fechaInicioProyecto')?.invalid &&
+              experienciaForm.get('fechaInicioProyecto')?.touched) {
+              <div class="text-red-500 text-sm mt-1">
+                La fecha de inicio es requerida
+              </div>
               }
             </div>
 
@@ -43,10 +44,11 @@
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Fin *</label>
               <input type="date" formControlName="fechaFinProyecto" title="fechaFinProyecto" class="form-control">
-              @if (experienciaForm.get('fechaFinProyecto')?.invalid && experienciaForm.get('fechaFinProyecto')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  La fecha de fin es requerida
-                </div>
+              @if (experienciaForm.get('fechaFinProyecto')?.invalid && experienciaForm.get('fechaFinProyecto')?.touched)
+              {
+              <div class="text-red-500 text-sm mt-1">
+                La fecha de fin es requerida
+              </div>
               }
             </div>
 
@@ -56,17 +58,16 @@
               <textarea formControlName="descripcion" class="form-control resize-none" rows="3"
                 placeholder="Descripción detallada de la experiencia..."></textarea>
               @if (experienciaForm.get('descripcion')?.invalid && experienciaForm.get('descripcion')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  La descripción es requerida (mínimo 10 caracteres)
-                </div>
+              <div class="text-red-500 text-sm mt-1">
+                La descripción es requerida (mínimo 10 caracteres)
+              </div>
               }
             </div>
 
             <!-- Link (opcional) -->
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Link del proyecto (opcional)</label>
-              <input type="url" formControlName="link" class="form-control"
-                placeholder="https://ejemplo.com/proyecto">
+              <input type="url" formControlName="link" class="form-control" placeholder="https://ejemplo.com/proyecto">
             </div>
 
             <!-- Tipo de Experiencia -->
@@ -75,15 +76,15 @@
               <select formControlName="tipoExperiencia" title="tipoExperiencia" class="form-control">
                 <option value="">Seleccionar tipo</option>
                 @for (tipo of tiposExperiencia; track tipo.value) {
-                  <option [value]="tipo.value">
-                    {{ tipo.label }}
-                  </option>
+                <option [value]="tipo.value">
+                  {{ tipo.label }}
+                </option>
                 }
               </select>
               @if (experienciaForm.get('tipoExperiencia')?.invalid && experienciaForm.get('tipoExperiencia')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  Debe seleccionar un tipo de experiencia
-                </div>
+              <div class="text-red-500 text-sm mt-1">
+                Debe seleccionar un tipo de experiencia
+              </div>
               }
             </div>
 
@@ -92,34 +93,35 @@
               <label class="block mb-2 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
               <div class="tecnologias-grid">
                 @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
-                  <div class="tecnologia-checkbox" 
-                       (click)="toggleTecnologia(tecnologia.value)"
-                       [style.background-color]="isTecnologiaSeleccionada(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
-                    <input type="checkbox" 
-                           [checked]="isTecnologiaSeleccionada(tecnologia.value)"
-                           (change)="toggleTecnologia(tecnologia.value)"
-                           style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
-                    <span class="tecnologia-label">
-                      {{ tecnologia.label }}
-                    </span>
-                  </div>
+                <div class="tecnologia-checkbox" (click)="toggleTecnologia(tecnologia.value)"
+                  [style.background-color]="isTecnologiaSeleccionada(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
+                  <input type="checkbox" [checked]="isTecnologiaSeleccionada(tecnologia.value)"
+                    (change)="toggleTecnologia(tecnologia.value)"
+                    style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
+                  <span class="tecnologia-label">
+                    {{ tecnologia.label }}
+                  </span>
+                </div>
                 }
               </div>
-              @if (experienciaForm.get('tecnologiasUsadas')?.invalid && experienciaForm.get('tecnologiasUsadas')?.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  Debe seleccionar al menos una tecnología
-                </div>
+              @if (experienciaForm.get('tecnologiasUsadas')?.invalid &&
+              experienciaForm.get('tecnologiasUsadas')?.touched) {
+              <div class="text-red-500 text-sm mt-1">
+                Debe seleccionar al menos una tecnología
+              </div>
               }
               <!-- Mostrar tecnologías seleccionadas como badges -->
               @if (experienciaForm.get('tecnologiasUsadas')?.value?.length > 0) {
-                <div class="mt-2 d-flex flex-wrap gap-1">
-                  @for (tecnologia of experienciaForm.get('tecnologiasUsadas')?.value; track $index) {
-                    <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
-                      {{getTecnologiaDisplay(tecnologia)}}
-                      <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;" (click)="toggleTecnologia(tecnologia)">×</span>
-                    </span>
-                  }
-                </div>
+              <div class="mt-2 d-flex flex-wrap gap-1">
+                @for (tecnologia of experienciaForm.get('tecnologiasUsadas')?.value; track $index) {
+                <span class="badge {{getTecnologiaColor(tecnologia)}}"
+                  style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                  {{getTecnologiaDisplay(tecnologia)}}
+                  <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;"
+                    (click)="toggleTecnologia(tecnologia)">×</span>
+                </span>
+                }
+              </div>
               }
             </div>
 
@@ -128,39 +130,36 @@
             <!-- ============================================ -->
             <div class="form-group">
               <label class="block mb-2 text-sm font-medium text-gray-700">Imágenes del proyecto (máx 5)</label>
-              
+
               <div class="file-input-wrapper">
-                <div 
-                  class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                <div class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
                   [class.border-gray-300]="imagenesPreviews.length === 0"
-                  [class.border-blue-500]="imagenesPreviews.length > 0"
-                  style="background-color: #f9fafb;">
-                  
+                  [class.border-blue-500]="imagenesPreviews.length > 0" style="background-color: #f9fafb;">
+
                   <!-- Previsualizaciones en grid -->
                   @if (imagenesPreviews.length > 0) {
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
-                      @for (preview of imagenesPreviews; track $index) {
-                        <div class="relative inline-block">
-                          <img [src]="preview" alt="Preview de imagen" class="w-full h-32 object-cover rounded-lg shadow-md">
-                          <button 
-                            type="button" 
-                            (click)="eliminarImagenSeleccionada($index)"
-                            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
-                            title="Eliminar imagen">
-                            ×
-                          </button>
-                        </div>
-                      }
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
+                    @for (preview of imagenesPreviews; track $index) {
+                    <div class="relative inline-block">
+                      <img [src]="preview" alt="Preview de imagen"
+                        class="w-full h-32 object-cover rounded-lg shadow-md">
+                      <button type="button" (click)="eliminarImagenSeleccionada($index)"
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                        title="Eliminar imagen">
+                        ×
+                      </button>
                     </div>
+                    }
+                  </div>
                   }
-                  
+
                   <!-- Mensaje cuando no hay imágenes -->
                   @if (imagenesPreviews.length === 0) {
-                    <div>
-                      <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                      <p class="text-gray-600">Arrastra o haz clic para subir imágenes</p>
-                      <p class="text-gray-400 text-sm">PNG, JPG o WEBP (máx 5MB cada una)</p>
-                    </div>
+                  <div>
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                    <p class="text-gray-600">Arrastra o haz clic para subir imágenes</p>
+                    <p class="text-gray-400 text-sm">PNG, JPG o WEBP (máx 5MB cada una)</p>
+                  </div>
                   }
 
                   <!-- Contador y botón de selección -->
@@ -168,41 +167,30 @@
                     <span class="text-sm text-gray-600">
                       {{ imagenesPreviews.length + imagenesSubidas.length }} / {{ maxImagenes }} imágenes
                     </span>
-                    @if ((imagenesPreviews.length + imagenesSubidas.length) < maxImagenes) {
-                      <input 
-                        type="file" 
-                        accept="image/*"
-                        multiple
-                        (change)="onFileSelected($event)"
-                        class="hidden"
-                        aria-label="Subir imágenes del proyecto"
-                        title="Subir imágenes del proyecto"
-                        #fileInput>
-                      <button 
-                        type="button"
-                        (click)="fileInput.click()"
-                        class="btn btn-primary"
+                    @if ((imagenesPreviews.length + imagenesSubidas.length) < maxImagenes) { <input type="file"
+                      accept="image/*" multiple (change)="onFileSelected($event)" class="hidden"
+                      aria-label="Subir imágenes del proyecto" title="Subir imágenes del proyecto" #fileInput>
+                      <button type="button" (click)="fileInput.click()" class="btn btn-primary"
                         style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
                         <i class="fas fa-plus-circle mr-1"></i> Agregar imagen
                       </button>
-                    } @else {
+                      } @else {
                       <span class="text-sm text-gray-500">Límite de imágenes alcanzado</span>
-                    }
+                      }
                   </div>
 
                   <!-- Barra de progreso (subida) -->
                   @if (imagenSubiendo) {
-                    <div class="mt-4">
-                      <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div 
-                          class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-                          [style.width.%]="imagenProgreso">
-                        </div>
+                  <div class="mt-4">
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                      <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                        [style.width.%]="imagenProgreso">
                       </div>
-                      <p class="text-sm text-gray-500 mt-2">
-                        Subiendo imágenes... {{imagenProgreso}}%
-                      </p>
                     </div>
+                    <p class="text-sm text-gray-500 mt-2">
+                      Subiendo imágenes... {{imagenProgreso}}%
+                    </p>
+                  </div>
                   }
                 </div>
               </div>
@@ -210,24 +198,24 @@
 
             <!-- Mensajes de error/success -->
             @if (errorMessage) {
-              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {{ errorMessage }}
-              </div>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {{ errorMessage }}
+            </div>
             }
 
             @if (successMessage) {
-              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                {{ successMessage }}
-              </div>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+              {{ successMessage }}
+            </div>
             }
 
             <button type="submit" [disabled]="experienciaForm.invalid || guardando || imagenSubiendo"
               class="btn-primary w-full py-3 flex items-center justify-center">
               <i class="fas fa-plus-circle mr-2"></i>
               @if (!guardando) {
-                <span>Añadir experiencia</span>
+              <span>Añadir experiencia</span>
               } @else {
-                <span>Guardando...</span>
+              <span>Guardando...</span>
               }
             </button>
           </form>
@@ -239,364 +227,368 @@
       <!-- LISTA DE EXPERIENCIAS                        -->
       <!-- ============================================ -->
       @if (experiencias.length > 0) {
-        <div class="animated-border-card mb-8">
-          <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">
-            Todas las experiencias ({{experiencias.length}})
-          </h3>
+      <div class="animated-border-card mb-8">
+        <h3 class="text-xl text-center font-bold mb-6" style="color: rgb(255, 255, 255);">
+          Todas las experiencias ({{experiencias.length}})
+        </h3>
 
-          <div class="row g-4">
-            @for (experiencia of experiencias; track experiencia.id) {
-              <div class="col-12 col-sm-6 col-lg-4 d-flex">
-                <div class="card experiencia-card w-100 h-100">
-                  <div class="card-body d-flex flex-column w-100" style="position: relative;">
+        <div class="row g-4">
+          @for (experiencia of experiencias; track experiencia.id) {
+          <div class="col-12 col-sm-6 col-lg-4 d-flex">
+            <div class="card experiencia-card w-100 h-100">
+              <div class="card-body d-flex flex-column w-100" style="position: relative;">
 
-                    <!-- BOTONES DE ACCIÓN -->
-                    <div class="action-buttons">
-                      <button type="button" class="btn btn-action btn-editar" 
-                        (click)="cargarExperienciaParaEditar(experiencia)" 
-                        title="Editar experiencia">
-                        ✏️
-                      </button>
+                <!-- BOTONES DE ACCIÓN -->
+                <div class="action-buttons">
+                  <button type="button" class="btn btn-action btn-editar"
+                    (click)="cargarExperienciaParaEditar(experiencia)" title="Editar experiencia">
+                    ✏️
+                  </button>
 
-                      <button type="button" class="btn btn-action btn-eliminar" 
-                        (click)="confirmarEliminacion(experiencia)" 
-                        title="Eliminar experiencia">
-                        🗑️
-                      </button>
-                    </div>
+                  <button type="button" class="btn btn-action btn-eliminar" (click)="confirmarEliminacion(experiencia)"
+                    title="Eliminar experiencia">
+                    🗑️
+                  </button>
+                </div>
 
-                    <!-- Título -->
-                    <h5 class="card-title text-white font-bold mb-2" style="padding-right: 50px;">
-                      {{experiencia.titulo}}
-                    </h5>
+                <!-- Título -->
+                <h5 class="card-title text-white font-bold mb-2" style="padding-right: 50px;">
+                  {{experiencia.titulo}}
+                </h5>
 
-                    <!-- Fechas -->
-                    <div class="fechas-container mb-3">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <span class="fecha-label">
-                          <i class="fas fa-calendar-alt me-1"></i>
-                          <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
-                        </span>
-                        <span class="fecha-separador">→</span>
-                        <span class="fecha-label">
-                          <i class="fas fa-calendar-check me-1"></i>
-                          <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' : 'PENDIENTE'}}</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- Tipo de proyecto -->
-                    <div class="mb-2">
-                      <span class="badge bg-secondary">
-                        {{ getTipoExperienciaLabel(experiencia.tipoExperiencia) }}
-                      </span>
-                    </div>
-
-                    <!-- TECNOLOGÍAS USADAS - BADGES EN LA LISTA -->
-                    <div class="mb-3">
-                      <div class="d-flex flex-wrap gap-1">
-                        @if (experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0) {
-                          @for (tecnologia of experiencia.tecnologiasUsadas; track $index) {
-                            <span class="badge {{getTecnologiaColor(tecnologia)}}">
-                              {{getTecnologiaDisplay(tecnologia)}}
-                            </span>
-                          }
-                        } @else {
-                          <span class="text-muted" style="font-size: 0.75rem;">Sin tecnologías</span>
-                        }
-                      </div>
-                    </div>
-
-                    <!-- Imagen del proyecto (ahora usando el array) -->
-                    @if (experiencia.imagenes && experiencia.imagenes.length > 0) {
-                      <div class="mb-3 text-center">
-                        <img 
-                          [src]="experiencia.imagenes[0]?.url" 
-                          [alt]="experiencia.imagenes[0]?.alt || 'Imagen de la experiencia'" 
-                          class="rounded experiencia-imagen">
-                        @if (experiencia.imagenes.length > 1) {
-                          <span class="badge bg-primary ms-2" style="font-size: 0.6rem;">
-                            +{{experiencia.imagenes.length - 1}} más
-                          </span>
-                        }
-                      </div>
-                    } @else {
-                      <div class="mb-3 text-center text-muted small" style="color: #e2e8f0">
-                        <i class="fas fa-image me-1"></i> Sin imágenes
-                      </div>
-                    }
-
-                    <!-- Descripción truncada -->
-                    <p class="card-text text-gray-300 flex-grow-1 small">
-                      {{ experiencia.descripcion | slice:0:100 }}{{ experiencia.descripcion.length > 100 ? '...' : '' }}
-                    </p>
-
-                    <!-- Botón Ver detalles -->
-                    <button class="btn btn-primary w-100 mt-auto" 
-                      (click)="abrirModalDetalles(experiencia)">
-                      🔍 Ver más detalles
-                    </button>
+                <!-- Fechas -->
+                <div class="fechas-container mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="fecha-label">
+                      <i class="fas fa-calendar-alt me-1"></i>
+                      <span class="fecha-valor">{{ experiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}</span>
+                    </span>
+                    <span class="fecha-separador">→</span>
+                    <span class="fecha-label">
+                      <i class="fas fa-calendar-check me-1"></i>
+                      <span class="fecha-valor">{{ experiencia.fechaFinProyecto | date:'dd/MM/yyyy' :
+                        'PENDIENTE'}}</span>
+                    </span>
                   </div>
                 </div>
+
+                <!-- Tipo de proyecto -->
+                <div class="mb-2">
+                  <span class="badge bg-secondary">
+                    {{ getTipoExperienciaLabel(experiencia.tipoExperiencia) }}
+                  </span>
+                </div>
+
+                <!-- TECNOLOGÍAS USADAS - BADGES EN LA LISTA -->
+                <div class="mb-3">
+                  <div class="d-flex flex-wrap gap-1">
+                    @if (experiencia.tecnologiasUsadas && experiencia.tecnologiasUsadas.length > 0) {
+                    @for (tecnologia of experiencia.tecnologiasUsadas; track $index) {
+                    <span class="badge {{getTecnologiaColor(tecnologia)}}">
+                      {{getTecnologiaDisplay(tecnologia)}}
+                    </span>
+                    }
+                    } @else {
+                    <span class="text-muted" style="font-size: 0.75rem;">Sin tecnologías</span>
+                    }
+                  </div>
+                </div>
+
+                <!-- Imagen del proyecto (ahora usando el array) -->
+                @if (experiencia.imagenes && experiencia.imagenes.length > 0) {
+                <div class="mb-3 text-center">
+                  <img [src]="experiencia.imagenes[0]?.url"
+                    [alt]="experiencia.imagenes[0]?.alt || 'Imagen de la experiencia'"
+                    class="rounded experiencia-imagen">
+                  @if (experiencia.imagenes.length > 1) {
+                  <span class="badge bg-primary ms-2" style="font-size: 0.6rem;">
+                    +{{experiencia.imagenes.length - 1}} más
+                  </span>
+                  }
+                </div>
+                } @else {
+                <div class="mb-3 text-center text-muted small" style="color: #e2e8f0">
+                  <i class="fas fa-image me-1"></i> Sin imágenes
+                </div>
+                }
+
+                <!-- Descripción truncada -->
+                <p class="card-text text-gray-300 flex-grow-1 small">
+                  {{ experiencia.descripcion | slice:0:100 }}{{ experiencia.descripcion.length > 100 ? '...' : '' }}
+                </p>
+
+                <!-- Botón Ver detalles -->
+                <button class="btn btn-primary w-100 mt-auto" (click)="abrirModalDetalles(experiencia)">
+                  🔍 Ver más detalles
+                </button>
               </div>
-            }
+            </div>
           </div>
+          }
         </div>
+      </div>
       } @else {
-        <div class="text-center py-8">
-          <p class="text-gray-500">No hay experiencias registradas aún. Agrega la primera.</p>
-        </div>
+      <div class="text-center py-8">
+        <p class="text-gray-500">No hay experiencias registradas aún. Agrega la primera.</p>
+      </div>
       }
 
       <!-- ============================================ -->
       <!-- MODAL DE DETALLES (con carrusel de imágenes)  -->
       <!-- ============================================ -->
       @if (selectedExperiencia) {
-        <div class="modal-overlay" (click)="cerrarModalDetalles()">
-          <div class="modal-content bg-dark text-white" (click)="$event.stopPropagation()" style="max-width: 600px;">
-            <div class="modal-header border-secondary">
-              <h5 class="modal-title">Detalles del Proyecto</h5>
-              <button type="button" class="btn-close" (click)="cerrarModalDetalles()">×</button>
+      <div class="modal-overlay" (click)="cerrarModalDetalles()">
+        <div class="modal-content bg-dark text-white" (click)="$event.stopPropagation()" style="max-width: 600px;">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title">Detalles del Proyecto</h5>
+            <button type="button" class="btn-close" (click)="cerrarModalDetalles()">×</button>
+          </div>
+          <div class="modal-body" style="max-height: 70vh; overflow-y: auto; color: #e2e8f0;">
+            <!-- Título -->
+            <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
+
+            <!-- Fechas -->
+            <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  <i class="fas fa-calendar-alt me-2"></i>
+                  <strong>Inicio:</strong>
+                  {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+                </span>
+                <span class="fecha-separador-modal">→</span>
+                <span>
+                  <i class="fas fa-calendar-check me-2"></i>
+                  <strong>Fin:</strong>
+                  {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' : 'PENDIENTE' }}
+                </span>
+              </div>
             </div>
-            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; color: #e2e8f0;">
-              <!-- Título -->
-              <h4 class="mb-3 text-center">{{selectedExperiencia.titulo}}</h4>
 
-              <!-- Fechas -->
-              <div class="fechas-modal mb-3 p-2 bg-secondary bg-opacity-25 rounded">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span>
-                    <i class="fas fa-calendar-alt me-2"></i>
-                    <strong>Inicio:</strong>
-                    {{ selectedExperiencia.fechaInicioProyecto | date:'dd/MM/yyyy' }}
+            <!-- CARRUSEL DE IMÁGENES (similar al de perfil) -->
+            <div class="text-center mb-3">
+              @if (selectedExperiencia.imagenes && selectedExperiencia.imagenes.length > 0) {
+              <div class="carrusel-imagenes-container position-relative">
+                <img [src]="selectedExperiencia.imagenes[imagenActualIndex]?.url"
+                  [alt]="selectedExperiencia.imagenes[imagenActualIndex]?.alt || selectedExperiencia.titulo"
+                  class="img-fluid rounded imagen-carrusel"
+                  style="max-height: 250px; object-fit: contain; width: 100%;">
+
+                @if (selectedExperiencia.imagenes.length > 1) {
+                <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-prev" (click)="anteriorImagen()"
+                  type="button">
+                  &#10094;
+                </button>
+                <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-next" (click)="siguienteImagen()"
+                  type="button">
+                  &#10095;
+                </button>
+                <div class="indicadores-container">
+                  @for (imagen of selectedExperiencia.imagenes; track $index) {
+                  <span class="indicador-dot" [class.active]="$index === imagenActualIndex" (click)="irAImagen($index)">
                   </span>
-                  <span class="fecha-separador-modal">→</span>
-                  <span>
-                    <i class="fas fa-calendar-check me-2"></i>
-                    <strong>Fin:</strong>
-                    {{ selectedExperiencia.fechaFinProyecto | date:'dd/MM/yyyy' : 'PENDIENTE' }}
-                  </span>
-                </div>
-              </div>
-
-              <!-- CARRUSEL DE IMÁGENES (similar al de perfil) -->
-              <div class="text-center mb-3">
-                @if (selectedExperiencia.imagenes && selectedExperiencia.imagenes.length > 0) {
-                  <div class="carrusel-imagenes-container position-relative">
-                    <img [src]="selectedExperiencia.imagenes[imagenActualIndex]?.url"
-                         [alt]="selectedExperiencia.imagenes[imagenActualIndex]?.alt || selectedExperiencia.titulo"
-                         class="img-fluid rounded imagen-carrusel"
-                         style="max-height: 250px; object-fit: contain; width: 100%;">
-
-                    @if (selectedExperiencia.imagenes.length > 1) {
-                      <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-prev"
-                              (click)="anteriorImagen()" type="button">
-                        &#10094;
-                      </button>
-                      <button class="btn btn-secondary btn-sm btn-carrusel btn-carrusel-next"
-                              (click)="siguienteImagen()" type="button">
-                        &#10095;
-                      </button>
-                      <div class="indicadores-container">
-                        @for (imagen of selectedExperiencia.imagenes; track $index) {
-                          <span class="indicador-dot"
-                                [class.active]="$index === imagenActualIndex"
-                                (click)="irAImagen($index)">
-                          </span>
-                        }
-                      </div>
-                      <div class="contador-imagenes text-muted small">
-                        {{ imagenActualIndex + 1 }} / {{ selectedExperiencia.imagenes.length }}
-                      </div>
-                    }
-                  </div>
-                } @else {
-                  <div class="text-center text-muted mb-3">
-                    <p style="color: #e2e8f0;">📷 No hay imágenes disponibles</p>
-                  </div>
-                }
-              </div>
-
-              <!-- Descripción -->
-              <div class="mb-3">
-                <h6>Descripción:</h6>
-                <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
-                  style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
-                  {{selectedExperiencia.descripcion}}
-                </div>
-              </div>
-
-              <!-- Tipo de experiencia -->
-              <div class="mb-2">
-                <strong>Tipo de proyecto:</strong>
-                <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
-              </div>
-
-              <!-- Tecnologías -->
-              <div class="mb-3">
-                <strong>Tecnologías usadas:</strong>
-                <div class="d-flex flex-wrap gap-1 mt-1">
-                  @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
-                    @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
-                      <span class="badge {{getTecnologiaColor(tecnologia)}}">
-                        {{getTecnologiaDisplay(tecnologia)}}
-                      </span>
-                    }
-                  } @else {
-                    <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
                   }
                 </div>
+                <div class="contador-imagenes text-muted small">
+                  {{ imagenActualIndex + 1 }} / {{ selectedExperiencia.imagenes.length }}
+                </div>
+                }
               </div>
-
-              <!-- Link -->
-              @if (selectedExperiencia.link) {
-                <div class="text-center">
-                  <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                    🔗 Visitar proyecto
-                  </a>
-                </div>
               } @else {
-                <div class="text-center text-muted">
-                  <p style="color: #e2e8f0;">🔗 No hay enlace disponible</p>
-                </div>
+              <div class="text-center text-muted mb-3">
+                <p style="color: #e2e8f0;">📷 No hay imágenes disponibles</p>
+              </div>
               }
             </div>
-            <!--actualizar estilo de btn cerrar para que tenga espaciado con lateral derecho y debajo-->
-            <div class="modal-footer border-secondary" style="padding: 1rem 1.5rem 1rem 1.5rem;">
-            <button type="button" class="btn btn-secondary" (click)="cerrarModalDetalles()" style="margin-right: 1rem; margin-bottom: 0.25rem;">Cerrar</button>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+              <h6>Descripción:</h6>
+              <div class="descripcion-modal p-2 bg-dark bg-opacity-25 rounded"
+                style="max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+                {{selectedExperiencia.descripcion}}
+              </div>
             </div>
+
+            <!-- Tipo de experiencia -->
+            <div class="mb-2">
+              <strong>Tipo de proyecto:</strong>
+              <span class="badge bg-secondary">{{selectedExperiencia.tipoExperiencia}}</span>
+            </div>
+
+            <!-- Tecnologías -->
+            <div class="mb-3">
+              <strong>Tecnologías usadas:</strong>
+              <div class="d-flex flex-wrap gap-1 mt-1">
+                @if (selectedExperiencia.tecnologiasUsadas && selectedExperiencia.tecnologiasUsadas.length > 0) {
+                @for (tecnologia of selectedExperiencia.tecnologiasUsadas; track $index) {
+                <span class="badge {{getTecnologiaColor(tecnologia)}}">
+                  {{getTecnologiaDisplay(tecnologia)}}
+                </span>
+                }
+                } @else {
+                <span class="text-muted" style="font-size: 0.8rem;">Sin tecnologías especificadas</span>
+                }
+              </div>
+            </div>
+
+            <!-- Link -->
+            @if (selectedExperiencia.link) {
+            <div class="text-center">
+              <a [href]="selectedExperiencia.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                🔗 Visitar proyecto
+              </a>
+            </div>
+            } @else {
+            <div class="text-center text-muted">
+              <p style="color: #e2e8f0;">🔗 No hay enlace disponible</p>
+            </div>
+            }
+          </div>
+          
+
+          <!--actualizar estilo de btn cerrar para que tenga espaciado con lateral derecho y debajo-->
+          <div class="modal-footer border-secondary"
+            style="padding: 1.25rem 1.5rem; display: flex; justify-content: flex-end; align-items: center;">
+            <button type="button" class="btn btn-secondary" (click)="cerrarModalDetalles()"
+              style="margin-right: 1rem; margin-bottom: 0.25rem; padding: 0.5rem 2rem;">Cerrar</button>
           </div>
         </div>
+      </div>
       }
 
       <!-- ============================================ -->
       <!-- MODAL DE EDICIÓN (con múltiples imágenes)     -->
       <!-- ============================================ -->
       @if (mostrarModalEditar) {
-        <div class="modal-overlay" (click)="cerrarModalEditar()">
-          <div class="modal-content" (click)="$event.stopPropagation()" style="max-width: 650px;">
-            <div class="modal-header border-secondary">
-              <h3 class="modal-title">Editar Experiencia</h3>
-              <button type="button" class="btn-close" (click)="cerrarModalEditar()">×</button>
-            </div>
-            <div class="modal-body">
-              <form [formGroup]="editarExperienciaForm" (ngSubmit)="actualizarExperiencia()">
-                <!-- Título -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
-                  <input type="text" formControlName="titulo" class="form-control" placeholder="Nombre del proyecto">
-                  @if (editarExperienciaForm.get('titulo')?.invalid && editarExperienciaForm.get('titulo')?.touched) {
-                    <div class="text-red-500 text-sm mt-1">El título es requerido (mínimo 2 caracteres)</div>
-                  }
-                </div>
+      <div class="modal-overlay" (click)="cerrarModalEditar()">
+        <div class="modal-content" (click)="$event.stopPropagation()" style="max-width: 650px;">
+          <div class="modal-header border-secondary">
+            <h3 class="modal-title">Editar Experiencia</h3>
+            <button type="button" class="btn-close" (click)="cerrarModalEditar()">×</button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="editarExperienciaForm" (ngSubmit)="actualizarExperiencia()">
+              <!-- Título -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Título *</label>
+                <input type="text" formControlName="titulo" class="form-control" placeholder="Nombre del proyecto">
+                @if (editarExperienciaForm.get('titulo')?.invalid && editarExperienciaForm.get('titulo')?.touched) {
+                <div class="text-red-500 text-sm mt-1">El título es requerido (mínimo 2 caracteres)</div>
+                }
+              </div>
 
-                <!-- Fechas -->
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Inicio *</label>
-                      <input type="date" formControlName="fechaInicioProyecto" class="form-control">
-                      @if (editarExperienciaForm.get('fechaInicioProyecto')?.invalid && editarExperienciaForm.get('fechaInicioProyecto')?.touched) {
-                        <div class="text-red-500 text-sm mt-1">Requerido</div>
-                      }
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Fin *</label>
-                      <input type="date" formControlName="fechaFinProyecto" class="form-control">
-                      @if (editarExperienciaForm.get('fechaFinProyecto')?.invalid && editarExperienciaForm.get('fechaFinProyecto')?.touched) {
-                        <div class="text-red-500 text-sm mt-1">Requerido</div>
-                      }
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Descripción -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
-                  <textarea formControlName="descripcion" class="form-control" rows="3" placeholder="Descripción detallada..."></textarea>
-                  @if (editarExperienciaForm.get('descripcion')?.invalid && editarExperienciaForm.get('descripcion')?.touched) {
-                    <div class="text-red-500 text-sm mt-1">Requerido (mínimo 10 caracteres)</div>
-                  }
-                </div>
-
-                <!-- Link -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Link (opcional)</label>
-                  <input type="url" formControlName="link" class="form-control" placeholder="https://ejemplo.com">
-                </div>
-
-                <!-- Tipo -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia *</label>
-                  <select formControlName="tipoExperiencia" title="tipoExperienciaSel" class="form-control">
-                    <option value="">Seleccionar tipo</option>
-                    @for (tipo of tiposExperiencia; track tipo.value) {
-                      <option [value]="tipo.value">{{ tipo.label }}</option>
+              <!-- Fechas -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Inicio *</label>
+                    <input type="date" formControlName="fechaInicioProyecto" class="form-control">
+                    @if (editarExperienciaForm.get('fechaInicioProyecto')?.invalid &&
+                    editarExperienciaForm.get('fechaInicioProyecto')?.touched) {
+                    <div class="text-red-500 text-sm mt-1">Requerido</div>
                     }
-                  </select>
-                  @if (editarExperienciaForm.get('tipoExperiencia')?.invalid && editarExperienciaForm.get('tipoExperiencia')?.touched) {
-                    <div class="text-red-500 text-sm mt-1">Seleccione un tipo</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Fecha de Fin *</label>
+                    <input type="date" formControlName="fechaFinProyecto" class="form-control">
+                    @if (editarExperienciaForm.get('fechaFinProyecto')?.invalid &&
+                    editarExperienciaForm.get('fechaFinProyecto')?.touched) {
+                    <div class="text-red-500 text-sm mt-1">Requerido</div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Descripción -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Descripción *</label>
+                <textarea formControlName="descripcion" class="form-control" rows="3"
+                  placeholder="Descripción detallada..."></textarea>
+                @if (editarExperienciaForm.get('descripcion')?.invalid &&
+                editarExperienciaForm.get('descripcion')?.touched) {
+                <div class="text-red-500 text-sm mt-1">Requerido (mínimo 10 caracteres)</div>
+                }
+              </div>
+
+              <!-- Link -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Link (opcional)</label>
+                <input type="url" formControlName="link" class="form-control" placeholder="https://ejemplo.com">
+              </div>
+
+              <!-- Tipo -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tipo de Experiencia *</label>
+                <select formControlName="tipoExperiencia" title="tipoExperienciaSel" class="form-control">
+                  <option value="">Seleccionar tipo</option>
+                  @for (tipo of tiposExperiencia; track tipo.value) {
+                  <option [value]="tipo.value">{{ tipo.label }}</option>
+                  }
+                </select>
+                @if (editarExperienciaForm.get('tipoExperiencia')?.invalid &&
+                editarExperienciaForm.get('tipoExperiencia')?.touched) {
+                <div class="text-red-500 text-sm mt-1">Seleccione un tipo</div>
+                }
+              </div>
+
+              <!-- Tecnologías (mismo sistema que en creación) -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
+                <div class="tecnologias-grid">
+                  @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
+                  <div class="tecnologia-checkbox" (click)="toggleTecnologiaEditar(tecnologia.value)"
+                    [style.background-color]="isTecnologiaSeleccionadaEditar(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
+                    <input type="checkbox" [checked]="isTecnologiaSeleccionadaEditar(tecnologia.value)"
+                      (change)="toggleTecnologiaEditar(tecnologia.value)"
+                      style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
+                    <span class="tecnologia-label">{{ tecnologia.label }}</span>
+                  </div>
                   }
                 </div>
+                @if (editarExperienciaForm.get('tecnologiasUsadas')?.invalid &&
+                editarExperienciaForm.get('tecnologiasUsadas')?.touched) {
+                <div class="text-red-500 text-sm mt-1">Seleccione al menos una tecnología</div>
+                }
+                <!-- Badges seleccionados -->
+                @if (editarExperienciaForm.get('tecnologiasUsadas')?.value?.length > 0) {
+                <div class="mt-2 d-flex flex-wrap gap-1">
+                  @for (tecnologia of editarExperienciaForm.get('tecnologiasUsadas')?.value; track $index) {
+                  <span class="badge {{getTecnologiaColor(tecnologia)}}"
+                    style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                    {{getTecnologiaDisplay(tecnologia)}}
+                    <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;"
+                      (click)="toggleTecnologiaEditar(tecnologia)">×</span>
+                  </span>
+                  }
+                </div>
+                }
+              </div>
 
-                <!-- Tecnologías (mismo sistema que en creación) -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Tecnologías usadas *</label>
-                  <div class="tecnologias-grid">
-                    @for (tecnologia of tecnologiasDisponibles; track tecnologia.value) {
-                      <div class="tecnologia-checkbox" 
-                           (click)="toggleTecnologiaEditar(tecnologia.value)"
-                           [style.background-color]="isTecnologiaSeleccionadaEditar(tecnologia.value) ? 'rgba(59, 130, 246, 0.15)' : 'transparent'">
-                        <input type="checkbox" 
-                               [checked]="isTecnologiaSeleccionadaEditar(tecnologia.value)"
-                               (change)="toggleTecnologiaEditar(tecnologia.value)"
-                               style="cursor: pointer; width: 16px; height: 16px; accent-color: #3b82f6;">
-                        <span class="tecnologia-label">{{ tecnologia.label }}</span>
+              <!-- ============================================ -->
+              <!-- IMÁGENES EXISTENTES Y AGREGAR NUEVAS         -->
+              <!-- ============================================ -->
+              <div class="form-group">
+                <label class="block mb-2 text-sm font-medium text-gray-700">Imágenes del proyecto</label>
+                <div class="file-input-wrapper">
+                  <div class="border-2 border-dashed rounded-lg p-4 text-center" style="background-color: #f9fafb;">
+                    <!-- Previsualizaciones de imágenes existentes -->
+                    @if (totalImagenesEditar > 0) {
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
+                      @for (imagen of experienciaEditada?.imagenes; track $index; let i = $index) {
+                      <div class="relative inline-block">
+                        <img [src]="imagen.url" [alt]="imagen.alt || 'Imagen'"
+                          class="w-full h-32 object-cover rounded-lg shadow-md">
+                        <button type="button" (click)="eliminarImagenEditar(i)"
+                          class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                          title="Eliminar imagen">
+                          ×
+                        </button>
                       </div>
-                    }
-                  </div>
-                  @if (editarExperienciaForm.get('tecnologiasUsadas')?.invalid && editarExperienciaForm.get('tecnologiasUsadas')?.touched) {
-                    <div class="text-red-500 text-sm mt-1">Seleccione al menos una tecnología</div>
-                  }
-                  <!-- Badges seleccionados -->
-                  @if (editarExperienciaForm.get('tecnologiasUsadas')?.value?.length > 0) {
-                    <div class="mt-2 d-flex flex-wrap gap-1">
-                      @for (tecnologia of editarExperienciaForm.get('tecnologiasUsadas')?.value; track $index) {
-                        <span class="badge {{getTecnologiaColor(tecnologia)}}" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
-                          {{getTecnologiaDisplay(tecnologia)}}
-                          <span style="cursor: pointer; margin-left: 0.4rem; font-weight: bold;" (click)="toggleTecnologiaEditar(tecnologia)">×</span>
-                        </span>
                       }
-                    </div>
-                  }
-                </div>
-
-                <!-- ============================================ -->
-                <!-- IMÁGENES EXISTENTES Y AGREGAR NUEVAS         -->
-                <!-- ============================================ -->
-                <div class="form-group">
-                  <label class="block mb-2 text-sm font-medium text-gray-700">Imágenes del proyecto</label>
-                  <div class="file-input-wrapper">
-                    <div class="border-2 border-dashed rounded-lg p-4 text-center" style="background-color: #f9fafb;">
-                      <!-- Previsualizaciones de imágenes existentes -->
-                      @if (totalImagenesEditar > 0) {
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
-                          @for (imagen of experienciaEditada?.imagenes; track $index; let i = $index) {
-                            <div class="relative inline-block">
-                              <img [src]="imagen.url" [alt]="imagen.alt || 'Imagen'" class="w-full h-32 object-cover rounded-lg shadow-md">
-                              <button 
-                                type="button" 
-                                (click)="eliminarImagenEditar(i)"
-                                class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
-                                title="Eliminar imagen">
-                                ×
-                              </button>
-                            </div>
-                          }
-                          <!-- Previews de imágenes nuevas -->
-                          <!--@for (preview of imagenesPreviewsEditar; track $index) {
+                      <!-- Previews de imágenes nuevas -->
+                      <!--@for (preview of imagenesPreviewsEditar; track $index) {
                             <div class="relative inline-block">
                               <img [src]="preview" alt="Nueva imagen" class="w-full h-32 object-cover rounded-lg shadow-md">
                               <button 
@@ -608,98 +600,93 @@
                               </button>
                             </div>
                           }-->
-                        </div>
-                      } @else {
-                        <div>
-                          <i class="fas fa-image text-4xl text-gray-400 mb-3"></i>
-                          <p class="text-gray-600">No hay imágenes cargadas</p>
-                        </div>
-                      }
-
-                      <!-- Contador y botón para agregar -->
-                      <div class="mt-3 d-flex flex-wrap align-items-center justify-content-center gap-3">
-                        <span class="text-sm text-gray-600">
-                          {{ totalImagenesEditar }} / {{ maxImagenes }} imágenes
-                        </span>
-                        @if (totalImagenesEditar < maxImagenes) {
-                          <input 
-                            type="file" 
-                            accept="image/*"
-                            multiple
-                            (change)="onFileSelectedEditar($event)"
-                            class="hidden"
-                            aria-label="Agregar imágenes"
-                            #fileInputEditar>
-                          <button 
-                            type="button"
-                            (click)="fileInputEditar.click()"
-                            class="btn btn-primary"
-                            style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
-                            <i class="fas fa-plus-circle mr-1"></i> Agregar imagen
-                          </button>
-                        } @else {
-                          <span class="text-sm text-gray-500">Límite de imágenes alcanzado</span>
-                        }
-                      </div>
-
-                      @if (imagenSubiendoEditar) {
-                        <div class="mt-3 text-sm text-gray-500">Subiendo imagen...</div>
-                      }
                     </div>
-                  </div>
-                </div>
-
-                <!-- Mensajes -->
-                @if (mensaje) {
-                  <div class="mt-3 p-3 rounded" [class.bg-red-100]="mensajeTipo === 'error'" [class.bg-green-100]="mensajeTipo === 'success'">
-                    <p [class.text-red-700]="mensajeTipo === 'error'" [class.text-green-700]="mensajeTipo === 'success'">{{ mensaje }}</p>
-                  </div>
-                }
-
-                <div class="d-flex justify-content-end gap-3 mt-4">
-                  <button type="button" class="btn btn-secondary" (click)="cerrarModalEditar()">Cancelar</button>
-                  <button type="submit" [disabled]="editarExperienciaForm.invalid || actualizando || imagenSubiendoEditar" class="btn btn-primary">
-                    @if (!actualizando) {
-                      <span>Actualizar</span>
                     } @else {
-                      <span>Actualizando...</span>
+                    <div>
+                      <i class="fas fa-image text-4xl text-gray-400 mb-3"></i>
+                      <p class="text-gray-600">No hay imágenes cargadas</p>
+                    </div>
                     }
-                  </button>
+
+                    <!-- Contador y botón para agregar -->
+                    <div class="mt-3 d-flex flex-wrap align-items-center justify-content-center gap-3">
+                      <span class="text-sm text-gray-600">
+                        {{ totalImagenesEditar }} / {{ maxImagenes }} imágenes
+                      </span>
+                      @if (totalImagenesEditar < maxImagenes) { <input type="file" accept="image/*" multiple
+                        (change)="onFileSelectedEditar($event)" class="hidden" aria-label="Agregar imágenes"
+                        #fileInputEditar>
+                        <button type="button" (click)="fileInputEditar.click()" class="btn btn-primary"
+                          style="background-color: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
+                          <i class="fas fa-plus-circle mr-1"></i> Agregar imagen
+                        </button>
+                        } @else {
+                        <span class="text-sm text-gray-500">Límite de imágenes alcanzado</span>
+                        }
+                    </div>
+
+                    @if (imagenSubiendoEditar) {
+                    <div class="mt-3 text-sm text-gray-500">Subiendo imagen...</div>
+                    }
+                  </div>
                 </div>
-              </form>
-            </div>
+              </div>
+
+              <!-- Mensajes -->
+              @if (mensaje) {
+              <div class="mt-3 p-3 rounded" [class.bg-red-100]="mensajeTipo === 'error'"
+                [class.bg-green-100]="mensajeTipo === 'success'">
+                <p [class.text-red-700]="mensajeTipo === 'error'" [class.text-green-700]="mensajeTipo === 'success'">{{
+                  mensaje }}</p>
+              </div>
+              }
+
+              <div class="d-flex justify-content-end gap-3 mt-4">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModalEditar()">Cancelar</button>
+                <button type="submit" [disabled]="editarExperienciaForm.invalid || actualizando || imagenSubiendoEditar"
+                  class="btn btn-primary">
+                  @if (!actualizando) {
+                  <span>Actualizar</span>
+                  } @else {
+                  <span>Actualizando...</span>
+                  }
+                </button>
+              </div>
+            </form>
           </div>
         </div>
+      </div>
       }
 
       <!-- ============================================ -->
       <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR          -->
       <!-- ============================================ -->
       @if (mostrarModalConfirmacion) {
-        <div class="modal-overlay" (click)="cancelarEliminacion()">
-          <div class="modal-content modal-confirmacion" (click)="$event.stopPropagation()" style="max-width: 450px;">
-            <div class="modal-header border-secondary">
-              <h3 class="modal-title">Confirmar eliminación</h3>
-              <button type="button" class="btn-close" (click)="cancelarEliminacion()">×</button>
-            </div>
-            <div class="modal-body text-center">
-              <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
-              <p class="mb-4">¿Estás seguro de que deseas eliminar la experiencia
-                 <strong>"{{experienciaAEliminar?.titulo}}"</strong>?</p>
-              <p class="text-sm text-gray-500">Esta acción no se puede deshacer.</p>
-              <div class="d-flex justify-content-center gap-3 mt-4">
-                <button type="button" class="btn btn-secondary" (click)="cancelarEliminacion()">Cancelar</button>
-                <button type="button" class="btn btn-danger" (click)="eliminarExperiencia()" [disabled]="eliminando">
-                  @if (!eliminando) {
-                    <span>Eliminar</span>
-                  } @else {
-                    <span>Eliminando...</span>
-                  }
-                </button>
-              </div>
+      <div class="modal-overlay" (click)="cancelarEliminacion()">
+        <div class="modal-content modal-confirmacion" (click)="$event.stopPropagation()" style="max-width: 450px;">
+          <div class="modal-header border-secondary">
+            <h3 class="modal-title">Confirmar eliminación</h3>
+            <button type="button" class="btn-close" (click)="cancelarEliminacion()">×</button>
+          </div>
+          <div class="modal-body text-center">
+            <i class="fas fa-trash-alt text-red-500 text-5xl mb-4"></i>
+            <p class="mb-4">¿Estás seguro de que deseas eliminar la experiencia
+              <strong>"{{experienciaAEliminar?.titulo}}"</strong>?
+            </p>
+            <p class="text-sm text-gray-500">Esta acción no se puede deshacer.</p>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <button type="button" class="btn btn-secondary" (click)="cancelarEliminacion()">Cancelar</button>
+              <button type="button" class="btn btn-danger" (click)="eliminarExperiencia()" [disabled]="eliminando">
+                @if (!eliminando) {
+                <span>Eliminar</span>
+                } @else {
+                <span>Eliminando...</span>
+                }
+              </button>
             </div>
           </div>
         </div>
+      </div>
       }
 
     </section>
