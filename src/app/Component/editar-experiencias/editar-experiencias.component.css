@@ -936,3 +936,41 @@ input[type="date"]:focus {
 .file-input-wrapper .grid img:hover {
   transform: scale(1.02);
 }
+/* ============================================ */
+/* ESTILOS PARA MODAL FOOTER                    */
+/* ============================================ */
+
+/* Asegurar espaciado en el footer del modal */
+.modal-footer {
+  padding: 1rem 1.5rem !important;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid #4a5568;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+/* Botón de cerrar en el modal */
+.modal-footer .btn-secondary {
+  background-color: #4a5568 !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.5rem 1.5rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  min-width: 80px !important;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #2d3748 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Asegurar que el footer del modal oscuro tenga el estilo correcto */
+.modal-content.bg-dark .modal-footer {
+  border-color: #4a5568 !important;
+  background: rgba(0, 0, 0, 0.3);
+}
